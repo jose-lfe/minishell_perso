@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joseluis <joseluis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/19 14:10:01 by joseluis         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:25:19 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ char	*ft_change_str(char *old, char *convert, int start, int size)
 	}
 	while (convert[j])
 		new[i++] = convert[j++];
-	while (old[i - ft_strlen(convert)])
+	while (old[i - ft_strlen(convert) + size + 1])
 	{
-		new[i] = old[i - ft_strlen(convert)];
+		new[i] = old[i - ft_strlen(convert) + size + 1];
 		i++;
 	}
 	new[i] = '\0';
-	ft_printf("%s\n", new);
 	free(old);
 	return (new);
 }
@@ -78,8 +77,6 @@ int	dollar_converter(char **str, int i, char **env)
 		i++;
 	size_var = i - start - 1;
 	var = ft_substr(*str + 1, start, size_var);
-	ft_printf("taille var = %i\n", size_var);
-	ft_printf("var = %s\n", var);
 	i = 0;
 	while (env[i] && ft_strncmp(env[i], var, size_var) != 0)
 		i++;
@@ -88,7 +85,6 @@ int	dollar_converter(char **str, int i, char **env)
 		free(var);
 		return (1);
 	}
-	ft_printf("ici \n");
 	convert = ft_strdup(env[i] + size_var + 1);
 	*str = ft_change_str(*str, convert, start, size_var);
 	free(convert);
@@ -111,15 +107,17 @@ void	dollar_checker(char **str, char **env)
 	{
 		if ((*str)[i] == '$')
 		{
-			if ((*str)[i + 1] == '?')
-			{
-				exit_statut(*str, i);
-				i = 0;
-			}
 			if (ft_isalpha((*str)[i + 1]))
 			{
 				if (dollar_converter(str, i, env) == 0)
+				{
 					i = 0;
+					continue ;
+				}
+			}
+			if ((*str)[i + 1] == '?')
+			{
+				exit_statut(*str, i);
 			}
 		}
 		i++;
@@ -134,12 +132,11 @@ void	dollar_checker(char **str, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*test = "la voiture de $USER me plait";
 	char	*check;
 
 	(void)av;
 	(void)ac;
-	check = ft_strdup(test);
+	check = readline("text:");
 	if (check_open_quote(check) != 0)
 		return (1);
 	dollar_checker(&check, env);

@@ -1,5 +1,6 @@
 NAME = minishell
 CC = gcc
+LDFLAGS = -lreadline
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_PATH = ./library/libft
 LIBFT = -L$(LIBFT_PATH) -lft
@@ -13,7 +14,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(notdir $(OBJS)))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_SENTINEL)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LIBFT) -lm -o $(NAME)
 
 $(OBJ_PATH)/%.o: source/%.c | $(OBJ_PATH)
 	$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
