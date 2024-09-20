@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joseluis <joseluis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/19 13:50:16 by joseluis         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:34:43 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,24 @@ typedef struct s_data
 	int		exit_statue;
 }	t_data;
 
+typedef struct s_envp
+{
+	char	*var;
+	struct s_envp	*pre;
+	struct s_envp	*next;
+}	t_envp;
 
-int check_open_quote(char *str);
-char *ft_change_str(char *old, char *convert, int start, int size);
-int dollar_converter(char **str, int i, char **env);
-void exit_statut(char *str, int i);
-void dollar_checker(char **str, char **env);
+int	check_open_quote(char *str);
+char	*ft_change_str(char *old, char *convert, int start, int size);
+int		dollar_converter(char **str, int i, char **env);
+void	exit_statut(char *str, int i);
+void	dollar_checker(char **str, char **env);
+
+void	ft_copy_envp(char **env, t_envp **envp);
+t_envp	*ft_new_var(char *str);
+void	ft_add_back(t_envp **envp, t_envp *new);
+void	ft_env(t_envp **envp);
+void	ft_free_envp(t_envp *envp);
+
 
 #endif

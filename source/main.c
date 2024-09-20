@@ -6,12 +6,13 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:25:19 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:41:18 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// a modifier car erreur si  "  '  "  '
 int	check_open_quote(char *str)
 {
 	int	i;
@@ -31,7 +32,7 @@ int	check_open_quote(char *str)
 	}
 	if (sq == 1 && dq == 1)
 		return (0);
-	ft_printf("open quote \n");
+	ft_printf("Error: open quote \n");
 	return (1);
 }
 
@@ -133,14 +134,18 @@ void	dollar_checker(char **str, char **env)
 int	main(int ac, char **av, char **env)
 {
 	char	*check;
+	t_envp	*envp;
 
 	(void)av;
 	(void)ac;
+	ft_copy_envp(env, &envp);
+	ft_env(&envp);
 	check = readline("text:");
 	if (check_open_quote(check) != 0)
 		return (1);
 	dollar_checker(&check, env);
 	ft_printf("%s\n", check);
 	free(check);
+	ft_free_envp(envp);
 	return (0);
 }
