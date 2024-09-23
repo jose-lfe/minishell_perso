@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/23 12:04:03 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:12:22 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	ft_add_back(t_envp **envp, t_envp *new)
 
 void	ft_env(t_envp **envp)
 {
-	t_envp	*tmp = *envp;
+	t_envp	*tmp;
+
+	tmp = *envp;
 	while (tmp)
 	{
 		ft_printf("%s\n", tmp->var);

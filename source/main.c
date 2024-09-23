@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 12:15:50 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:13:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*ft_change_str(char *old, char *convert, int start, int size)
 
 	i = 0;
 	j = 0;
-	new = malloc((ft_strlen(old) - size + ft_strlen(convert) + 1) 
-    	 * sizeof(char));
+	new = malloc((ft_strlen(old) - size + ft_strlen(convert) + 1)
+			* sizeof(char));
 	if (!new)
 		return (NULL);
 	while (old[i] && i < start)
@@ -126,10 +126,6 @@ void	dollar_checker(char **str, char **env)
 }
 
 // t_data *data	init_data(char **av, char *env)
-// {
-	
-// }
-
 
 int	main(int ac, char **av, char **env)
 {

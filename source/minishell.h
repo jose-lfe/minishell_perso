@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 14:06:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:09:13 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 typedef struct s_token
 {
 	char			*str;
-	struct s_token 	*next;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_data
@@ -49,7 +49,7 @@ typedef struct s_data
 
 typedef struct s_envp
 {
-	char	*var;
+	char			*var;
 	struct s_envp	*pre;
 	struct s_envp	*next;
 }	t_envp;

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/23 14:04:35 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:12:48 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	ft_print_export(t_envp **envp)
 {
-	t_envp	*tmp = *envp;
+	t_envp	*tmp;
+
+	tmp = *envp;
 	while (tmp)
 	{
 		ft_printf("declare -x %s\n", tmp->var);
