@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 12:13:30 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:06:55 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
-int	check_open_quote(char *str);
+int		check_open_quote(char *str);
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, char **env);
 void	exit_statut(char *str, int i);
@@ -66,6 +66,9 @@ void	ft_add_back(t_envp **envp, t_envp *new);
 void	ft_env(t_envp **envp);
 void	ft_free_envp(t_envp *envp);
 
+void	ft_pre_export(t_envp **envp, char **args);
+void	ft_export(t_envp **envp, char *arg);
+void	ft_pre_unset(t_envp **envp, char **args);
 void	ft_unset(t_envp **envp, char *arg);
 
 #endif
