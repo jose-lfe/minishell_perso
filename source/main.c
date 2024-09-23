@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/20 15:41:18 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:15:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)ac;
 	ft_copy_envp(env, &envp);
+	ft_env(&envp);
+	ft_unset(&envp, "PATH");
 	ft_env(&envp);
 	check = readline("text:");
 	if (check_open_quote(check) != 0)
