@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 14:09:13 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:13:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,19 @@
 # include <stddef.h>
 # include <stdbool.h>
 
-typedef struct s_token
+typedef struct s_command
 {
-	char			*str;
-	struct s_token	*next;
-}	t_token;
+	char				**arg;
+	bool				in_redir;
+	char				*in_path;
+	bool				out_redir;
+	char				*out_path;
+	bool				append;
+	bool				*pipein;
+	bool				*pipeout;
+	bool				*heredoc;
+	struct s_command	*next;
+}	t_command;
 
 typedef struct s_data
 {
@@ -70,5 +78,7 @@ void	ft_pre_export(t_envp **envp, char **args);
 void	ft_export(t_envp **envp, char *arg);
 void	ft_pre_unset(t_envp **envp, char **args);
 void	ft_unset(t_envp **envp, char *arg);
+
+void	start_exec(t_command **command, t_envp **envp);
 
 #endif
