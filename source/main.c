@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 13:53:37 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:54:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,13 @@ char	*ft_change_str(char *old, char *convert, int start, int size)
 	return (new);
 }
 
-int	dollar_converter(char **str, int i, char **env)
+int	dollar_converter(char **str, int i, t_envp **envp)
 {
 	int		size_var;
 	char	*var;
 	char	*convert;
 	int		start;
+	t_envp	*tmp;
 
 	start = i;
 	i++;
@@ -79,19 +80,45 @@ int	dollar_converter(char **str, int i, char **env)
 	size_var = i - start - 1;
 	var = ft_substr(*str + 1, start, size_var);
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], var, size_var) != 0)
-		i++;
-	if (!env[i])
-	{
-		free(var);
-		return (1);
-	}
-	convert = ft_strdup(env[i] + size_var + 1);
+	tmp = *envp;
+	while (tmp && ft_strncmp(tmp->var, var, ft_strlen(tmp->var)) != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		return (ft_free_str_and_return_1(var));
+	convert = ft_strdup(tmp->value);
 	*str = ft_change_str(*str, convert, start, size_var);
 	free(convert);
 	free(var);
 	return (0);
 }
+
+// int	dollar_converter(char **str, int i, char **env)
+// {
+// 	int		size_var;
+// 	char	*var;
+// 	char	*convert;
+// 	int		start;
+
+// 	start = i;
+// 	i++;
+// 	while ((*str)[i] && ft_isalpha((*str)[i]))
+// 		i++;
+// 	size_var = i - start - 1;
+// 	var = ft_substr(*str + 1, start, size_var);
+// 	i = 0;
+// 	while (env[i] && ft_strncmp(env[i], var, size_var) != 0)
+// 		i++;
+// 	if (!env[i])
+// 	{
+// 		free(var);
+// 		return (1);
+// 	}
+// 	convert = ft_strdup(env[i] + size_var + 1);
+// 	*str = ft_change_str(*str, convert, start, size_var);
+// 	free(convert);
+// 	free(var);
+// 	return (0);
+// }
 
 void	exit_statut(char *str, int i)
 {
@@ -99,7 +126,7 @@ void	exit_statut(char *str, int i)
 	ft_printf("exit statut to change in : %s\n", str);
 }
 
-void	dollar_checker(char **str, char **env)
+void	dollar_checker(char **str, t_envp **envp)
 {
 	int	i;
 
@@ -110,7 +137,7 @@ void	dollar_checker(char **str, char **env)
 		{
 			if (ft_isalpha((*str)[i + 1]))
 			{
-				if (dollar_converter(str, i, env) == 0)
+				if (dollar_converter(str, i, envp) == 0)
 				{
 					i = 0;
 					continue ;
@@ -138,15 +165,16 @@ int	main(int ac, char **av, char **env)
 	command = NULL;
 	ft_copy_envp(env, &envp);
 	ft_env(&envp);
-	ft_unset(&envp, "PATH");
-	ft_env(&envp);
+	ft_print_export(&envp);
+	//ft_unset(&envp, "PATH");
+	//ft_env(&envp);
 	setup_signals();
 	while (1)
 	{
 		input = readline("minishell> ");
 		if (check_open_quote(input) != 0)
 			return (1);
-		dollar_checker(&input, env);
+		dollar_checker(&input, &envp);
 		ft_printf("%s\n", input);
 		parsing_input(input, &command);
 		//execution();

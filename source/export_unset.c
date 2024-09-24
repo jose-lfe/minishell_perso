@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/24 13:00:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:52:49 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_export(t_envp **envp)
 	tmp = *envp;
 	while (tmp)
 	{
-		ft_printf("declare -x %s\n", tmp->var); // ajouter les quotes
+		printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -110,6 +110,7 @@ void	ft_unset(t_envp **envp, char *arg)
 			if (tmp->next != NULL)
 				tmp->next->pre = tmp->pre;
 			free(tmp->var);
+			free(tmp->value);
 			free(tmp);
 			return ;
 		}

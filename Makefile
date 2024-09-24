@@ -13,7 +13,8 @@ SRCS = 	source/main.c \
 		source/commands_utils.c \
 		source/transform_input_counters.c \
 		source/transform_input.c \
-		source/signal.c
+		source/signal.c \
+		source/utils.c
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJ_PATH)/,$(notdir $(OBJS)))
 

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 14:04:46 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:54:11 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,16 @@ typedef struct s_data
 typedef struct s_envp
 {
 	char			*var;
+	char			*value;
 	struct s_envp	*pre;
 	struct s_envp	*next;
 }	t_envp;
 
 int		check_open_quote(char *str);
 char	*ft_change_str(char *old, char *convert, int start, int size);
-int		dollar_converter(char **str, int i, char **env);
+int		dollar_converter(char **str, int i, t_envp **envp);
 void	exit_statut(char *str, int i);
-void	dollar_checker(char **str, char **env);
+void	dollar_checker(char **str, t_envp **envp);
 
 void	ft_copy_envp(char **env, t_envp **envp);
 t_envp	*ft_new_var(char *str);
@@ -76,11 +77,16 @@ void	ft_add_back(t_envp **envp, t_envp *new);
 void	ft_env(t_envp **envp);
 void	ft_free_envp(t_envp *envp);
 
+void	ft_print_export(t_envp **envp);
 void	ft_pre_export(t_envp **envp, char **args);
 void	ft_export(t_envp **envp, char *arg);
 void	ft_pre_unset(t_envp **envp, char **args);
 void	ft_unset(t_envp **envp, char *arg);
 int		ft_strlen_var(char *str);
+
+char	*ft_get_var(char *str);
+char 	*ft_get_value(char *str);
+int		ft_free_str_and_return_1(char *str);
 
 void	start_exec(t_command **command, t_envp **envp);
 

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/23 14:12:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:19:24 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ t_envp	*ft_new_var(char *str)
 	new = malloc(sizeof(t_envp));
 	if (!new)
 		return (NULL);
-	new->var = ft_strdup(str);
+	new->var = ft_get_var(str);
+	new->value = ft_get_value(str);
 	new->pre = NULL;
 	new->next = NULL;
 	return (new);
@@ -62,7 +63,7 @@ void	ft_env(t_envp **envp)
 	tmp = *envp;
 	while (tmp)
 	{
-		ft_printf("%s\n", tmp->var);
+		ft_printf("%s=%s\n", tmp->var, tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -75,6 +76,7 @@ void	ft_free_envp(t_envp *envp)
 	{
 		tmp = envp->next;
 		free(envp->var);
+		free(envp->value);
 		free(envp);
 		envp = tmp;
 	}
