@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 14:13:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:53:37 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,21 +129,82 @@ void	dollar_checker(char **str, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*check;
-	t_envp	*envp;
+	t_envp		*envp;
+	char		*input;
+	t_command	*command;
 
 	(void)av;
 	(void)ac;
+	command = NULL;
 	ft_copy_envp(env, &envp);
 	ft_env(&envp);
 	ft_unset(&envp, "PATH");
 	ft_env(&envp);
-	check = readline("text:");
-	if (check_open_quote(check) != 0)
-		return (1);
-	dollar_checker(&check, env);
-	ft_printf("%s\n", check);
-	free(check);
+	setup_signals();
+	while (1)
+	{
+		input = readline("minishell> ");
+		if (check_open_quote(input) != 0)
+			return (1);
+		dollar_checker(&input, env);
+		ft_printf("%s\n", input);
+		parsing_input(input, &command);
+		//execution();
+		//free_cmd_input();
+	}
 	ft_free_envp(envp);
 	return (0);
 }
+/*
+int	main(int ac, char **av, char **env)
+{
+	t_envp		*envp;
+	char		*input;
+	t_command	*command;
+
+	(void)av;
+	(void)ac;
+	command = NULL;
+	create_env();
+	while (1)
+	{
+		input = readline("minishell> ");
+		checking_input();
+		parsing_input(input, &command);
+		execution();
+		free_cmd_input();
+	}
+	ft_free_envp(envp);
+	return (0);
+}
+pid_t	current_process;
+current_process = NULL;
+
+int	main(int ac, char **av, char **env)
+{
+	t_envp		*envp;
+	char		*input;
+	t_command	*command;
+
+	(void)av;
+	(void)ac;
+	command = NULL;
+	setup_signals();
+	create_data();
+	while (1)
+	{
+		input = readline("minishell> ");
+		checking_input();
+		parsing_input(input, &command);
+		execution();
+		free_cmd_input();
+	}
+	ft_free_envp(envp);
+	return (0);
+}
+
+free les commandes et linput apres lexecution
+gerer les signaux
+echo
+exit
+*/

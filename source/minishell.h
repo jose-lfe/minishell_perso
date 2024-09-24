@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 12:07:40 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:04:46 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ typedef struct s_command
 	bool				out_redir;
 	char				*out_path;
 	bool				append;
-	bool				*pipein;
-	bool				*pipeout;
-	bool				*heredoc;
+	bool				pipein;
+	bool				pipeout;
+	bool				heredoc;
 	struct s_command	*next;
 }	t_command;
 
 typedef struct s_data
 {
-	int			*exit_statue;
+	int			*exit_status;
 	int			base_stdin;
 	int			base_stdout;
-	t_envp		**envp;
-	t_command	**command;
+	struct s_envp		**envp;
+	struct s_command	**command;
 }	t_data;
 
 typedef struct s_envp
@@ -80,7 +80,29 @@ void	ft_pre_export(t_envp **envp, char **args);
 void	ft_export(t_envp **envp, char *arg);
 void	ft_pre_unset(t_envp **envp, char **args);
 void	ft_unset(t_envp **envp, char *arg);
+int		ft_strlen_var(char *str);
 
 void	start_exec(t_command **command, t_envp **envp);
+
+
+int		command_length(char *str);
+int		arg_length(char *str, int c);
+int		count_arg(char *str);
+bool	is_separator(char c);
+bool	is_pipe(char c);
+bool	is_white_space(char c);
+void	parsing_input(char *str, t_command **command);
+void	create_command(char *str, t_command **command);
+void	print_commands(t_command **head);
+void	initialize_command(t_command *new);
+void	fill_command(char *str, t_command *command);
+char	**create_tab_for_command(char *str);
+char	*create_string(char *str, int c);
+void	append_to_list(t_command **command, t_command *new);
+void	check_for_redir(char *str, t_command *command);
+void	file_redir(char *str, t_command *command, int flag);
+void	set_pipeout(t_command **head);
+
+void	setup_signals();
 
 #endif

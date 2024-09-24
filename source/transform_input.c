@@ -110,7 +110,7 @@ void	set_pipeout(t_command **head)
     t_command *current = *head;
 	while (current != NULL)
 	{
-		if (current->pipein = true)
+		if (current->pipein == true)
 			current->next->pipeout = true;
 		current = current->next;
 	}
@@ -139,21 +139,21 @@ void	fill_command(char *str, t_command *command)
 
 char	**create_tab_for_command(char *str)
 {
-	char	**tab;
+	char	**tb;
 	int		i;
 
 	i = 0;
-	tab = malloc((count_arg(str) + 1) * sizeof(char*));
+	tb = malloc((count_arg(str) + 1) * sizeof(char*));
 	printf("%d ceci est le nb dargument", count_arg(str));
 	/*if (!tab)
 		free_and_exit(command);*/
 	while (i < count_arg(str))
 	{
-		tab[i] = create_string(str, i);
+		tb[i] = create_string(str, i);
 		i++;
 	}
-	tab[i] = NULL;
-	return(tab);
+	tb[i] = NULL;
+	return(tb);
 }
 //on est deja envoyer au bon endroit
 char	*create_string(char *str, int c)

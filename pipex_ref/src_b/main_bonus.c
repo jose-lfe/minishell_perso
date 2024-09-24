@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:38:57 by joseluis          #+#    #+#             */
-/*   Updated: 2024/04/25 15:58:20 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:00:15 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void	ft_start(int ac, char *av[], char *env[])
 		info->infile_error = 0;
 		waitpid(pid, NULL, 0);
 		dup2(fd[0], STDIN_FILENO);
+		if (command->in_redir)
+			fd = open(command->in_path);
+		dup2(fd, STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
 		i++;

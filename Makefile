@@ -7,7 +7,13 @@ LIBFT = -L$(LIBFT_PATH) -lft
 LIBFT_SENTINEL = $(LIBFT_PATH)/libft_built.sentinel
 OBJ_PATH = ./obj
 
-SRCS = source/main.c source/envp.c source/export_unset.c
+SRCS = 	source/main.c \
+		source/envp.c \
+		source/export_unset.c \
+		source/commands_utils.c \
+		source/transform_input_counters.c \
+		source/transform_input.c \
+		source/signal.c
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJ_PATH)/,$(notdir $(OBJS)))
 
