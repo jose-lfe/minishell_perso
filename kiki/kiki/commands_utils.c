@@ -5,9 +5,9 @@ int	command_length(char *str)
 	int	count;
 	
 	count = 0;
-	while (!is_separator(str[count]) && str[count] != '\0')
+	while (!is_pipe(str[count]) && str[count] != '\0')
 		count++;
-	if (is_separator(str[count]))
+	if (is_pipe(str[count]))
 		count++;
 	return (count);
 }

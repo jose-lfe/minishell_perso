@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 15:38:54 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:36:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,24 @@ execve
 
 void	start_exec(t_command **command, t_envp **envp)
 {
+	t_command	*tmp;
+	int			fd[2];
+	pid_t		pid;
+
+	tmp = *command;
+	while (tmp)
+	{
+		if (ft_must_be_parent(tmp, envp) == 0)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+	}
+}
+
+int	ft_must_be_parent(t_command *command, t_envp **envp)
+{
+	if (ft_strncmp(command->arg[0], "cd", 2))
 
 }
 

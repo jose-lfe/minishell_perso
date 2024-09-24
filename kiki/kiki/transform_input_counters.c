@@ -4,6 +4,17 @@ bool	is_separator(char c)
 {
 	if (c == '|')
 		return (true);
+	if (c == '<')
+		return (true);
+	if (c == '>')
+		return (true);
+	return (false);
+}
+
+bool	is_pipe(char c)
+{
+	if (c == '|')
+		return (true);
 	return (false);
 }
 

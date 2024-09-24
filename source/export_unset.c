@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/23 15:08:03 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:27:13 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_export(t_envp **envp)
 	tmp = *envp;
 	while (tmp)
 	{
-		ft_printf("declare -x %s\n", tmp->var);
+		ft_printf("declare -x %s\n", tmp->var); // ajouter les quotes
 		tmp = tmp->next;
 	}
 }
@@ -34,7 +34,10 @@ void	ft_pre_export(t_envp **envp, char **args)
 	while (args[i])
 	{
 		if (ft_isalpha(args[i][0]) == 0)
+		{
 			ft_printf("error: %s: not a valid identifier", args[i]);
+			// manque changer la valeur de exit statut a 1
+		}
 		else
 			ft_unset(envp, args[i]);
 		i++;
@@ -88,6 +91,7 @@ void	ft_pre_unset(t_envp **envp, char **args)
 		ft_unset(envp, args[i]);
 		i++;
 	}
+	// il manque de mettre la valeur de exit status a 0
 }
 
 void	ft_unset(t_envp **envp, char *arg)

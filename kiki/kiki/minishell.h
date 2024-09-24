@@ -16,24 +16,28 @@ typedef struct s_command
 	bool				out_redir;
 	char				*out_path;
 	bool				append;
-	bool				*pipein;
-	bool				*pipeout;
-	bool				*heredoc;
+	bool				pipein;
+	bool				pipeout;
+	bool				heredoc;
 	struct s_command	*next;
 }	t_command;
 
 
-int	command_length(char *str);
-int	arg_length(char *str, int c);
-int	count_arg(char *str);
+int		command_length(char *str);
+int		arg_length(char *str, int c);
+int		count_arg(char *str);
 bool	is_separator(char c);
+bool	is_pipe(char c);
 bool	is_white_space(char c);
 void	parsing_input(char *str, t_command **command);
 void	create_command(char *str, t_command **command);
-void print_commands(t_command **head);
+void	print_commands(t_command **head);
 void	initialize_command(t_command *new);
 void	fill_command(char *str, t_command *command);
 char	**create_tab_for_command(char *str);
 char	*create_string(char *str, int c);
 void	append_to_list(t_command **command, t_command *new);
+void	check_for_redir(char *str, t_command *command);
+void	file_redir(char *str, t_command *command, int flag);
+void	set_pipeout(t_command **head);
 #endif

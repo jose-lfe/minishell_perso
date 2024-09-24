@@ -38,15 +38,20 @@ void	create_command(char *str, t_command **command)
 	i = 0;
 	while (str[i] != '\0')
 	{
+		while (is_white_space(str[i]))
+			i++;
+		if (str[i] == '\0')
+			break ;
 		new = malloc(sizeof(t_command));
 		/*if (!new)
 			free_and_exit();*/
 		initialize_command(new);
 		fill_command(str + i, new);
 		append_to_list(command, new);
-		i = i + command_length(str + i) + 1; // attention a cette ligne si lindex est faux
+		i = i + command_length(str + i); // attention a cette ligne si lindex est faux
 	}
 	print_commands(command);
+	set_pipeout(command);
 }
 
 void print_commands(t_command **head)
@@ -100,6 +105,18 @@ void print_commands(t_command **head)
     }
 }
 
+void	set_pipeout(t_command **head)
+{
+    t_command *current = *head;
+	while (current != NULL)
+	{
+		if (current->pipein = true)
+			current->next->pipeout = true;
+		current = current->next;
+	}
+	return ;
+}
+
 void	initialize_command(t_command *new)
 {
 	new->arg = NULL;
@@ -116,9 +133,8 @@ void	initialize_command(t_command *new)
 
 void	fill_command(char *str, t_command *command)
 {
-	/*check_for_redir(str, command);
-	check_for_pipe(str, command);*/
 	command->arg = create_tab_for_command(str);
+	check_for_redir(str, command);
 }
 
 char	**create_tab_for_command(char *str)
@@ -128,6 +144,7 @@ char	**create_tab_for_command(char *str)
 
 	i = 0;
 	tab = malloc((count_arg(str) + 1) * sizeof(char*));
+	printf("%d ceci est le nb dargument", count_arg(str));
 	/*if (!tab)
 		free_and_exit(command);*/
 	while (i < count_arg(str))
@@ -192,35 +209,52 @@ void	check_for_redir(char *str, t_command *command)
 
 	i = 0;
 	while (str[i] != '\0' && !is_separator(str[i]))
-	{	
-		if (str[i] == '<' && str[i + 1] == '<')
-			command->heredoc = true;
-		else if (str[i] == '<')
-			command->in_redir = true;
-		else if (str[i] == '>' && str[i + 1] == '>')
-			command->append = true;
-		else if (str[i] == '>')
-			command->out_redir = true;
 		i++;
+	if (str[i] == '\0')
+		return ;
+	else if (str[i] == '|')
+		command->pipein = true;
+	else if (str[i] == '<' && str[i + 1] == '<')
+		command->heredoc = true;
+	else if (str[i] == '>' && str[i + 1] == '>')
+		command->append = true;
+	else if (str[i] == '<')
+		file_redir(str + i, command, -1);
+	else if (str[i] == '>')
+		file_redir(str + i, command, 1);
+	return ;
+}
+
+void	file_redir(char *str, t_command *command, int flag)
+{
+	char	*path;
+	int		i;
+	int		j;
+
+	i = 1;
+	j = 0;
+	while (is_white_space(str[i]))
+		i++;
+	path = malloc((arg_length(str + i, 0) + 1) * sizeof(char));
+	while (str[i] != '|' && str[i] != '\0')
+	{
+		path[j] = str[i];
+		i++;
+		j++;
+	}
+	path[j] = '\0';
+	if (flag == -1)
+	{
+		command->in_redir = true;
+		command->in_path = path;
+	}
+	else if (flag == 1)
+	{
+		command->out_redir = true;
+		command->out_path = path;
 	}
 }
 
-void	check_for_pipe(char *str, t_command *command)
-{
-	t_command	current;
-
-	current = command;
-	while (current)
-	{
-		if 
-	}
-
-
-
-
-
-
-//le but est de savoir si il y a une redirection et dinscrire cette redirection
-//dans le bon truc
-
-// /!\ ATTENTION GERER LES EXIT ET FREE ENCORE*/
+// /!\ ATTENTION GERER LES EXIT ET FREE ENCORE
+//SI JAMAIS les outfile et infile ne
+//sarrete pas a lespace mais copie tout jusqa la fin ou la pipe

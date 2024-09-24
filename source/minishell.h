@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/23 15:13:05 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:07:40 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ typedef struct s_command
 
 typedef struct s_data
 {
-	char	**env;
-	char	*lim;
-	int		exit_statue;
+	int			*exit_statue;
+	int			base_stdin;
+	int			base_stdout;
+	t_envp		**envp;
+	t_command	**command;
 }	t_data;
 
 typedef struct s_envp
