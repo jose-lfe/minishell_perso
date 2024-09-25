@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/24 15:52:49 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:55:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_pre_export(t_envp **envp, char **args)
 		if (ft_isalpha(args[i][0]) == 0)
 		{
 			ft_printf("error: %s: not a valid identifier", args[i]);
-			// manque changer la valeur de exit statut a 1
 		}
 		else
 			ft_unset(envp, args[i]);
@@ -109,8 +108,10 @@ void	ft_unset(t_envp **envp, char *arg)
 				tmp->pre->next = tmp->next;
 			if (tmp->next != NULL)
 				tmp->next->pre = tmp->pre;
-			free(tmp->var);
-			free(tmp->value);
+			if (tmp->var)
+				free(tmp->var);
+			if (tmp->value)
+				free(tmp->value);
 			free(tmp);
 			return ;
 		}

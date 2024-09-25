@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 15:54:11 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:54:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ typedef struct s_command
 	bool				in_redir;
 	char				*in_path;
 	bool				out_redir;
-	char				*out_path;
-	bool				append;
+	t_list				*out_path;
 	bool				pipein;
 	bool				pipeout;
 	bool				heredoc;

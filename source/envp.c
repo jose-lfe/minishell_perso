@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/24 15:19:24 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:11:02 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_env(t_envp **envp)
 	tmp = *envp;
 	while (tmp)
 	{
+		if (tmp)
 		ft_printf("%s=%s\n", tmp->var, tmp->value);
 		tmp = tmp->next;
 	}
@@ -75,8 +76,10 @@ void	ft_free_envp(t_envp *envp)
 	while (envp != NULL)
 	{
 		tmp = envp->next;
-		free(envp->var);
-		free(envp->value);
+		if (envp->var)
+			free(envp->var);
+		if (envp->value)
+			free(envp->value);
 		free(envp);
 		envp = tmp;
 	}

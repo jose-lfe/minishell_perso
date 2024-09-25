@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 11:36:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:18:23 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	start_exec(t_command **command, t_envp **envp)
 	tmp = *command;
 	while (tmp)
 	{
-		if (ft_must_be_parent(tmp, envp) == 0)
+		if (tmp->pipein == true || tmp->pipeout == true)
 		{
 			tmp = tmp->next;
 			continue ;
@@ -36,14 +36,8 @@ void	start_exec(t_command **command, t_envp **envp)
 	}
 }
 
-int	ft_must_be_parent(t_command *command, t_envp **envp)
-{
-	if (ft_strncmp(command->arg[0], "cd", 2))
-
-}
-
 // signe << 
-char	*ft_heredoc(t_data *data)
+char	*ft_heredoc(t_data *data, char *lim, int fd, bool last)
 {
     char    *input;
 	char	*buffer;
@@ -51,11 +45,12 @@ char	*ft_heredoc(t_data *data)
 	while (1)
 	{
 		input = readline("readline> ");
-		if (ft_strnstr(input, data->lim, ft_strlen(input)) != 0)
+		if (ft_strnstr(input, lim, ft_strlen(input)) != 0)
 			break;
 		buffer = ft_strjoin_gnl(buffer, input);
 	}
+	if (last == true)
+		ft_putstr_fd(buffer, fd);
 	free(input);
 	return (buffer);
-	//ft_putstr_fd(buffer, STDIN_FILENO); si on veut plutot utiliser l'entré standar
 }
