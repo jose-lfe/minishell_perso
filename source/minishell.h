@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/25 12:54:33 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:34:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,28 @@ typedef struct s_command
 {
 	char				**arg;
 	bool				in_redir;
-	char				*in_path;
+	struct s_inpath		*in_path;
 	bool				out_redir;
-	t_list				*out_path;
+	struct s_outpath	*out_path;
 	bool				pipein;
 	bool				pipeout;
 	bool				heredoc;
 	struct s_command	*next;
 }	t_command;
+
+typedef struct s_inpath
+{
+	char				*filename;
+	bool				here_doc;
+	struct s_inpath		*next;
+}	t_inpath;
+
+typedef struct s_outpath
+{
+	char				*filename;
+	bool				append;
+	struct s_outpath	*next;
+}	t_outpath;
 
 typedef struct s_data
 {
