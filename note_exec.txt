@@ -1,0 +1,83 @@
+• Search and launch the right executable (based on the PATH variable or using a
+relative or an absolute path).
+
+explique moi cette consigne de minishell
+ChatGPT said:
+ChatGPT
+Cette consigne de ton projet de minishell signifie que tu dois implémenter la fonctionnalité permettant de rechercher et de lancer le bon exécutable en fonction de plusieurs critères. Voici une explication détaillée des différents aspects :
+
+1. Recherche d'exécutable :
+Variable PATH :
+
+La variable d'environnement PATH contient une liste de répertoires où le système cherche les exécutables lorsque tu entres une commande dans le terminal.
+Par exemple, une valeur typique de PATH peut ressembler à ceci :
+javascript
+Copy code
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Lorsque tu tapes une commande (comme ls), le shell cherche d'abord dans ces répertoires dans l'ordre pour trouver l'exécutable correspondant.
+Chemins relatifs et absolus :
+
+Chemin absolu : Un chemin qui commence par / et indique l'emplacement complet de l'exécutable dans le système de fichiers. Par exemple, /bin/ls.
+Chemin relatif : Un chemin qui ne commence pas par / et est relatif au répertoire courant. Par exemple, si tu es dans le répertoire /home/user, une commande comme ./script.sh exécuterait le script script.sh dans ce répertoire.
+2. Lancer l'exécutable :
+Une fois que tu as trouvé le bon exécutable (soit via PATH, soit via un chemin relatif ou absolu), tu dois l'exécuter.
+Cela implique d'utiliser une fonction comme execve pour lancer le programme. Il est important de s'assurer que les arguments et les variables d'environnement sont correctement passés à l'exécutable.
+Étapes à suivre pour implémenter cela :
+Vérifier si la commande fournie par l'utilisateur est un chemin relatif ou absolu :
+
+Si c'est un chemin absolu (commence par /), essaie d'exécuter directement ce fichier.
+Si c'est un chemin relatif (ne commence pas par /), construis le chemin complet en ajoutant le répertoire courant.
+Si la commande n'est pas un chemin, cherche l'exécutable dans PATH:
+
+Récupère la valeur de PATH depuis les variables d'environnement.
+Parcours les répertoires listés dans PATH, et pour chaque répertoire, concatène le nom de la commande et vérifie si l'exécutable existe (en utilisant access ou stat).
+Exécuter l'exécutable trouvé :
+
+Une fois que tu as trouvé le bon exécutable, utilise execve pour le lancer, en passant les arguments nécessaires.
+Exemple de logique :
+L'utilisateur entre my_command.
+Vérifie si my_command est un chemin relatif ou absolu :
+Si c'est absolu : essaie d'exécuter /path/to/my_command.
+Si c'est relatif : essaie d'exécuter ./my_command.
+Si aucun des deux ne fonctionne, cherche dans les répertoires listés dans PATH :
+Par exemple, essaie /usr/bin/my_command, puis /bin/my_command, etc.
+Exécute le bon exécutable lorsqu'il est trouvé.
+Conclusion :
+Cette consigne vise à te faire créer un minishell qui imite le comportement d'un shell standard en permettant à l'utilisateur d'exécuter des commandes de manière flexible, que ce soit via des chemins relatifs, absolus ou en utilisant la variable PATH.
+
+
+
+
+
+
+You said:
+a quoi ressemble une commande qui utilse path, un absolute path et un relatif
+ChatGPT said:
+ChatGPT
+Voici des exemples de commandes utilisant la variable PATH, un chemin absolu et un chemin relatif :
+
+1. Commande utilisant PATH
+Lorsque tu exécutes une commande sans spécifier de chemin, le shell recherche l'exécutable dans les répertoires listés dans la variable PATH.
+
+bash
+Copy code
+ls
+Explication : Ici, ls est une commande. Le shell cherche l'exécutable ls dans les répertoires spécifiés par la variable PATH (comme /bin, /usr/bin, etc.).
+2. Commande avec un chemin absolu
+Un chemin absolu commence par / et donne l'emplacement complet de l'exécutable.
+
+bash
+Copy code
+/usr/bin/ls
+Explication : Cette commande exécute le programme ls en spécifiant le chemin complet. Le shell n'a pas besoin de chercher dans PATH car le chemin complet est fourni.
+3. Commande avec un chemin relatif
+Un chemin relatif ne commence pas par / et est relatif au répertoire courant.
+
+bash
+Copy code
+./myscript.sh
+Explication : Ici, myscript.sh est un script dans le répertoire courant. Le ./ indique que le shell doit chercher le fichier dans le répertoire actuel. Si le script est exécuté, le shell vérifie qu'il existe à cet emplacement.
+En résumé :
+Commande utilisant PATH : ls (sans spécifier de chemin)
+Commande avec un chemin absolu : /usr/bin/ls
+Commande avec un chemin relatif : ./myscript.sh

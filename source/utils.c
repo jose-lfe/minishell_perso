@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/24 15:41:12 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:46:17 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,76 @@ int	ft_free_str_and_return_1(char *str)
 {
 	free(str);
 	return (1);	
+}
+
+char	**convert_envp(t_envp **env)
+{
+	t_envp	*current;
+	int		count;
+	char	**envp;
+	int		i;
+
+	count = 0;
+	current = *env;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	envp = malloc((count + 1) * sizeof(char *));
+	if (!envp)
+		return (NULL);
+	current = *env;
+	i = 0;
+	while (current)
+	{
+		envp[i++] = ft_fill_envp(current);
+		if (!envp[i - 1])
+			return (ft_free_tab(envp));
+		current = current->next;
+	}
+	return (envp);
+}
+
+char	*ft_fill_envp(t_envp *current)
+{
+	int		len;
+	char	*res;
+	int		i;
+
+	len = ft_strlen(current->var) + ft_strlen(current->value) + 2;
+	res = malloc(len * sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	len = 0;
+	while (current->var[i])
+	{
+		res[i] = current->var[i];
+		i++;
+	}
+	res[i] = '=';
+	i++;
+	while (current->value && current->value[len])
+	{
+		res[i] = current->value[len];
+		i++;
+		len++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_free_tab(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+	return (NULL);
 }

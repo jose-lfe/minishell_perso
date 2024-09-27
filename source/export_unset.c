@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/25 11:55:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:06:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	ft_print_export(t_envp **envp)
 	tmp = *envp;
 	while (tmp)
 	{
-		printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+		if (tmp->value && tmp->var)
+			printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+		else if (tmp->var && !tmp->value)
+			printf("declare -x %s\n", tmp->var);
 		tmp = tmp->next;
 	}
 }

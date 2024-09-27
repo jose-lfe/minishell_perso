@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/24 15:54:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:23:02 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	command = NULL;
 	ft_copy_envp(env, &envp);
-	ft_env(&envp);
-	ft_print_export(&envp);
+	//ft_env(&envp);
+	//ft_print_export(&envp);
 	//ft_unset(&envp, "PATH");
 	//ft_env(&envp);
 	setup_signals();

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/26 16:34:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:48:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,10 @@ int		ft_strlen_var(char *str);
 char	*ft_get_var(char *str);
 char 	*ft_get_value(char *str);
 int		ft_free_str_and_return_1(char *str);
+char	**convert_envp(t_envp **env);
+char	*ft_fill_envp(t_envp *current);
+char	*ft_free_tab(char **envp);
+
 
 void	start_exec(t_command **command, t_envp **envp);
 

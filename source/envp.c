@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/25 11:11:02 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:12:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,25 @@ void	ft_add_back(t_envp **envp, t_envp *new)
 void	ft_env(t_envp **envp)
 {
 	t_envp	*tmp;
+	int		check;
 
 	tmp = *envp;
+	check = 0;
 	while (tmp)
 	{
-		if (tmp)
-		ft_printf("%s=%s\n", tmp->var, tmp->value);
+		if (ft_strncmp(tmp->var, "PATH", ft_strlen(tmp->var)) == 0)
+			check = 1;
+		tmp = tmp->next;
+	}
+	if (check == 0)
+	{
+		perror("env: No such file or directory\n");
+		return ;
+	}
+	while (tmp)
+	{
+		if (tmp->var && tmp->value)
+			ft_printf("%s=%s\n", tmp->var, tmp->value);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/27 12:44:43 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:54:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,20 @@ void	start_exec(t_command **command, t_envp **envp)
 	while (tmp)
 	{
 		if (tmp->out_redir == true && ft_outredir(tmp->out_path) == 1)
-			break ;
+		{
+			tmp =tmp->next;
+			continue ;
+		}
 		if (tmp->in_redir == true && ft_inredir(tmp->in_path) == 1)
-			break ;
+		{
+			tmp =tmp->next;
+			continue ;
+		}
+		if (ft_exec_our_command(tmp) == 0)
+		{
+			tmp =tmp->next;
+			continue ;
+		}
 		if (!tmp->out_redir && (tmp->pipein || tmp->pipeout))
 		{
 			if (pipe(fd) < 0)
@@ -41,6 +52,35 @@ void	start_exec(t_command **command, t_envp **envp)
 		}
 	}
 	ft_free_command(command);
+}
+
+int	ft_exec_our_command(t_command *command)
+{
+	int	i;
+
+	i = ft_check_command(command);
+	if (i == -1)
+		return (1);
+	if ()
+}
+
+int	ft_check_command(t_command *command)
+{
+	if (ft_strncmp(command->arg[1], "echo", ft_strlen(command->arg[1])) == 0)
+		return (1);
+	if (ft_strncmp(command->arg[1], "cd", ft_strlen(command->arg[1])) == 0)
+		return (2);
+	if (ft_strncmp(command->arg[1], "pwd", ft_strlen(command->arg[1])) == 0)
+		return (3);
+	if (ft_strncmp(command->arg[1], "export", ft_strlen(command->arg[1])) == 0)
+		return (4);
+	if (ft_strncmp(command->arg[1], "unset", ft_strlen(command->arg[1])) == 0)
+		return (5);
+	if (ft_strncmp(command->arg[1], "env", ft_strlen(command->arg[1])) == 0)
+		return (6);
+	if (ft_strncmp(command->arg[1], "exit", ft_strlen(command->arg[1])) == 0)
+		return (7);
+	return (-1);
 }
 
 int	ft_inredir(t_inpath *inpath)
