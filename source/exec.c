@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/26 17:00:37 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:44:43 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	start_exec(t_command **command, t_envp **envp)
 	tmp = *command;
 	while (tmp)
 	{
-		if (ft_outredir(tmp->out_path) == 1) // peut etre plutot verifier avant bool in_redir
+		if (tmp->out_redir == true && ft_outredir(tmp->out_path) == 1)
 			break ;
-		if (ft_inredir(tmp->in_path) == 1)
+		if (tmp->in_redir == true && ft_inredir(tmp->in_path) == 1)
 			break ;
-		if (tmp->pipein == true || tmp->pipeout == true)
+		if (!tmp->out_redir && (tmp->pipein || tmp->pipeout))
 		{
+			if (pipe(fd) < 0)
+				perror("pipe error");
 			tmp = tmp->next;
 			continue ;
 		}
@@ -43,8 +45,6 @@ void	start_exec(t_command **command, t_envp **envp)
 
 int	ft_inredir(t_inpath *inpath)
 {
-	int	fd;
-
 	while (inpath)
 	{
 		if (inpath->here_doc == true)
@@ -64,9 +64,20 @@ int	ft_inredir(t_inpath *inpath)
 			perror(inpath->filename);
 			perror(": Permission denied\n");
 			return (1);
-		} // a terminer
+		}
+		ft_change_stdin(inpath);
+		inpath = inpath->next;
 	}
 	return (0);
+}
+
+void	ft_change_stdin(t_inpath *inpath)
+{
+	int	fd;
+
+	fd = open(inpath->filename, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
 
 int	ft_outredir(t_outpath *outpath)
@@ -105,7 +116,7 @@ void	ft_heredoc(t_inpath *inpath)
 	buffer = NULL;
 	if (pipe(fd) < 0)
 	{
-		perror("error de pipe\n");
+		perror("pipe error\n");
 		return ;
 	}
 	while (1)
