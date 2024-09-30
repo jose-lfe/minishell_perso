@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/27 15:06:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:26:54 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,32 @@ void	ft_export(t_envp **envp, char *arg)
 	size_var = ft_strlen_var(arg);
 	while (tmp)
 	{
-		if (size_var == -1 && ft_strncmp(tmp->var, arg, ft_strlen(arg) == 0))
+		if (size_var == -1
+			&& ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
 			return ;
-		/*else if (ft_strncmp(tmp->var, arg, size_var) == 0)
-			ft_change_var(envp, arg, size_var);*/
+		else if (ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
+		{
+			ft_change_var(envp, arg, size_var);
+			return ;
+		}
 		tmp = tmp->next;
 	}
-	if (size_var == -1)
-		ft_add_back(envp, ft_new_var(arg));
-	else
+	ft_add_back(envp, ft_new_var(arg));
+}
+
+void	ft_change_var(t_envp **envp, char *arg, int size_var)
+{
+	t_envp	*tmp;
+
+	tmp = *envp;
+	while (tmp)
 	{
-		// suite avec question avec kiki, si les quote sont supprimer ou pas 
+		if (ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
+			break ;
+		tmp = tmp->next;
 	}
+	free(tmp->value);
+	tmp->value = ft_strdup(arg + size_var + 1);
 }
 
 void	ft_pre_unset(t_envp **envp, char **args)

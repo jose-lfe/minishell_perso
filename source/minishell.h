@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/27 17:48:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:09:11 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_export(t_envp **envp, char *arg);
 void	ft_pre_unset(t_envp **envp, char **args);
 void	ft_unset(t_envp **envp, char *arg);
 int		ft_strlen_var(char *str);
+void	ft_change_var(t_envp **envp, char *arg, int size_var);
 
 char	*ft_get_var(char *str);
 char 	*ft_get_value(char *str);

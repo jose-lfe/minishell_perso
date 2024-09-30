@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/27 14:54:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:55:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	start_exec(t_command **command, t_envp **envp)
 {
 	t_command	*tmp;
 	int			fd[2];
-	pid_t		pid;
 
 	tmp = *command;
 	while (tmp)
@@ -38,7 +37,7 @@ void	start_exec(t_command **command, t_envp **envp)
 			tmp =tmp->next;
 			continue ;
 		}
-		if (ft_exec_our_command(tmp) == 0)
+		if (ft_exec_our_command(tmp, envp) == 0)
 		{
 			tmp =tmp->next;
 			continue ;
@@ -54,17 +53,20 @@ void	start_exec(t_command **command, t_envp **envp)
 	ft_free_command(command);
 }
 
-int	ft_exec_our_command(t_command *command)
+int	ft_exec_our_command(t_command *command, t_envp **envp)
 {
 	int	i;
 
-	i = ft_check_command(command);
+	i = ft_check_command(command, envp);
 	if (i == -1)
 		return (1);
-	if ()
+	if (command->next)
+	{
+		
+	}
 }
 
-int	ft_check_command(t_command *command)
+int	ft_check_command(t_command *command, t_envp **envp)
 {
 	if (ft_strncmp(command->arg[1], "echo", ft_strlen(command->arg[1])) == 0)
 		return (1);
@@ -80,7 +82,33 @@ int	ft_check_command(t_command *command)
 		return (6);
 	if (ft_strncmp(command->arg[1], "exit", ft_strlen(command->arg[1])) == 0)
 		return (7);
+	if (ft_check_base_command(command, envp) == 0)
+		return (8);
+	if (ft_check_relative_path(command) == 0)
+		return (9);
 	return (-1);
+}
+
+int	check_base_command(t_command *command, t_envp **envp)
+{
+	t_envp	*tmp;
+	char	**path;
+	int		i;
+	char	*cmd;
+
+	tmp = *envp;
+	while(tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		return (1);
+	path = ft_split(tmp->value, ":");
+	i = 0;
+	while (path[i])
+	{
+		path[i] = ft_strjoin_gnl(path[i], "/");
+		i++;
+	}
+	// continuer
 }
 
 int	ft_inredir(t_inpath *inpath)

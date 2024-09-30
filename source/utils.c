@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/27 17:46:17 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:25:18 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char 	*ft_get_value(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	start = ++i;
+	if (!str[i])
+		return (NULL);
 	while (str[i++])
 		j++;
 	res = malloc((j + 1) * sizeof(char));
@@ -52,11 +54,7 @@ char 	*ft_get_value(char *str)
 		return (NULL);
 	j = 0;
 	while (str[start])
-	{
-		res[j] = str[start];
-		j++;
-		start++;
-	}
+		res[j++] = str[start++];
 	res[j] = '\0';
 	return (res);
 }
