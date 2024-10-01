@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/01 11:20:21 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:16:12 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,34 @@ char 	*ft_get_value(char *str);
 int		ft_free_str_and_return_1(char *str);
 char	**convert_envp(t_envp **env);
 char	*ft_fill_envp(t_envp *current);
+
 char	*ft_free_tab(char **envp);
+char	**ft_get_path(t_envp **envp);
+int		free_path_cmd_return_int(char **path, char *cmd, int value);
 
 
 void	start_exec(t_data *data, t_command **command, t_envp **envp);
+int		ft_exec_command(t_command *command, t_envp **envp);
+void	ft_absolute_relative_path(t_command *command, t_envp **envp);
+void	ft_base_command(t_command *command, t_envp **envp);
+void	ft_exec_base_command(t_command *command, t_envp **envp);
 
+void	ft_builtins(int i, t_command *command, t_envp **envp);
+void	ft_exec_builtins(int i, t_command *command, t_envp **envp);
+int		ft_command_not_found(t_command *command, t_envp **envp);
+
+void	ft_original_std(t_data *data, t_command *command);
+void	ft_copy_original_std(t_data *data);
+void	ft_redirect_fd(int i, int *fd);
+
+int		ft_inredir(t_inpath *inpath);
+int		ft_outredir(t_outpath *outpath);
+void	ft_heredoc(t_inpath *inpath);
+void	ft_change_stdin(t_inpath *inpath);
+
+int	ft_check_command(t_command *command, t_envp **envp);
+int	check_base_command(t_command *command, t_envp **envp);
+int	ft_check_absolute_relative_path(t_command *command);
 
 int		command_length(char *str);
 int		arg_length(char *str, int c);

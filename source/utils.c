@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/30 12:25:18 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:11:56 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,3 @@ char	*ft_fill_envp(t_envp *current)
 	return (res);
 }
 
-char	*ft_free_tab(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		free(envp[i]);
-		i++;
-	}
-	free(envp);
-	return (NULL);
-}
