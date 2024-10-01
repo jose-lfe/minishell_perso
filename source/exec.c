@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/30 15:55:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:18:42 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ fork // regarder pipex
 execve
 */
 
-void	start_exec(t_command **command, t_envp **envp)
+void	start_exec(t_data *data, t_command **command, t_envp **envp)
 {
 	t_command	*tmp;
 	int			fd[2];
@@ -29,41 +29,229 @@ void	start_exec(t_command **command, t_envp **envp)
 	{
 		if (tmp->out_redir == true && ft_outredir(tmp->out_path) == 1)
 		{
-			tmp =tmp->next;
+			tmp = tmp->next;
 			continue ;
 		}
 		if (tmp->in_redir == true && ft_inredir(tmp->in_path) == 1)
 		{
-			tmp =tmp->next;
-			continue ;
-		}
-		if (ft_exec_our_command(tmp, envp) == 0)
-		{
-			tmp =tmp->next;
-			continue ;
-		}
-		if (!tmp->out_redir && (tmp->pipein || tmp->pipeout))
-		{
-			if (pipe(fd) < 0)
-				perror("pipe error");
 			tmp = tmp->next;
 			continue ;
 		}
+		if (ft_exec_command(tmp, envp) == 0)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		ft_original_std(data, tmp);
+		tmp = tmp->next;
 	}
 	ft_free_command(command);
 }
 
-int	ft_exec_our_command(t_command *command, t_envp **envp)
+void	ft_original_std(t_data *data, t_command *command)
+{
+	if (!command->pipeout && data->base_stdin >= 0) {
+		if (dup2(data->base_stdin, STDIN_FILENO) == -1)
+		{
+			perror("dup2 STDIN");
+		}
+    }
+    if (data->base_stdout >= 0)
+	{
+		if (dup2(data->base_stdout, STDOUT_FILENO) == -1)
+		{
+			perror("dup2 STDOUT");
+		}
+	}
+}
+
+void	ft_copy_original_std(t_data *data)
+{
+	data->base_stdin = dup(STDIN_FILENO);
+	if (data->base_stdin == -1)
+	{
+		perror("dup STDIN");
+		exit(EXIT_FAILURE);
+    }
+	data->base_stdout = dup(STDOUT_FILENO);
+	if (data->base_stdout == -1)
+	{
+		perror("dup STDOUT");
+		close(data->base_stdin);
+		exit(EXIT_FAILURE);
+	}
+}
+
+int	ft_exec_command(t_command *command, t_envp **envp)
 {
 	int	i;
 
 	i = ft_check_command(command, envp);
 	if (i == -1)
-		return (1);
+		return (ft_command_not_found(command, envp));
+	if (i >= 1 && i <= 7)
+		ft_builtins(i, command, envp);
+	if (i == 8)
+		ft_base_command(command, envp);
+	if (i == 9 || 1 == 10)
+		ft_absolute_relative_path(command, envp);
+	return (0);
+}
+
+void	ft_absolute_relative_path(t_command *command, t_envp **envp)
+{
+	int		fd[2];
+	pid_t	pid;
+	char	**env;
+
+	if (command->next && !command->out_redir)
+		pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (command->next && !command->out_redir)
+			ft_redirect_fd(0, fd);
+		env = convert_envp(envp);
+		execve(command->arg[0], command->arg, env);
+		perror("execve");
+	}
+	waitpid(pid, NULL, 0);
+	if (command->next && !command->out_redir)
+		ft_redirect_fd(1, fd);
+	// manque exit statue
+}
+
+void	ft_base_command(t_command *command, t_envp **envp)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (command->next && !command->out_redir)
+		pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (command->next && !command->out_redir)
+			ft_redirect_fd(0, fd);
+		ft_exec_base_command(command, envp);
+	}
+	waitpid(pid, NULL, 0);
+	if (command->next && !command->out_redir)
+		ft_redirect_fd(1, fd);
+	// manque exit statue
+}
+
+void	ft_exec_base_command(t_command *command, t_envp **envp)
+{
+	char	**path;
+	char	**env;
+	int		i;
+	char	*cmd;
+
+	env = convert_envp(envp);
+	path = ft_get_path(envp);
+	i = 0;
+	while (path[i])
+	{
+		path[i] = ft_strjoin_gnl(path[i], "/");
+		i++;
+	}
+	i = 0;
+	while (path[i])
+	{
+		cmd = ft_strjoin(path[i], command->arg[0]);
+		if (access(cmd, X_OK) == 0)
+			execve(cmd, command->arg, env);
+		free(cmd);
+		i++;
+	} 
+}
+
+void	ft_builtins(int i, t_command *command, t_envp **envp)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (command->next && !command->out_redir)
+		pipe(fd);
 	if (command->next)
 	{
-		
+		pid = fork();
+		if (pid == 0)
+		{
+			if (command->next && !command->out_redir)
+				ft_redirect_fd(0, fd);
+			ft_exec_builtins(i, command, envp);
+			exit(0); // a changer
+		}
+		waitpid(pid, NULL, 0);
+		if (command->next && !command->out_redir)
+			ft_redirect_fd(1, fd);
 	}
+	else
+		ft_exec_builtins(i, command, envp);
+}
+
+void	ft_exec_builtins(int i, t_command *command, t_envp **envp)
+{
+	if (i == 1)
+		ft_echo();
+	if (i == 2)
+		ft_cd();
+	if (i == 3)
+		ft_pwd();
+	if (i == 4)
+		ft_pre_export(envp, command->arg);
+	if (i == 5)
+		ft_pre_unset(envp, command->arg);
+	if (i == 6)
+		ft_env(envp);
+	if (i == 7)
+		ft_exit();
+}
+
+void	ft_redirect_fd(int i, int *fd)
+{
+	if (i == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+	}
+	if (i == 1)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+	}
+}
+
+int	ft_command_not_found(t_command *command, t_envp **envp)
+{
+	t_envp	*tmp;
+	bool	path;
+
+	path = true;
+	tmp = *envp;
+	while(tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		path = false;
+	if (ft_isalpha(command->arg[0]) == 1)
+	{
+		ft_putstr_fd(command->arg[0], 2);
+		if (path)
+			ft_putstr_fd(": command not found\n", 2);
+		else
+			ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd(command->arg[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	// change exit_status
+	return (0);
 }
 
 int	ft_check_command(t_command *command, t_envp **envp)
@@ -84,31 +272,75 @@ int	ft_check_command(t_command *command, t_envp **envp)
 		return (7);
 	if (ft_check_base_command(command, envp) == 0)
 		return (8);
-	if (ft_check_relative_path(command) == 0)
+	if (ft_check_absolute_path(command) == 0)
 		return (9);
+	if (ft_check_relative_path(command) == 0)
+		return (10);
 	return (-1);
 }
 
 int	check_base_command(t_command *command, t_envp **envp)
 {
-	t_envp	*tmp;
 	char	**path;
 	int		i;
 	char	*cmd;
 
-	tmp = *envp;
-	while(tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
-		tmp = tmp->next;
-	if (!tmp)
+	path = ft_get_path(envp);
+	if (!path)
 		return (1);
-	path = ft_split(tmp->value, ":");
 	i = 0;
 	while (path[i])
 	{
 		path[i] = ft_strjoin_gnl(path[i], "/");
 		i++;
 	}
-	// continuer
+	i = 0;
+	while (path[i])
+	{
+		cmd = ft_strjoin(path[i], command->arg[0]);
+		if (access(cmd, X_OK) == 0)
+			return (free_path_cmd_return_int(path, cmd, 0));
+		free(cmd);
+		i++;
+	} 
+	return (free_path_cmd_return_int(path, cmd, 1));
+}
+
+int	free_path_cmd_return_int(char **path, char *cmd, int value)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+	free(cmd);
+	return (value);
+}
+
+int	ft_check_absolute_path(t_command *command)
+{
+	if (access(command->arg[0], X_OK) == 0)
+		return (0);
+	return (1);
+}
+
+char	**ft_get_path(t_envp **envp)
+{
+	t_envp	*tmp;
+	char	**path;
+
+	tmp = *envp;
+	while(tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		return (NULL);
+	path = ft_split(tmp->value, ":");
+	return (path);
+
 }
 
 int	ft_inredir(t_inpath *inpath)
@@ -174,7 +406,6 @@ int	ft_outredir(t_outpath *outpath)
 	return (0);
 }
 
-// signe << 
 void	ft_heredoc(t_inpath *inpath)
 {
     char    *input;
