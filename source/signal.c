@@ -4,7 +4,7 @@ void    handle_sigint(int sig)
 {
 	(void)sig;
     printf("\nsignal ctrl c recu");
-	printf("minishell >");
+	printf("tavais raison >");
 	//kill(current_pid);
 }
 

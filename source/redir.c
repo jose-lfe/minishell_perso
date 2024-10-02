@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/01 14:29:08 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:46:08 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_inredir(t_inpath *inpath)
 {
 	while (inpath)
 	{
-		if (inpath->here_doc == true)
+		if (inpath->heredoc == true)
 		{
 			ft_heredoc(inpath);
 			inpath = inpath->next;

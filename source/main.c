@@ -6,35 +6,13 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/09/27 15:23:02 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:30:02 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // a modifier car erreur si  "  '  "  '
-int	check_open_quote(char *str)
-{
-	int	i;
-	int	sq;
-	int	dq;
-
-	i = 0;
-	sq = 1;
-	dq = 1;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			sq = sq * -1;
-		if (str[i] == '"')
-			dq = dq * -1;
-		i++;
-	}
-	if (sq == 1 && dq == 1)
-		return (0);
-	ft_printf("Error: open quote \n");
-	return (1);
-}
 
 char	*ft_change_str(char *old, char *convert, int start, int size)
 {
@@ -152,34 +130,41 @@ void	dollar_checker(char **str, t_envp **envp)
 	}
 }
 
-// t_data *data	init_data(char **av, char *env)
+t_data	*init_data(void)
+{
+	t_data *data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		exit(0);
+	ft_copy_original_std(data);
+	data->exit_status = 0;
+	return (data);
+}
 
 int	main(int ac, char **av, char **env)
 {
 	t_envp		*envp;
 	char		*input;
 	t_command	*command;
+	t_data		*data;
 
 	(void)av;
 	(void)ac;
 	command = NULL;
+	data = init_data();
 	ft_copy_envp(env, &envp);
-	//ft_env(&envp);
-	//ft_print_export(&envp);
-	//ft_unset(&envp, "PATH");
-	//ft_env(&envp);
 	setup_signals();
 	while (1)
 	{
 		input = readline("minishell> ");
-		if (check_open_quote(input) != 0)
-			return (1);
 		dollar_checker(&input, &envp);
-		ft_printf("%s\n", input);
-		parsing_input(input, &command);
-		//execution();
-		//free_cmd_input();
+		//ft_printf("%s\n", input);
+		command = NULL;
+		parsing(input, &command);
+		start_exec(data, &command, &envp);
 	}
+
 	ft_free_envp(envp);
 	return (0);
 }

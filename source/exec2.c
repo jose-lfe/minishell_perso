@@ -6,53 +6,53 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/01 15:15:13 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:58:24 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_builtins(int i, t_command *command, t_envp **envp)
+void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data)
 {
 	int		fd[2];
 	pid_t	pid;
 
-	if (command->next && !command->out_redir)
+	if (command->next && !command->outpath)
 		pipe(fd);
 	if (command->next)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			if (command->next && !command->out_redir)
+			if (command->next && !command->outpath)
 				ft_redirect_fd(0, fd);
-			ft_exec_builtins(i, command, envp);
+			ft_exec_builtins(i, command, envp, data);
 			exit(0); // a changer
 		}
 		waitpid(pid, NULL, 0);
-		if (command->next && !command->out_redir)
+		if (command->next && !command->outpath)
 			ft_redirect_fd(1, fd);
 	}
 	else
-		ft_exec_builtins(i, command, envp);
+		ft_exec_builtins(i, command, envp, data);
 }
 
-void	ft_exec_builtins(int i, t_command *command, t_envp **envp)
+void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 {
-	if (i == 1)
-		ft_echo();
+	//if (i == 1)
+		//ft_echo();
 	if (i == 2)
-		ft_cd();
+		ft_cd(command->arg, data);
 	if (i == 3)
-		ft_pwd();
+		ft_pwd(data);
 	if (i == 4)
-		ft_pre_export(envp, command->arg);
+		ft_pre_export(env, command->arg);
 	if (i == 5)
-		ft_pre_unset(envp, command->arg);
+		ft_pre_unset(env, command->arg);
 	if (i == 6)
-		ft_env(envp);
-	if (i == 7)
-		ft_exit();
+		ft_env(env);
+	//if (i == 7)
+		//ft_exit();
 }
 
 int	ft_command_not_found(t_command *command, t_envp **envp)
@@ -66,7 +66,7 @@ int	ft_command_not_found(t_command *command, t_envp **envp)
 		tmp = tmp->next;
 	if (!tmp)
 		path = false;
-	if (ft_isalpha(command->arg[0]) == 1)
+	if (ft_isalpha(command->arg[0][0]) == 1)
 	{
 		ft_putstr_fd(command->arg[0], 2);
 		if (path)

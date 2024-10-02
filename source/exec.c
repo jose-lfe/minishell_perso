@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/01 15:15:28 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:39:16 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@ execve
 void	start_exec(t_data *data, t_command **command, t_envp **envp)
 {
 	t_command	*tmp;
-	int			fd[2];
 
 	tmp = *command;
 	while (tmp)
 	{
-		if (tmp->out_redir == true && ft_outredir(tmp->out_path) == 1)
+		if (tmp->outpath && ft_outredir(tmp->outpath) == 1)
 		{
 			tmp = tmp->next;
 			continue ;
 		}
-		if (tmp->in_redir == true && ft_inredir(tmp->in_path) == 1)
+		if (tmp->inpath && ft_inredir(tmp->inpath) == 1)
 		{
 			tmp = tmp->next;
 			continue ;
 		}
-		if (ft_exec_command(tmp, envp) == 0)
+		if (ft_exec_command(tmp, envp, data) == 0)
 		{
 			tmp = tmp->next;
 			continue ;
@@ -45,10 +44,10 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 		ft_original_std(data, tmp);
 		tmp = tmp->next;
 	}
-	ft_free_command(command);
+	free_command(*command);
 }
 
-int	ft_exec_command(t_command *command, t_envp **envp)
+int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 {
 	int	i;
 
@@ -56,12 +55,12 @@ int	ft_exec_command(t_command *command, t_envp **envp)
 	if (i == -1)
 		return (ft_command_not_found(command, envp));
 	if (i >= 1 && i <= 7)
-		ft_builtins(i, command, envp);
+		ft_builtins(i, command, envp, data);
 	if (i == 8)
 		ft_base_command(command, envp);
 	if (i == 9)
 		ft_absolute_relative_path(command, envp);
-	return (0);
+	return (1);
 }
 
 void	ft_absolute_relative_path(t_command *command, t_envp **envp)
@@ -70,19 +69,19 @@ void	ft_absolute_relative_path(t_command *command, t_envp **envp)
 	pid_t	pid;
 	char	**env;
 
-	if (command->next && !command->out_redir)
+	if (command->next && !command->outpath)
 		pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (command->next && !command->out_redir)
+		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
 		env = convert_envp(envp);
 		execve(command->arg[0], command->arg, env);
 		perror("execve");
 	}
 	waitpid(pid, NULL, 0);
-	if (command->next && !command->out_redir)
+	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
 	// manque exit statue
 }
@@ -92,17 +91,17 @@ void	ft_base_command(t_command *command, t_envp **envp)
 	int		fd[2];
 	pid_t	pid;
 
-	if (command->next && !command->out_redir)
+	if (command->next && !command->outpath)
 		pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (command->next && !command->out_redir)
+		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
 		ft_exec_base_command(command, envp);
 	}
 	waitpid(pid, NULL, 0);
-	if (command->next && !command->out_redir)
+	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
 	// manque exit statue
 }

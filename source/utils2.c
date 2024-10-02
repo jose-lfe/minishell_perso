@@ -6,13 +6,13 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 10:40:00 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:44:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_free_tab(char **envp)
+char	**ft_free_tab(char **envp)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ char	**ft_get_path(t_envp **envp)
 		tmp = tmp->next;
 	if (!tmp)
 		return (NULL);
-	path = ft_split(tmp->value, ":");
+	path = ft_split(tmp->value, ':');
 	return (path);
 
 }

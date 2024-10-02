@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:14:00 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 11:12:40 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:27:36 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_cd(char **arg, t_data *data)
 		data->exit_status = 0;
 }
 
-void	ft_pwd(char **arg, t_data *data)
+void	ft_pwd(t_data *data)
 {
 	char	*buffer;
 

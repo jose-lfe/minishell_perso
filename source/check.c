@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/01 14:55:38 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:32:57 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_check_command(t_command *command, t_envp **envp)
 	return (-1);
 }
 
-int	check_base_command(t_command *command, t_envp **envp)
+int	ft_check_base_command(t_command *command, t_envp **envp)
 {
 	char	**path;
 	int		i;

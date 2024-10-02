@@ -1,23 +1,13 @@
 #include "minishell.h"
 
-bool	is_separator(char c)
+bool	is_redir(char c)
 {
-	if (c == '|')
-		return (true);
 	if (c == '<')
 		return (true);
 	if (c == '>')
 		return (true);
 	return (false);
 }
-
-bool	is_pipe(char c)
-{
-	if (c == '|')
-		return (true);
-	return (false);
-}
-
 bool	is_white_space(char c)
 {
 	if (c == ' ')
