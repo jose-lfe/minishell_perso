@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/09/30 12:26:54 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:40:36 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,6 @@ void	ft_pre_export(t_envp **envp, char **args)
 	}
 }
 
-int	ft_strlen_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (!str[i])
-		return (-1);
-	return (i);
-}
-
 void	ft_export(t_envp **envp, char *arg)
 {
 	t_envp	*tmp;
@@ -78,21 +66,6 @@ void	ft_export(t_envp **envp, char *arg)
 		tmp = tmp->next;
 	}
 	ft_add_back(envp, ft_new_var(arg));
-}
-
-void	ft_change_var(t_envp **envp, char *arg, int size_var)
-{
-	t_envp	*tmp;
-
-	tmp = *envp;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
-			break ;
-		tmp = tmp->next;
-	}
-	free(tmp->value);
-	tmp->value = ft_strdup(arg + size_var + 1);
 }
 
 void	ft_pre_unset(t_envp **envp, char **args)
