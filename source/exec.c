@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/02 13:39:16 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:08:48 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 	tmp = *command;
 	while (tmp)
 	{
-		if (tmp->outpath && ft_outredir(tmp->outpath) == 1)
+		if (tmp->inpath && ft_inredir(tmp->inpath) == 1)
 		{
 			tmp = tmp->next;
 			continue ;
 		}
-		if (tmp->inpath && ft_inredir(tmp->inpath) == 1)
+		if (tmp->outpath && ft_outredir(tmp->outpath) == 1)
 		{
 			tmp = tmp->next;
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 11:46:08 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:56:00 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_heredoc(t_inpath *inpath)
 	char	*buffer;
 	int		fd[2];
 
-	buffer = NULL;
+	buffer = ft_strdup("");
 	if (pipe(fd) < 0)
 	{
 		perror("pipe error\n");
@@ -80,10 +80,10 @@ void	ft_heredoc(t_inpath *inpath)
 	}
 	while (1)
 	{
-		input = readline("readline> ");
-		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) != 0)
+		input = readline("heredoc> ");
+		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0)
 			break;
-		buffer = ft_strjoin_gnl(buffer, input);
+		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
 	}
 	if (inpath->next == NULL)
 		ft_putstr_fd(buffer, fd[1]);
@@ -92,7 +92,6 @@ void	ft_heredoc(t_inpath *inpath)
 		dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	free(buffer);
-	free(input);
 }
 
 void	ft_change_stdin(t_inpath *inpath)

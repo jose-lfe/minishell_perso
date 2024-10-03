@@ -20,7 +20,7 @@ int	create_inpath(char *input, t_inpath **inpath)
 	t_inpath	*new;
 	t_inpath	*current;
 
-	i = filename_length(input);
+	i = skip_filename_length(input);
 	new = malloc(sizeof(t_inpath));
 	initialize_inpath(new);
 	filename = copy_redir(input);

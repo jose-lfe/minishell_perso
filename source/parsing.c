@@ -42,17 +42,22 @@ void	parsing(char *input, t_command **command)
 			length = 0;
 			while (is_white_space(input[i]))
 				i++;
-			if (is_redir(input[i]))
-				length = create_redir(input + i, &inpath, &outpath);
-			else if (input[i] != '\0')
-				length = create_command(input + i, &temp_cmd);
-			else if (input[i] == '\0')
+			if (input[i] == '\0' || input[i] == '|')
 				break ;
+			else if (is_redir(input[i]))
+				length = create_redir(input + i, &inpath, &outpath);
+			else 
+				length = create_command(input + i, &temp_cmd);
 			i = i + length;
 			if (length == 0)
 				i++;
 		}
 		convert_command(&temp_cmd, command, &inpath, &outpath, input[i]);
+		if (input[i] == '|')
+		{
+			i++;
+			set_pipein(command);
+		}
 	}
 	set_pipeout(command);
 	print_command(command);
@@ -89,7 +94,7 @@ int	skip_command_length(char *input)
 	i = 0;
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
 		i++;
 	return (i);
 }
@@ -109,7 +114,7 @@ int	command_length(char *input)
 	c = 0;
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
 	{
 		i++;
 		c++;
@@ -131,7 +136,7 @@ char *copy_command(char *input)
 		return (NULL);
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
 	{
 		copy[j] = input[i];
 		i++;
@@ -183,6 +188,19 @@ void print_command(t_command **head)
         current = current->next;
         printf("\n");  // Ajouter une ligne vide entre les commandes
     }
+}
+
+void	set_pipein(t_command **head)
+{
+    t_command *current;
+
+	current = *head;
+	if (current == NULL)
+		return ;
+	while (current->next != NULL)
+		current = current->next;
+	current->pipein = true;
+	return ;
 }
 
 void	set_pipeout(t_command **head)

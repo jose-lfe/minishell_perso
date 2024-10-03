@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 12:58:24 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:39:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 	if (i == 5)
 		ft_pre_unset(env, command->arg);
 	if (i == 6)
-		ft_env(env);
+		ft_env(env, data);
 	//if (i == 7)
 		//ft_exit();
 }

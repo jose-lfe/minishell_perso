@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 10:40:36 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:38:21 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_pre_export(t_envp **envp, char **args)
 			ft_printf("error: %s: not a valid identifier", args[i]);
 		}
 		else
-			ft_unset(envp, args[i]);
+			ft_export(envp, args[i]);
 		i++;
 	}
 }

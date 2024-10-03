@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/02 13:30:02 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:09:22 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	printf("start :D\n");
 	command = NULL;
 	data = init_data();
 	ft_copy_envp(env, &envp);

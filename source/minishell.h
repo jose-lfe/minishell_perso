@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/02 13:35:04 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:17:22 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	dollar_checker(char **str, t_envp **envp);
 void	ft_copy_envp(char **env, t_envp **envp);
 t_envp	*ft_new_var(char *str);
 void	ft_add_back(t_envp **envp, t_envp *new);
-void	ft_env(t_envp **envp);
+void	ft_env(t_envp **envp, t_data *data);
 void	ft_free_envp(t_envp *envp);
 
 //export_unset.c
@@ -157,8 +157,7 @@ char	 *copy_redir(char *input);
 
 //convert_command.c
 void	convert_command(t_temp_command **temp, t_command **command, t_inpath **inpath, t_outpath **outpath, char input);
-void	remove_quote(t_temp_command **temp);
-char	*realloc_without_quotes(char *str);
+char	*realloc_without_quote(char *str);
 int		command_count(t_temp_command **command);
 void	create_command_def(char **tb, t_command **command, t_inpath **inpath, t_outpath **outpath, char input);
 void	free_temp_command(t_temp_command **command);
@@ -174,6 +173,7 @@ void	parsing(char *str, t_command **command);
 int		create_command(char *input, t_temp_command **command);
 //void	print_commands(t_command **head);
 void	initialize_command(t_command *new);
+void	set_pipein(t_command **head);
 void	set_pipeout(t_command **head);
 
 //free.c

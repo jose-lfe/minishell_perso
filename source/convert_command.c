@@ -7,57 +7,45 @@ void	convert_command(t_temp_command **temp, t_command **command, t_inpath **inpa
 	char			**tb;
 	int				i;
 	
-	//remove_quote(temp);
 	current = *temp;
 	size = command_count(temp);
 	tb = create_tab(size);
 	i = 0;
 	while (i < size)
 	{
-		tb[i] = current->str;
+		tb[i] = realloc_without_quote(current->str);
 		current->str = NULL;
 		current = current->next;
 		i++;
 	}
 	create_command_def(tb, command, inpath, outpath, input);
 	free_temp_command(temp);
+	*temp = NULL;
 	return ;
 }
-/*void	remove_quote(t_temp_command **temp)
-{
-	t_temp_command *current;
-	int				start;
-	int				end;
 
-	current = *temp;
-	start = 0;
-	while (current)
-	{
-		end = ft_strlen(current->str) - 1;
-		if (current->str[start] == '"' && current->str[end] == '"')
-			current->str = realloc_without_quotes(current->str);
-		else if (current->str[start] == '\'' && current->str[end] == '\'')
-			current->str = realloc_without_quotes(current->str);
-		current = current->next;
-	}
-	return ;
-}*/
-
-char	*realloc_without_quotes(char *str)
+char	*realloc_without_quote(char *str)
 {
 	char	*new;
 	int		i;
 	int		j;
 	int		len;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	len = ft_strlen(str) - 2;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] != '"' && str[i] != '\'')
+			len++;
+		i++;
+	}
 	new = malloc((len + 1)*sizeof(char));
+	i = 0;
 	while (j < len)
 	{
-		new[j] = str[i];
-		j++;
+		if (str[i] != '"' && str[i] != '\'')
+			new[j++] = str[i];
 		i++;
 	}
 	new[j] = '\0';
