@@ -6,22 +6,25 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 16:32:04 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:20:56 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_copy_envp(char **env, t_envp **envp)
+t_envp	*ft_copy_envp(char **env)
 {
-	int	i;
+	int		i;
+	t_envp	*start;
 
-	i = 0;
+	i = 1;
+	start = ft_new_var(env[0]);
 	while (env[i])
 	{
-		ft_add_back(envp, ft_new_var(env[i]));
+		ft_add_back(&start, ft_new_var(env[i]));
 		i++;
 	}
+	return (start);
 }
 
 t_envp	*ft_new_var(char *str)

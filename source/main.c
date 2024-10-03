@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/03 17:09:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:21:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ int	main(int ac, char **av, char **env)
 	printf("start :D\n");
 	command = NULL;
 	data = init_data();
-	ft_copy_envp(env, &envp);
+	envp = ft_copy_envp(env);
 	setup_signals();
-	while (1)
+	while (1) 
 	{
 		input = readline("minishell> ");
 		dollar_checker(&input, &envp);

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/03 17:17:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:21:21 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_data	*init_data(void);
 void	dollar_checker(char **str, t_envp **envp);
 
 //envp.c
-void	ft_copy_envp(char **env, t_envp **envp);
+t_envp	*ft_copy_envp(char **env);
 t_envp	*ft_new_var(char *str);
 void	ft_add_back(t_envp **envp, t_envp *new);
 void	ft_env(t_envp **envp, t_data *data);
@@ -96,9 +96,9 @@ void	ft_free_envp(t_envp *envp);
 
 //export_unset.c
 void	ft_print_export(t_envp **envp);
-void	ft_pre_export(t_envp **envp, char **args);
+void	ft_pre_export(t_envp **envp, char **args, t_data *data);
 void	ft_export(t_envp **envp, char *arg);
-void	ft_pre_unset(t_envp **envp, char **args);
+void	ft_pre_unset(t_envp **envp, char **args, t_data *data);
 void	ft_unset(t_envp **envp, char *arg);
 
 //cd_pwd.c

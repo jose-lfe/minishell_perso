@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 16:38:21 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:10:03 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,22 @@ void	ft_print_export(t_envp **envp)
 	}
 }
 
-void	ft_pre_export(t_envp **envp, char **args)
+void	ft_pre_export(t_envp **envp, char **args, t_data *data)
 {
 	int	i;
 
 	i = 1;
 	if (args[i] == NULL)
+	{
 		ft_print_export(envp);
+		data->exit_status = 0;
+	}
 	while (args[i])
 	{
 		if (ft_isalpha(args[i][0]) == 0)
 		{
 			ft_printf("error: %s: not a valid identifier", args[i]);
+			data->exit_status = 1;
 		}
 		else
 			ft_export(envp, args[i]);
@@ -68,19 +72,23 @@ void	ft_export(t_envp **envp, char *arg)
 	ft_add_back(envp, ft_new_var(arg));
 }
 
-void	ft_pre_unset(t_envp **envp, char **args)
+void	ft_pre_unset(t_envp **envp, char **args, t_data *data)
 {
 	int	i;
 
 	i = 1;
 	if (args[i] == NULL)
-		ft_printf("unset: not enough arguments");
+	{
+		ft_printf("unset: not enough arguments\n");
+		data->exit_status = 1;
+		return ;
+	}
 	while (args[i])
 	{
 		ft_unset(envp, args[i]);
 		i++;
 	}
-	// il manque de mettre la valeur de exit status a 0
+	data->exit_status = 0;
 }
 
 void	ft_unset(t_envp **envp, char *arg)

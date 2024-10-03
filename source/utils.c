@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 14:25:04 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:06:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,17 @@ int	ft_free_str_and_return_1(char *str)
 char	**convert_envp(t_envp **env)
 {
 	t_envp	*current;
-	int		count;
 	char	**envp;
 	int		i;
 
-	count = 0;
+	i = 0;
 	current = *env;
 	while (current)
 	{
-		count++;
+		i++;
 		current = current->next;
 	}
-	envp = malloc((count + 1) * sizeof(char *));
+	envp = malloc((i + 1) * sizeof(char *));
 	if (!envp)
 		return (NULL);
 	current = *env;
@@ -91,6 +90,7 @@ char	**convert_envp(t_envp **env)
 			return (ft_free_tab(envp));
 		current = current->next;
 	}
+	envp[i] = NULL;
 	return (envp);
 }
 
