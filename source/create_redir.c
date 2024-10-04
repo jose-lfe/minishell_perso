@@ -132,13 +132,45 @@ char *copy_redir(char *input)
 }
 void	initialize_inpath(t_inpath *new)
 {
+	new->index = -1;
 	new->filename = NULL;
 	new->heredoc = false;
 	new->next = NULL;
 }
 void	initialize_outpath(t_outpath *new)
 {
+	new->index = -1;
 	new->filename = NULL;
 	new->append = false;
 	new->next = NULL;
+}
+
+void	give_index_redir(t_inpath **inpath, t_outpath **outpath)
+{
+	static int	index = 0;
+	t_inpath	*current_in;
+	t_outpath	*current_out;
+
+	if (inpath != NULL)
+	{
+		current_in = *inpath;
+		while (current_in)
+		{
+			if (current_in->index < index)
+				current_in->index = index;
+			current_in = current_in->next;
+		}
+	}
+	if (outpath != NULL)
+	{
+		current_out = *outpath;
+		while (current_out)
+		{
+			if (current_out->index < index)
+				current_out->index = index;
+			current_out = current_out->next;
+		}
+	}
+	index++;
+	return ;
 }

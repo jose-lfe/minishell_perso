@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/02 13:03:59 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:43:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@ void	free_command(t_command *command)
 	current = command;
 	while (command != NULL)
 	{
+		printf("free\n");
 		current = command->next;
+		printf("free2\n");
 		free_arg(command->arg);
-		free_inpath(command->inpath);
-		free_outpath(command->outpath);
+		printf("free3\n");
+		if (command->inpath)
+			free_inpath(command->inpath);
+		printf("free4\n");
+		if (command->outpath)
+			free_outpath(command->outpath);
+		printf("free5\n");
 		free(command);
+		printf("free6\n");
 		command = current;
 	}
 }
@@ -48,7 +56,10 @@ void	free_inpath(t_inpath *inpath)
 	while (inpath != NULL)
 	{
 		temp = inpath->next;
-		free(inpath);
+		if (inpath->filename)
+			free(inpath->filename);
+		if (inpath)
+			free(inpath);
 		inpath = temp;
 	}
 }
@@ -60,7 +71,10 @@ void	free_outpath(t_outpath *outpath)
 	while (outpath != NULL)
 	{
 		temp = outpath->next;
-		free(outpath);
+		if (outpath->filename)
+			free(outpath->filename);
+		if (outpath)
+			free(outpath);
 		outpath = temp;
 	}
 }

@@ -6,69 +6,75 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 15:56:00 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:24:34 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_inredir(t_inpath *inpath)
+int	ft_inredir(t_inpath *inpath, int i)
 {
 	while (inpath)
 	{
-		if (inpath->heredoc == true)
+		if (inpath->index == i && inpath->heredoc == true)
 		{
 			ft_heredoc(inpath);
 			inpath = inpath->next;
 			continue ;
 		}
-		if (access(inpath->filename, F_OK) == -1)
+		if (inpath->index == i && access(inpath->filename, F_OK) == -1)
 		{
-			perror(inpath->filename);
-			perror(": no such file or directory\n");
+			ft_putstr_fd(inpath->filename, 2);
+			ft_putstr_fd(": no such file or directory\n", 2);
 			return (1);
 		}
-		if (access(inpath->filename, R_OK) == -1)
+		if (inpath->index == i && access(inpath->filename, R_OK) == -1)
 		{
-			perror(inpath->filename);
-			perror(": Permission denied\n");
+			ft_putstr_fd(inpath->filename, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
 			return (1);
 		}
-		ft_change_stdin(inpath);
+		if (inpath->index == i)
+			ft_change_stdin(inpath);
 		inpath = inpath->next;
 	}
 	return (0);
 }
 
-int	ft_outredir(t_outpath *outpath)
+int	ft_outredir(t_outpath *outpath, int i)
 {
 	int	fd;
 
 	while (outpath)
 	{
-		if (access(outpath->filename, F_OK) != -1)
+		if (outpath->index == i && access(outpath->filename, F_OK) != -1)
+		{
 			if (access(outpath->filename, W_OK) == -1)
 			{
-				perror(outpath->filename);
-				perror(": Permission denied\n");
+				ft_putstr_fd(outpath->filename, 2);
+				ft_putstr_fd(": Permission denied\n", 2);
 				return (1);
 			}
-		if (outpath->append == false)
-			fd = open(outpath->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else
-			fd = open(outpath->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
-			return (1);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		outpath =outpath->next;
+		}
+		if (outpath->index == i)
+		{
+			if (outpath->append == false)
+				fd = open(outpath->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			else
+				fd = open(outpath->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+				return (1);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		outpath = outpath->next;
 	}
 	return (0);
 }
 
 void	ft_heredoc(t_inpath *inpath)
 {
-    char    *input;
+	char	*input;
 	char	*buffer;
 	int		fd[2];
 
@@ -82,7 +88,7 @@ void	ft_heredoc(t_inpath *inpath)
 	{
 		input = readline("heredoc> ");
 		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0)
-			break;
+			break ;
 		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
 	}
 	if (inpath->next == NULL)

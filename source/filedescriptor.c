@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:20:11 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/01 14:24:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:41:34 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_original_std(t_data *data, t_command *command)
 {
-	if (!command->pipeout && data->base_stdin >= 0) {
+	if (!command->pipein && data->base_stdin >= 0) {
 		if (dup2(data->base_stdin, STDIN_FILENO) == -1)
 		{
 			perror("dup2 STDIN");

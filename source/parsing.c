@@ -57,6 +57,7 @@ void	parsing(char *input, t_command **command)
 		{
 			i++;
 			set_pipein(command);
+			give_index_redir(&inpath, &outpath);
 		}
 	}
 	set_pipeout(command);

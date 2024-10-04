@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/03 18:21:21 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:09:48 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_temp_command
 
 typedef struct s_inpath
 {
+	int					index;
 	char				*filename;
 	bool				heredoc;
 	struct s_inpath		*next;
@@ -60,6 +61,7 @@ typedef struct s_inpath
 
 typedef struct s_outpath
 {
+	int					index;
 	char				*filename;
 	bool				append;
 	struct s_outpath	*next;
@@ -137,8 +139,8 @@ void	ft_copy_original_std(t_data *data);
 void	ft_redirect_fd(int i, int *fd);
 
 //redir.c
-int		ft_inredir(t_inpath *inpath);
-int		ft_outredir(t_outpath *outpath);
+int		ft_inredir(t_inpath *inpath, int i);
+int		ft_outredir(t_outpath *outpath, int i);
 void	ft_heredoc(t_inpath *inpath);
 void	ft_change_stdin(t_inpath *inpath);
 
@@ -163,7 +165,7 @@ void	create_command_def(char **tb, t_command **command, t_inpath **inpath, t_out
 void	free_temp_command(t_temp_command **command);
 char	**create_tab(int size);
 
-
+void    give_index_redir(t_inpath **inpath, t_outpath **outpath);
 int		command_length(char *input);
 int		skip_command_length(char *str);
 char 	*copy_command(char *input);
