@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/04 13:30:48 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:10:20 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 		tmp = tmp->next;
 		i++;
 	}
-	printf("test1\n");
 	free_command(*command);
-	printf("test2\n");
 }
 
 int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)

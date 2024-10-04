@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/04 13:43:50 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:02:42 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,15 @@ void	free_command(t_command *command)
 	t_command	*current;
 
 	current = command;
+	if (command->inpath)
+		free_inpath(command->inpath);
+	if (command->outpath)
+		free_outpath(command->outpath);
 	while (command != NULL)
 	{
-		printf("free\n");
 		current = command->next;
-		printf("free2\n");
 		free_arg(command->arg);
-		printf("free3\n");
-		if (command->inpath)
-			free_inpath(command->inpath);
-		printf("free4\n");
-		if (command->outpath)
-			free_outpath(command->outpath);
-		printf("free5\n");
 		free(command);
-		printf("free6\n");
 		command = current;
 	}
 }

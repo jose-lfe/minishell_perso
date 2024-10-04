@@ -25,11 +25,13 @@ void	parsing(char *input, t_command **command)
 	t_outpath		*outpath;
 	int				length;
 	int				i;
+	int				j;
 
 	temp_cmd = NULL;
 	inpath = NULL;
 	outpath = NULL;
 	i = 0;
+	j = 0;
 
 	//check_open_quotes(input);
 	//check_errors;
@@ -45,7 +47,7 @@ void	parsing(char *input, t_command **command)
 			if (input[i] == '\0' || input[i] == '|')
 				break ;
 			else if (is_redir(input[i]))
-				length = create_redir(input + i, &inpath, &outpath);
+				length = create_redir(input + i, &inpath, &outpath, j);
 			else 
 				length = create_command(input + i, &temp_cmd);
 			i = i + length;
@@ -56,12 +58,13 @@ void	parsing(char *input, t_command **command)
 		if (input[i] == '|')
 		{
 			i++;
+			j++;
 			set_pipein(command);
-			give_index_redir(&inpath, &outpath);
 		}
 	}
 	set_pipeout(command);
 	print_command(command);
+	j = 0;
 }
 
 

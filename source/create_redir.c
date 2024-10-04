@@ -1,19 +1,19 @@
 #include "minishell.h"
 
-int	create_redir(char *input, t_inpath **inpath, t_outpath **outpath)
+int	create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index)
 {
 	int	i;
 
 	i = 0;
 	if (*input == '<')
-		i = create_inpath(input, inpath);
+		i = create_inpath(input, inpath, index);
 	else if (*input == '>')
-		i = create_outpath(input, outpath);
+		i = create_outpath(input, outpath, index);
 	return (i);
 }
 
 
-int	create_inpath(char *input, t_inpath **inpath)
+int	create_inpath(char *input, t_inpath **inpath, int index)
 {
 	int			i;
 	char		*filename;
@@ -25,6 +25,7 @@ int	create_inpath(char *input, t_inpath **inpath)
 	initialize_inpath(new);
 	filename = copy_redir(input);
 	new->filename = filename;
+	new->index = index;
 	if (*input == '<' && *(input + 1) == '<')
 		new->heredoc = true;
 	else
@@ -42,7 +43,7 @@ int	create_inpath(char *input, t_inpath **inpath)
 }
 
 
-int	create_outpath(char *input, t_outpath **outpath)
+int	create_outpath(char *input, t_outpath **outpath, int index)
 {
 	int		i;
 	char		*filename;
@@ -53,7 +54,8 @@ int	create_outpath(char *input, t_outpath **outpath)
 	new = malloc(sizeof(t_outpath));
 	initialize_outpath(new);
 	filename = copy_redir(input);
-	new->filename = filename;	
+	new->filename = filename;
+	new->index = index;	
 	if (*input == '>' && *(input + 1) == '>')
 		new->append = true;
 	else
@@ -132,45 +134,15 @@ char *copy_redir(char *input)
 }
 void	initialize_inpath(t_inpath *new)
 {
-	new->index = -1;
+	new->index = 0;
 	new->filename = NULL;
 	new->heredoc = false;
 	new->next = NULL;
 }
 void	initialize_outpath(t_outpath *new)
 {
-	new->index = -1;
+	new->index = 0;
 	new->filename = NULL;
 	new->append = false;
 	new->next = NULL;
-}
-
-void	give_index_redir(t_inpath **inpath, t_outpath **outpath)
-{
-	static int	index = 0;
-	t_inpath	*current_in;
-	t_outpath	*current_out;
-
-	if (inpath != NULL)
-	{
-		current_in = *inpath;
-		while (current_in)
-		{
-			if (current_in->index < index)
-				current_in->index = index;
-			current_in = current_in->next;
-		}
-	}
-	if (outpath != NULL)
-	{
-		current_out = *outpath;
-		while (current_out)
-		{
-			if (current_out->index < index)
-				current_out->index = index;
-			current_out = current_out->next;
-		}
-	}
-	index++;
-	return ;
 }

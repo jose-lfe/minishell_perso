@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/04 13:09:48 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:29:55 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ int		ft_check_base_command(t_command *command, t_envp **envp);
 int		ft_check_absolute_relative_path(t_command *command);
 
 //create_redir.c
-int		create_redir(char *input, t_inpath **inpath, t_outpath **outpath);
-int		create_inpath(char *input, t_inpath **inpath);
-int		create_outpath(char *input, t_outpath **outpath);
+int		create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index);
+int		create_inpath(char *input, t_inpath **inpath, int index);
+int		create_outpath(char *input, t_outpath **outpath, int index);
 int		skip_filename_length(char *input);
 int		filename_length(char *input);
 char	 *copy_redir(char *input);
@@ -165,7 +165,7 @@ void	create_command_def(char **tb, t_command **command, t_inpath **inpath, t_out
 void	free_temp_command(t_temp_command **command);
 char	**create_tab(int size);
 
-void    give_index_redir(t_inpath **inpath, t_outpath **outpath);
+void	give_index_redir(t_inpath **inpath, t_outpath **outpath, int index);
 int		command_length(char *input);
 int		skip_command_length(char *str);
 char 	*copy_command(char *input);
