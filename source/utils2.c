@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 14:44:20 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:03:55 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	free_path_cmd_return_int(char **path, char *cmd, int value)
 		i++;
 	}
 	free(path);
-	if (cmd == NULL)
+	if (value == 0)
 		free(cmd);
 	return (value);
 }

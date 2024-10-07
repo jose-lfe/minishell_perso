@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/04 15:29:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:54:35 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_data
 	int					exit_status;
 	int					base_stdin;
 	int					base_stdout;
+	struct s_envp		*envp;
+	struct s_command	*command;
 }	t_data;
 
 typedef struct s_envp
@@ -106,6 +108,11 @@ void	ft_unset(t_envp **envp, char *arg);
 //cd_pwd.c
 void	ft_cd(char **arg, t_data *data);
 void	ft_pwd(t_data *data);
+
+//echo_exit.c
+void	ft_echo(char **arg, t_data *data);
+void	ft_exit(char **arg, t_data *data);
+void	ft_free_all(t_data *data, int exit_value);
 
 //utils.c
 char	*ft_get_var(char *str);
@@ -173,6 +180,7 @@ bool	is_redir(char c);
 bool	is_white_space(char c);
 void	parsing(char *str, t_command **command);
 int		create_command(char *input, t_temp_command **command);
+
 //void	print_commands(t_command **head);
 void	initialize_command(t_command *new);
 void	set_pipein(t_command **head);
@@ -183,6 +191,7 @@ void	free_command(t_command *command);
 void	free_arg(char **arg);
 void	free_inpath(t_inpath *inpath);
 void	free_outpath(t_outpath *outpath);
+void	ft_free_data(t_data *data);
 
 void 	print_command(t_command **head);
 void	initialize_temp_command(t_temp_command *new);

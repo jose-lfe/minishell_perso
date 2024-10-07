@@ -63,7 +63,7 @@ void	parsing(char *input, t_command **command)
 		}
 	}
 	set_pipeout(command);
-	print_command(command);
+	//print_command(command);
 	j = 0;
 }
 
@@ -149,7 +149,7 @@ char *copy_command(char *input)
 	copy[j] = '\0';
 	return (copy);
 }
-void print_command(t_command **head)
+/*void print_command(t_command **head)
 {
     t_command *current = *head;
 
@@ -192,7 +192,7 @@ void print_command(t_command **head)
         current = current->next;
         printf("\n");  // Ajouter une ligne vide entre les commandes
     }
-}
+}*/
 
 void	set_pipein(t_command **head)
 {

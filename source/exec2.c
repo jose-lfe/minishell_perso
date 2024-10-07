@@ -12,24 +12,25 @@
 
 #include "minishell.h"
 
+extern pid_t glob_pid;
+
 void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data)
 {
 	int		fd[2];
-	pid_t	pid;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
 	if (command->next)
 	{
-		pid = fork();
-		if (pid == 0)
+		glob_pid = fork();
+		if (glob_pid == 0)
 		{
 			if (command->next && !command->outpath)
 				ft_redirect_fd(0, fd);
 			ft_exec_builtins(i, command, envp, data);
 			exit(0); // a changer
 		}
-		waitpid(pid, NULL, 0);
+		waitpid(glob_pid, NULL, 0);
 		if (command->next && !command->outpath)
 			ft_redirect_fd(1, fd);
 	}

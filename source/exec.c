@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern pid_t glob_pid;
+
 /*
 commencer par verifier qu'il s'agit pas d'une des 7 commandes faite
 s'occuper des pipes et redirection 
@@ -65,13 +67,12 @@ int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 void	ft_absolute_relative_path(t_command *command, t_envp **envp)
 {
 	int		fd[2];
-	pid_t	pid;
 	char	**env;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
-	pid = fork();
-	if (pid == 0)
+	glob_pid = fork();
+	if (glob_pid == 0)
 	{
 		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
@@ -79,7 +80,7 @@ void	ft_absolute_relative_path(t_command *command, t_envp **envp)
 		execve(command->arg[0], command->arg, env);
 		perror("execve");
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(glob_pid, NULL, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
 	// manque exit statue
@@ -88,18 +89,17 @@ void	ft_absolute_relative_path(t_command *command, t_envp **envp)
 void	ft_base_command(t_command *command, t_envp **envp)
 {
 	int		fd[2];
-	pid_t	pid;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
-	pid = fork();
-	if (pid == 0)
+	glob_pid = fork();
+	if (glob_pid == 0)
 	{
 		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
 		ft_exec_base_command(command, envp);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(glob_pid, NULL, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
 	// manque exit statue

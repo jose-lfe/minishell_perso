@@ -6,14 +6,14 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/03 18:21:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:59:48 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+pid_t glob_pid = 0;
 // a modifier car erreur si  "  '  "  '
-
 char	*ft_change_str(char *old, char *convert, int start, int size)
 {
 	int		i;
@@ -151,22 +151,26 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
-	printf("start :D\n");
 	command = NULL;
-	data = init_data();
 	envp = ft_copy_envp(env);
+	data = init_data();
 	setup_signals();
 	while (1) 
 	{
 		input = readline("minishell> ");
+		if (!input)
+			break ;
+		if (input)
+			add_history(input);
 		dollar_checker(&input, &envp);
-		//ft_printf("%s\n", input);
 		command = NULL;
 		parsing(input, &command);
 		start_exec(data, &command, &envp);
+		free(input);
 	}
-
+	ft_free_data(data);
 	ft_free_envp(envp);
+	rl_clear_history();
 	return (0);
 }
 /*

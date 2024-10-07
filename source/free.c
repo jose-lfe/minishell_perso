@@ -6,7 +6,7 @@
 /*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/04 14:02:42 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:03:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,11 @@ void	free_outpath(t_outpath *outpath)
 			free(outpath);
 		outpath = temp;
 	}
+}
+
+void	ft_free_data(t_data *data)
+{
+	if (data != NULL)
+		free(data);
+	return ;
 }

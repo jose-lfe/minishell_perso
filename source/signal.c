@@ -1,44 +1,43 @@
 #include "minishell.h"
 
+extern pid_t glob_pid;
+
 void    handle_sigint(int sig)
 {
 	(void)sig;
-    printf("\nsignal ctrl c recu");
-	printf("tavais raison >");
-	//kill(current_pid);
+	if (glob_pid != 0)
+	{
+		kill(glob_pid, SIGINT);
+		glob_pid = 0;
+		write(1, "\n", 1);
+	}
+	else
+	{
+    write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	}
 }
 
 void    handle_sigquit(int sig)
 {
-    (void)sig;
-	printf("\n signal ctrl \\ recu");
-	exit(0);
-}
-
-void    handle_sigterm(int sig)
-{
 	(void)sig;
-    printf("\n signal ctrl d recu");
+	rl_redisplay();
 }
 
 void setup_signals(void)
 {
     struct sigaction sa_int;
     struct sigaction sa_quit;
-    struct sigaction sa_term;
 
     sa_int.sa_handler = handle_sigint;
     sigemptyset(&sa_int.sa_mask);
-    sa_int.sa_flags = 0;
+    sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
 
     sa_quit.sa_handler = handle_sigquit;
     sigemptyset(&sa_quit.sa_mask);
     sa_quit.sa_flags = 0;
-    sigaction(SIGINT, &sa_quit, NULL);
-
-    sa_term.sa_handler = handle_sigterm;
-    sigemptyset(&sa_term.sa_mask);
-    sa_term.sa_flags = 0;
-    sigaction(SIGINT, &sa_term, NULL);
+    sigaction(SIGQUIT, &sa_quit, NULL);
 }
