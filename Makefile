@@ -13,6 +13,7 @@ SRCS = 	source/main.c \
 		source/check.c \
 		source/convert_command.c \
 		source/create_redir.c \
+		source/echo_exit.c \
 		source/envp.c \
 		source/export_unset.c \
 		source/exec.c \

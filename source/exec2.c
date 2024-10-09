@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 17:53:29 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:27:35 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data)
 
 void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 {
-	//if (i == 1)
-		//ft_echo();
+	if (i == 1)
+		ft_echo(command->arg, data);
 	if (i == 2)
 		ft_cd(command->arg, data);
 	if (i == 3)

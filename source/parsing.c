@@ -36,7 +36,6 @@ void	parsing(char *input, t_command **command)
 	//check_open_quotes(input);
 	//check_errors;
 
-	printf("debut\n"); //
 	while (input[i] != '\0')
 	{
 		while (input[i] != '|' && input[i] != '\0')
@@ -63,7 +62,7 @@ void	parsing(char *input, t_command **command)
 		}
 	}
 	set_pipeout(command);
-	//print_command(command);
+	print_command(command);
 	j = 0;
 }
 
@@ -98,7 +97,7 @@ int	skip_command_length(char *input)
 	i = 0;
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
 		i++;
 	return (i);
 }
@@ -118,7 +117,7 @@ int	command_length(char *input)
 	c = 0;
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
 	{
 		i++;
 		c++;
@@ -140,7 +139,7 @@ char *copy_command(char *input)
 		return (NULL);
 	while (is_white_space(input[i]) && input[i] != '\0')
 		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|')
+	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
 	{
 		copy[j] = input[i];
 		i++;
@@ -149,7 +148,7 @@ char *copy_command(char *input)
 	copy[j] = '\0';
 	return (copy);
 }
-/*void print_command(t_command **head)
+void print_command(t_command **head)
 {
     t_command *current = *head;
 
@@ -192,7 +191,7 @@ char *copy_command(char *input)
         current = current->next;
         printf("\n");  // Ajouter une ligne vide entre les commandes
     }
-}*/
+}
 
 void	set_pipein(t_command **head)
 {

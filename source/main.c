@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/07 12:59:48 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:47:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,41 +70,12 @@ int	dollar_converter(char **str, int i, t_envp **envp)
 	return (0);
 }
 
-// int	dollar_converter(char **str, int i, char **env)
-// {
-// 	int		size_var;
-// 	char	*var;
-// 	char	*convert;
-// 	int		start;
-
-// 	start = i;
-// 	i++;
-// 	while ((*str)[i] && ft_isalpha((*str)[i]))
-// 		i++;
-// 	size_var = i - start - 1;
-// 	var = ft_substr(*str + 1, start, size_var);
-// 	i = 0;
-// 	while (env[i] && ft_strncmp(env[i], var, size_var) != 0)
-// 		i++;
-// 	if (!env[i])
-// 	{
-// 		free(var);
-// 		return (1);
-// 	}
-// 	convert = ft_strdup(env[i] + size_var + 1);
-// 	*str = ft_change_str(*str, convert, start, size_var);
-// 	free(convert);
-// 	free(var);
-// 	return (0);
-// }
-
-void	exit_statut(char *str, int i)
+void	exit_statut(char **str, int i, t_data *data)
 {
-	i++;
-	ft_printf("exit statut to change in : %s\n", str);
+	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 2);
 }
 
-void	dollar_checker(char **str, t_envp **envp)
+void	dollar_checker(char **str, t_envp **envp, t_data *data)
 {
 	int	i;
 
@@ -123,7 +94,9 @@ void	dollar_checker(char **str, t_envp **envp)
 			}
 			if ((*str)[i + 1] == '?')
 			{
-				exit_statut(*str, i);
+				exit_statut(str, i, data);
+				i = 0;
+				continue ;
 			}
 		}
 		i++;
@@ -162,7 +135,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (input)
 			add_history(input);
-		dollar_checker(&input, &envp);
+		dollar_checker(&input, &envp, data);
 		command = NULL;
 		parsing(input, &command);
 		start_exec(data, &command, &envp);

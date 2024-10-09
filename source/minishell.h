@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/07 12:54:35 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:23:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ typedef struct s_envp
 // main.c
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, t_envp **envp);
-void	exit_statut(char *str, int i);
+void	exit_statut(char **str, int i, t_data *data);
 t_data	*init_data(void);
-void	dollar_checker(char **str, t_envp **envp);
+void	dollar_checker(char **str, t_envp **envp, t_data *data);
 
 //envp.c
 t_envp	*ft_copy_envp(char **env);
