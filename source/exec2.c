@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/09 12:27:35 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:34:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 		//ft_exit();
 }
 
-int	ft_command_not_found(t_command *command, t_envp **envp)
+int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 {
 	t_envp	*tmp;
 	bool	path;
@@ -80,6 +80,6 @@ int	ft_command_not_found(t_command *command, t_envp **envp)
 		ft_putstr_fd(command->arg[0], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 	}
-	// change exit_status
-	return (0);
+	data->exit_status = 127;
+	return (1);
 }

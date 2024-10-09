@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/04 14:10:20 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:34:18 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 
 	i = ft_check_command(command, envp);
 	if (i == -1)
-		return (ft_command_not_found(command, envp));
+		return (ft_command_not_found(command, envp, data));
 	if (i >= 1 && i <= 7)
 		ft_builtins(i, command, envp, data);
 	if (i == 8)

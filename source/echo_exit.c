@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/09 14:25:17 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:37:18 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,7 @@ void	ft_echo(char **arg, t_data *data)
 		ft_printf("\n");
 	data->exit_status = 0;
 }
-/*void	ft_echo(char **arg, t_data *data)
-{
-	bool	option;
-	int		i;
 
-	i = 1;
-	option = false;
-	if (arg[i] && strcmp(arg[i], "-n") == 0)
-	{
-		option = true;
-		i++;
-	}
-	while (arg[i])
-	{
-		if (option)
-			i++;
-		if (i != 1 && !option)
-			printf(" ");
-		printf("%s", arg[i]);
-		i++;
-	}
-	if (!option)
-		printf("\n");
-	data->exit_status = 0;
-	return ;
-}*/
 void	ft_exit(char **arg, t_data *data)
 {
 	int	i;

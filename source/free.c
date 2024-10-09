@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/07 13:03:05 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:44:57 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_command(t_command *command)
 {
 	t_command	*current;
 
+	if (command == NULL)
+		return ;
 	current = command;
 	if (command->inpath)
 		free_inpath(command->inpath);

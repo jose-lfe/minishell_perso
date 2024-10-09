@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/09 12:47:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:46:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,56 +146,14 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	return (0);
 }
+
 /*
-int	main(int ac, char **av, char **env)
-{
-	t_envp		*envp;
-	char		*input;
-	t_command	*command;
-
-	(void)av;
-	(void)ac;
-	command = NULL;
-	create_env();
-	while (1)
-	{
-		input = readline("minishell> ");
-		checking_input();
-		parsing_input(input, &command);
-		execution();
-		free_cmd_input();
-	}
-	ft_free_envp(envp);
-	return (0);
-}
-pid_t	current_process;
-current_process = NULL;
-
-int	main(int ac, char **av, char **env)
-{
-	t_envp		*envp;
-	char		*input;
-	t_command	*command;
-
-	(void)av;
-	(void)ac;
-	command = NULL;
-	setup_signals();
-	create_data();
-	while (1)
-	{
-		input = readline("minishell> ");
-		checking_input();
-		parsing_input(input, &command);
-		execution();
-		free_cmd_input();
-	}
-	ft_free_envp(envp);
-	return (0);
-}
-
-free les commandes et linput apres lexecution
-gerer les signaux
-echo
-exit
+a faire demain : 
+-ajouter index a heredoc
+-changer dollar_checker (verfier si dans quote, supprimer $text si n'existe pas)
+-modifier ft_cd pour modifier pwd et old_pwd
+-faire macro pour valeur de retour waitpid + autre endroit
+-preparer les endroits ou tout free
+-tout normer
+-enjoy
 */

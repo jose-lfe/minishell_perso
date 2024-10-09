@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/09 12:23:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:34:19 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_exec_base_command(t_command *command, t_envp **envp);
 //exec2.c
 void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data);
 void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data);
-int		ft_command_not_found(t_command *command, t_envp **envp);
+int		ft_command_not_found(t_command *command, t_envp **envp, t_data *data);
 
 //filedescriptor.c
 void	ft_original_std(t_data *data, t_command *command);
