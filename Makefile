@@ -6,13 +6,13 @@ LIBFT_PATH = ./library/libft
 LIBFT = -L$(LIBFT_PATH) -lft
 LIBFT_SENTINEL = $(LIBFT_PATH)/libft_built.sentinel
 OBJ_PATH = ./obj
+AR = ar
 
 SRCS = 	source/main.c \
 		source/cd_pwd.c \
 		source/check.c \
 		source/convert_command.c \
 		source/create_redir.c \
-		source/echo_exit.c \
 		source/envp.c \
 		source/export_unset.c \
 		source/exec.c \
@@ -32,7 +32,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(notdir $(OBJS)))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_SENTINEL)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LIBFT) -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lm -o $(NAME) $(LDFLAGS)
 
 $(OBJ_PATH)/%.o: source/%.c | $(OBJ_PATH)
 	$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@

@@ -22,10 +22,10 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) libft.h get_next_line_bonus.h
-	ar rcs $(NAME) $(OBJ)
+	$(AR) rcs $(NAME) $(OBJ)
     
 bonus : $(OBJ) $(BOBJ)
-	$ AR -r $(NAME) $?
+	$(AR) -r $(NAME) $?
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<

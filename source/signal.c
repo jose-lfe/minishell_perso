@@ -23,7 +23,6 @@ void    handle_sigint(int sig)
 void    handle_sigquit(int sig)
 {
 	(void)sig;
-	rl_redisplay();
 }
 
 void setup_signals(void)
@@ -36,7 +35,7 @@ void setup_signals(void)
     sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
 
-    sa_quit.sa_handler = handle_sigquit;
+    sa_quit.sa_handler = SIG_IGN;
     sigemptyset(&sa_quit.sa_mask);
     sa_quit.sa_flags = 0;
     sigaction(SIGQUIT, &sa_quit, NULL);
