@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/09 15:34:19 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:09:34 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,10 @@ void	ft_pre_unset(t_envp **envp, char **args, t_data *data);
 void	ft_unset(t_envp **envp, char *arg);
 
 //cd_pwd.c
-void	ft_cd(char **arg, t_data *data);
+void	ft_cd(char **arg, t_data *data, t_envp **envp);
 void	ft_pwd(t_data *data);
+void	ft_change_old_pwd(char *buffer, t_envp **envp);
+void	ft_change_new_pwd(t_envp **envp);
 
 //echo_exit.c
 void	ft_echo(char **arg, t_data *data);
@@ -117,7 +119,7 @@ void	ft_free_all(t_data *data, int exit_value);
 //utils.c
 char	*ft_get_var(char *str);
 char	*ft_get_value(char *str);
-int		ft_free_str_and_return_1(char *str);
+int		ft_remove_dollar(char **str, char *var, int start, int size_var);
 char	**convert_envp(t_envp **env);
 char	*ft_fill_envp(t_envp *current);
 
@@ -148,7 +150,7 @@ void	ft_redirect_fd(int i, int *fd);
 //redir.c
 int		ft_inredir(t_inpath *inpath, int i);
 int		ft_outredir(t_outpath *outpath, int i);
-void	ft_heredoc(t_inpath *inpath);
+void	ft_heredoc(t_inpath *inpath, int i);
 void	ft_change_stdin(t_inpath *inpath);
 
 //check.c

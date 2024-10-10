@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/09 15:34:18 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:32:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,5 @@ void	ft_exec_base_command(t_command *command, t_envp **envp)
 			execve(cmd, command->arg, env);
 		free(cmd);
 		i++;
-	} 
+	}
 }

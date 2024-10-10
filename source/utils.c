@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/03 18:06:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:35:28 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_get_var(char *str)
 	return (res);
 }
 
-char 	*ft_get_value(char *str)
+char	*ft_get_value(char *str)
 {
 	char	*res;
 	int		i;
@@ -59,10 +59,11 @@ char 	*ft_get_value(char *str)
 	return (res);
 }
 
-int	ft_free_str_and_return_1(char *str)
+int	ft_remove_dollar(char **str, char *var, int start, int size_var)
 {
-	free(str);
-	return (1);	
+	*str = ft_change_str(*str, "", start, size_var);
+	free(var);
+	return (0);
 }
 
 char	**convert_envp(t_envp **env)
@@ -122,4 +123,3 @@ char	*ft_fill_envp(t_envp *current)
 	res[i] = '\0';
 	return (res);
 }
-

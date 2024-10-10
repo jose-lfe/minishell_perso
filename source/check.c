@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/07 13:05:17 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:31:42 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_check_base_command(t_command *command, t_envp **envp)
 			return (free_path_cmd_return_int(path, cmd, 0));
 		free(cmd);
 		i++;
-	} 
+	}
 	return (free_path_cmd_return_int(path, cmd, 1));
 }
 

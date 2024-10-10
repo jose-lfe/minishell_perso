@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/09 14:25:44 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:27:29 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_inredir(t_inpath *inpath, int i)
 	{
 		if (inpath->index == i && inpath->heredoc == true)
 		{
-			ft_heredoc(inpath);
+			ft_heredoc(inpath, i);
 			inpath = inpath->next;
 			continue ;
 		}
@@ -72,12 +72,13 @@ int	ft_outredir(t_outpath *outpath, int i)
 	return (0);
 }
 
-void	ft_heredoc(t_inpath *inpath)
+void	ft_heredoc(t_inpath *inpath, int i)
 {
 	char	*input;
 	char	*buffer;
 	int		fd[2];
 
+	ft_putstr_fd("ici\n", 2);
 	buffer = ft_strdup("");
 	if (pipe(fd) < 0)
 	{
@@ -88,13 +89,17 @@ void	ft_heredoc(t_inpath *inpath)
 	{
 		input = readline("heredoc> ");
 		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0)
+		{
+			ft_putstr_fd(input, 2);
+			ft_putstr_fd("moi\n", 2);
 			break ;
+		}
 		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
 	}
-	if (inpath->next == NULL)
+	if (!inpath->next || inpath->next->index != i)
 		ft_putstr_fd(buffer, fd[1]);
 	close(fd[1]);
-	if (inpath->next == NULL)
+	if (inpath->next == NULL || inpath->next->index != i)
 		dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	free(buffer);

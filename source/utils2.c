@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/07 13:03:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:35:51 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ char	**ft_get_path(t_envp **envp)
 	char	**path;
 
 	tmp = *envp;
-	while(tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+	while (tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
 		tmp = tmp->next;
 	if (!tmp)
 		return (NULL);
 	path = ft_split(tmp->value, ':');
 	return (path);
-
 }
 
 int	free_path_cmd_return_int(char **path, char *cmd, int value)

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/09 15:37:18 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:32:14 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	ft_echo(char **arg, t_data *data)
 void	ft_exit(char **arg, t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	ft_putstr_fd("exit\n", 2);
 	if (arg[1] && arg[2])
-		{
-			ft_putstr_fd("exit: too many arguments", 2);
-			data->exit_status = 1;
-			return ;
-		}
+	{
+		ft_putstr_fd("exit: too many arguments", 2);
+		data->exit_status = 1;
+		return ;
+	}
 	if (!arg[1])
 		ft_free_all(data, data->exit_status);
 	while (arg[1][i])

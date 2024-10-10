@@ -6,14 +6,14 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/09 15:46:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:30:41 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 pid_t glob_pid = 0;
-// a modifier car erreur si  "  '  "  '
+
 char	*ft_change_str(char *old, char *convert, int start, int size)
 {
 	int		i;
@@ -62,7 +62,7 @@ int	dollar_converter(char **str, int i, t_envp **envp)
 	while (tmp && ft_strncmp(tmp->var, var, ft_strlen(tmp->var)) != 0)
 		tmp = tmp->next;
 	if (!tmp)
-		return (ft_free_str_and_return_1(var));
+		return (ft_remove_dollar(str, var, start, size_var));
 	convert = ft_strdup(tmp->value);
 	*str = ft_change_str(*str, convert, start, size_var);
 	free(convert);
@@ -149,9 +149,8 @@ int	main(int ac, char **av, char **env)
 
 /*
 a faire demain : 
--ajouter index a heredoc
+-ajouter index a heredoc << END cat -e > zzz | << end ls
 -changer dollar_checker (verfier si dans quote, supprimer $text si n'existe pas)
--modifier ft_cd pour modifier pwd et old_pwd
 -faire macro pour valeur de retour waitpid + autre endroit
 -preparer les endroits ou tout free
 -tout normer
