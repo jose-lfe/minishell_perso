@@ -10,6 +10,7 @@ AR = ar
 
 SRCS = 	source/main.c \
 		source/cd_pwd.c \
+		source/check_input.c \
 		source/check_quote.c \
 		source/check.c \
 		source/convert_command.c \
@@ -28,6 +29,7 @@ SRCS = 	source/main.c \
 		source/parsing_utils.c \
 		source/parsing.c \
 		source/redir.c \
+		source/setup.c \
 		source/signal.c \
 		source/utils.c \
 		source/utils2.c \

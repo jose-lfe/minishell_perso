@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   convert_command.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:13:44 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:18:52 by jose-lfe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	convert_command(t_parsing *p, t_command **command, char input)
@@ -18,7 +30,7 @@ void	convert_command(t_parsing *p, t_command **command, char input)
 		current = current->next;
 		i++;
 	}
-	create_command_def(tb, command, p, input);
+	create_cmd_def(tb, command, p, input);
 	free_temp_command(&(p->t));
 	p->t = NULL;
 	return ;
@@ -39,7 +51,7 @@ int	command_count(t_temp_command **command)
 	return (i);
 }
 
-void	create_command_def(char **tb, t_command **command, t_parsing *p, char i)
+void	create_cmd_def(char **tb, t_command **command, t_parsing *p, char i)
 {
 	t_command	*new;
 	t_command	*current;

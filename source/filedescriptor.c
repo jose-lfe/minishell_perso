@@ -6,27 +6,34 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:20:11 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:34:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:56:12 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_original_std(t_data *data, t_command *command)
+void	ft_original_std(t_data *data, t_command *command, int index)
 {
-	if (!command->pipein && data->base_stdin >= 0)
+	t_inpath	*tmp;
+	int			check;
+
+	check = 0;
+	tmp = command->inpath;
+	while (tmp)
+	{
+		if (tmp->index == index + 1)
+			check = 1;
+		tmp = tmp->next;
+	}
+	if (check == 1 || !command->pipein)
 	{
 		if (dup2(data->base_stdin, STDIN_FILENO) == -1)
-		{
 			perror("dup2 STDIN");
-		}
 	}
 	if (data->base_stdout >= 0)
 	{
 		if (dup2(data->base_stdout, STDOUT_FILENO) == -1)
-		{
 			perror("dup2 STDOUT");
-		}
 	}
 }
 

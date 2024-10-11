@@ -6,13 +6,13 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 11:29:19 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:34:15 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t g_glob_pid = 0;
+pid_t	g_glob_pid = 0;
 
 char	*ft_change_str(char *old, char *convert, int start, int size)
 {
@@ -72,11 +72,6 @@ int	dollar_converter(char **str, int i, t_envp **envp)
 	return (0);
 }
 
-void	exit_statut(char **str, int i, t_data *data)
-{
-	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 2);
-}
-
 void	dollar_checker(char **str, t_envp **envp, t_data *data)
 {
 	int	i;
@@ -107,7 +102,7 @@ void	dollar_checker(char **str, t_envp **envp, t_data *data)
 
 t_data	*init_data(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -124,27 +119,24 @@ int	main(int ac, char **av, char **env)
 	t_command	*command;
 	t_data		*data;
 
-	(void)av;
-	(void)ac;
+	setup(ac, av, env, &envp);
 	command = NULL;
-	envp = ft_copy_envp(env);
 	data = init_data();
-	setup_signals();
-	while (1) 
+	while (1)
 	{
 		input = readline("minishell> ");
 		if (!input)
 			break ;
 		if (input)
 			add_history(input);
-		dollar_checker(&input, &envp, data);
+		if (check_input(&input, &envp, data))
+			continue ;
 		command = NULL;
 		parsing(input, &command);
 		start_exec(data, &command, &envp);
 		free(input);
 	}
-	ft_free_data(data);
-	ft_free_envp(envp);
+	ft_free_all(data, 0);
 	rl_clear_history();
 	return (0);
 }

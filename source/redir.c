@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 11:28:45 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:55:51 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	ft_heredoc(t_inpath *inpath, int i)
 	char	*buffer;
 	int		fd[2];
 
-	ft_putstr_fd("ici\n", 2);
 	buffer = ft_strdup("");
 	if (pipe(fd) < 0)
 	{
@@ -96,11 +95,7 @@ void	ft_heredoc(t_inpath *inpath, int i)
 	{
 		input = readline("heredoc> ");
 		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0)
-		{
-			ft_putstr_fd(input, 2);
-			ft_putstr_fd("moi\n", 2);
 			break ;
-		}
 		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
 	}
 	if (!inpath->next || inpath->next->index != i)

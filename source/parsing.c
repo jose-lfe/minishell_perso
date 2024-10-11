@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:14:27 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:36:08 by jose-lfe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	parsing(char *input, t_command **command)
@@ -17,10 +29,10 @@ void	parsing(char *input, t_command **command)
 		}
 	}
 	set_pipeout(command);
-	print_command(command);
 	p->j = 0;
 	free(p);
 }
+	//print_command(command);
 
 void	init_struct_parsing(t_parsing **p)
 {
@@ -42,7 +54,7 @@ void	parsing2(char *input, t_parsing *p)
 		if (input[p->i] == '\0' || input[p->i] == '|')
 			break ;
 		else if (is_redir(input[p->i]))
-			p->l = create_redir(input + p->i, &(p->in), &(p->o), p->j);
+			p->l = redir(input + p->i, &(p->in), &(p->o), p->j);
 		else
 			p->l = create_command(input + p->i, &(p->t));
 		p->i = p->i + p->l;
@@ -51,6 +63,7 @@ void	parsing2(char *input, t_parsing *p)
 	}
 }
 
+/*
 void	print_command(t_command **head)
 {
     t_command	*current = *head;
@@ -94,7 +107,7 @@ void	print_command(t_command **head)
         current = current->next;
         printf("\n");  // Ajouter une ligne vide entre les commandes
     }
-}
+}*/
 
 void	set_pipein(t_command **head)
 {

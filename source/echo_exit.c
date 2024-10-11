@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:32:14 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:34:57 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ void	ft_exit(char **arg, t_data *data)
 		}
 		i++;
 	}
-	ft_free_all(data, ft_atoi(arg[1]));
+	ft_free_all(data, ft_atoi(arg[1]) % 256);
 }
 
 void	ft_free_all(t_data *data, int exit_value)
 {
-	printf("%i", exit_value);
+	ft_free_envp(data->envp);
+	free_command(data->command);
 	free(data);
+	exit(exit_value);
 }

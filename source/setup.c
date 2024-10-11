@@ -1,38 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_command2.c                                  :+:      :+:    :+:   */
+/*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 16:13:53 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:13:54 by jose-lfe         ###   ########.fr       */
+/*   Created: 2024/10/11 16:14:32 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:14:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*copy_command(char *input)
+void	setup(int ac, char **av, char **env, t_envp **envp)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*copy;
-
-	i = 0;
-	j = 0;
-	len = command_length(input);
-	copy = malloc((len + 1) * sizeof(char));
-	if (!copy)
-		return (NULL);
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (j < len)
-	{
-		copy[j] = input[i];
-		i++;
-		j++;
-	}
-	copy[j] = '\0';
-	return (copy);
+	(void)ac;
+	(void)av;
+	*envp = ft_copy_envp(env);
+	setup_signals();
 }

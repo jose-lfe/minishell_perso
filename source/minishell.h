@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 12:00:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:19:37 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ typedef struct s_envp
 
 typedef struct s_parsing
 {
-
-	struct s_temp_command 	*t;
+	struct s_temp_command	*t;
 	struct s_inpath			*in;
 	struct s_outpath		*o;
 	int						l;
@@ -154,7 +153,7 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data);
 int		ft_command_not_found(t_command *command, t_envp **envp, t_data *data);
 
 //filedescriptor.c
-void	ft_original_std(t_data *data, t_command *command);
+void	ft_original_std(t_data *data, t_command *command, int index);
 void	ft_copy_original_std(t_data *data);
 void	ft_redirect_fd(int i, int *fd);
 
@@ -165,6 +164,9 @@ int		ft_outredir2(t_outpath *outpath);
 void	ft_heredoc(t_inpath *inpath, int i);
 void	ft_change_stdin(t_inpath *inpath);
 
+//check_input.c
+bool	check_input(char **str, t_envp **envp, t_data *data);
+
 //check_quote.c
 bool	check_quote(char *str);
 
@@ -172,18 +174,18 @@ bool	check_quote(char *str);
 int		ft_check_command(t_command *command, t_envp **envp);
 int		ft_check_base_command(t_command *command, t_envp **envp);
 int		ft_check_absolute_relative_path(t_command *command);
-int 	should_ignore_dollar(const char *str, int pos);
+int		should_ignore_dollar(const char *str, int pos);
 
 //create_command.c
-int	count_quote_command(char *input);
+int		count_quote_command(char *input);
 
 //create_redir.c
-int		create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index);
+int		redir(char *input, t_inpath **inpath, t_outpath **outpath, int index);
 int		create_inpath(char *input, t_inpath **inpath, int index);
 int		create_outpath(char *input, t_outpath **outpath, int index);
 int		skip_filename_length(char *input);
 int		filename_length(char *input);
-char	 *copy_redir(char *input);
+char	*copy_redir(char *input);
 
 //convert_command.c
 void	convert_command(t_parsing *p, t_command **command, char input);
@@ -191,13 +193,13 @@ char	*realloc_without_quote(char *str);
 char	*realloc_without_d_quote(char **str);
 char	*realloc_without_s_quote(char **str);
 int		command_count(t_temp_command **command);
-void	create_command_def(char **tb, t_command **command, t_parsing *p, char i);
+void	create_cmd_def(char **tb, t_command **command, t_parsing *p, char i);
 void	free_temp_command(t_temp_command **command);
 char	**create_tab(int size);
 void	give_index_redir(t_inpath **inpath, t_outpath **outpath, int index);
 int		command_length(char *input);
 int		skip_command_length(char *str);
-char 	*copy_command(char *input);
+char	*copy_command(char *input);
 bool	is_redir(char c);
 bool	is_white_space(char c);
 void	parsing(char *str, t_command **command);
@@ -217,10 +219,13 @@ void	free_inpath(t_inpath *inpath);
 void	free_outpath(t_outpath *outpath);
 void	ft_free_data(t_data *data);
 
-void 	print_command(t_command **head);
+void	print_command(t_command **head);
 void	initialize_temp_command(t_temp_command *new);
 void	initialize_inpath(t_inpath *new);
 void	initialize_outpath(t_outpath *new);
 void	setup_signals(void);
+
+//setup.c
+void	setup(int ac, char **av, char **env, t_envp **envp);
 
 #endif

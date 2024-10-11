@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_command2.c                                  :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 16:13:53 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:13:54 by jose-lfe         ###   ########.fr       */
+/*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:34:24 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*copy_command(char *input)
+bool	check_input(char **input, t_envp **envp, t_data *data)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*copy;
-
-	i = 0;
-	j = 0;
-	len = command_length(input);
-	copy = malloc((len + 1) * sizeof(char));
-	if (!copy)
-		return (NULL);
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (j < len)
+	if (check_quote(*input))
 	{
-		copy[j] = input[i];
-		i++;
-		j++;
+		write(1, "Error: quotes are wrong\n", 24);
+		return (true);
 	}
-	copy[j] = '\0';
-	return (copy);
+	dollar_checker(input, envp, data);
+	return (false);
+}
+
+void	exit_statut(char **str, int i, t_data *data)
+{
+	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 2);
 }

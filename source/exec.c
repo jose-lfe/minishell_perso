@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 11:05:56 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:14:08 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 			tmp = tmp->next;
 			continue ;
 		}
-		ft_original_std(data, tmp);
+		ft_original_std(data, tmp, i);
 		tmp = tmp->next;
 		i++;
 	}

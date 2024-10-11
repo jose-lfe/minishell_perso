@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_redir.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:13:56 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:19:37 by jose-lfe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index)
+int	redir(char *input, t_inpath **inpath, t_outpath **outpath, int index)
 {
 	int	i;
 

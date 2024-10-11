@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_command.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:13:50 by jose-lfe          #+#    #+#             */
+/*   Updated: 2024/10/11 16:38:06 by jose-lfe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	create_command(char *input, t_temp_command **command)
@@ -8,7 +20,6 @@ int	create_command(char *input, t_temp_command **command)
 	t_temp_command	*current;
 
 	i = skip_command_length(input);
-	printf("%d\n", i);
 	new = malloc(sizeof(t_temp_command));
 	initialize_temp_command(new);
 	str = copy_command(input);
