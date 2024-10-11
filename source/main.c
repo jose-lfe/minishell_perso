@@ -6,13 +6,13 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/10 17:30:41 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:29:19 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t glob_pid = 0;
+pid_t g_glob_pid = 0;
 
 char	*ft_change_str(char *old, char *convert, int start, int size)
 {
@@ -51,6 +51,8 @@ int	dollar_converter(char **str, int i, t_envp **envp)
 	int		start;
 	t_envp	*tmp;
 
+	if (should_ignore_dollar(*str, i) == 1)
+		return (1);
 	start = i;
 	i++;
 	while ((*str)[i] && ft_isalpha((*str)[i]))
@@ -150,8 +152,8 @@ int	main(int ac, char **av, char **env)
 /*
 a faire demain : 
 -ajouter index a heredoc << END cat -e > zzz | << end ls
--changer dollar_checker (verfier si dans quote, supprimer $text si n'existe pas)
--faire macro pour valeur de retour waitpid + autre endroit
+-changer dollar_checker (verfier si dans quote)
+-faire macro pour valeur de retour waitpid + autre endroit fait
 -preparer les endroits ou tout free
 -tout normer
 -enjoy

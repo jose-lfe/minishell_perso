@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/10 17:09:34 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:25:30 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ void	ft_change_var(t_envp **envp, char *arg, int size_var);
 //exec.c
 void	start_exec(t_data *data, t_command **command, t_envp **envp);
 int		ft_exec_command(t_command *command, t_envp **envp, t_data *data);
-void	ft_absolute_relative_path(t_command *command, t_envp **envp);
-void	ft_base_command(t_command *command, t_envp **envp);
+void	ft_abs_rel_path(t_command *command, t_envp **envp, t_data *data);
+void	ft_base_command(t_command *command, t_envp **envp, t_data *data);
 void	ft_exec_base_command(t_command *command, t_envp **envp);
 
 //exec2.c
@@ -150,6 +150,7 @@ void	ft_redirect_fd(int i, int *fd);
 //redir.c
 int		ft_inredir(t_inpath *inpath, int i);
 int		ft_outredir(t_outpath *outpath, int i);
+int		ft_outredir2(t_outpath *outpath);
 void	ft_heredoc(t_inpath *inpath, int i);
 void	ft_change_stdin(t_inpath *inpath);
 
@@ -157,6 +158,7 @@ void	ft_change_stdin(t_inpath *inpath);
 int		ft_check_command(t_command *command, t_envp **envp);
 int		ft_check_base_command(t_command *command, t_envp **envp);
 int		ft_check_absolute_relative_path(t_command *command);
+int 	should_ignore_dollar(const char *str, int pos);
 
 //create_redir.c
 int		create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index);

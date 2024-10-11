@@ -6,33 +6,36 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:33:32 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:12:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern pid_t glob_pid;
+extern pid_t	g_glob_pid;
 
 void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data)
 {
-	int		fd[2];
+	int	fd[2];
+	int	status;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
 	if (command->next)
 	{
-		glob_pid = fork();
-		if (glob_pid == 0)
+		g_glob_pid = fork();
+		if (g_glob_pid == 0)
 		{
 			if (command->next && !command->outpath)
 				ft_redirect_fd(0, fd);
 			ft_exec_builtins(i, command, envp, data);
-			exit(0); // a changer
+			exit(data->exit_status);
 		}
-		waitpid(glob_pid, NULL, 0);
+		waitpid(g_glob_pid, NULL, 0);
 		if (command->next && !command->outpath)
 			ft_redirect_fd(1, fd);
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);
 	}
 	else
 		ft_exec_builtins(i, command, envp, data);

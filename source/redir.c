@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:27:29 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:28:45 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_inredir(t_inpath *inpath, int i)
 
 int	ft_outredir(t_outpath *outpath, int i)
 {
-	int	fd;
-
 	while (outpath)
 	{
 		if (outpath->index == i && access(outpath->filename, F_OK) != -1)
@@ -58,17 +56,26 @@ int	ft_outredir(t_outpath *outpath, int i)
 		}
 		if (outpath->index == i)
 		{
-			if (outpath->append == false)
-				fd = open(outpath->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else
-				fd = open(outpath->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd == -1)
+			if (ft_outredir2(outpath) == 1)
 				return (1);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
 		}
 		outpath = outpath->next;
 	}
+	return (0);
+}
+
+int	ft_outredir2(t_outpath *outpath)
+{
+	int	fd;
+
+	if (outpath->append == false)
+		fd = open(outpath->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(outpath->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		return (1);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 	return (0);
 }
 

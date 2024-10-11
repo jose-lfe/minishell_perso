@@ -6,13 +6,13 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/10 17:32:50 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:05:56 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern pid_t glob_pid;
+extern pid_t	g_glob_pid;
 
 /*
 commencer par verifier qu'il s'agit pas d'une des 7 commandes faite
@@ -58,21 +58,22 @@ int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 	if (i >= 1 && i <= 7)
 		ft_builtins(i, command, envp, data);
 	if (i == 8)
-		ft_base_command(command, envp);
+		ft_base_command(command, envp, data);
 	if (i == 9)
-		ft_absolute_relative_path(command, envp);
+		ft_abs_rel_path(command, envp, data);
 	return (1);
 }
 
-void	ft_absolute_relative_path(t_command *command, t_envp **envp)
+void	ft_abs_rel_path(t_command *command, t_envp **envp, t_data *data)
 {
 	int		fd[2];
 	char	**env;
+	int		status;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
-	glob_pid = fork();
-	if (glob_pid == 0)
+	g_glob_pid = fork();
+	if (g_glob_pid == 0)
 	{
 		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
@@ -80,29 +81,36 @@ void	ft_absolute_relative_path(t_command *command, t_envp **envp)
 		execve(command->arg[0], command->arg, env);
 		perror("execve");
 	}
-	waitpid(glob_pid, NULL, 0);
+	waitpid(g_glob_pid, NULL, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
-	// manque exit statue
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_status = 128 + WTERMSIG(status);
 }
 
-void	ft_base_command(t_command *command, t_envp **envp)
+void	ft_base_command(t_command *command, t_envp **envp, t_data *data)
 {
-	int		fd[2];
+	int	fd[2];
+	int	status;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
-	glob_pid = fork();
-	if (glob_pid == 0)
+	g_glob_pid = fork();
+	if (g_glob_pid == 0)
 	{
 		if (command->next && !command->outpath)
 			ft_redirect_fd(0, fd);
 		ft_exec_base_command(command, envp);
 	}
-	waitpid(glob_pid, NULL, 0);
+	waitpid(g_glob_pid, &status, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
-	// manque exit statue
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_status = 128 + WTERMSIG(status);
 }
 
 void	ft_exec_base_command(t_command *command, t_envp **envp)

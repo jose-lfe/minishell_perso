@@ -1,14 +1,14 @@
 #include "minishell.h"
 
-extern pid_t glob_pid;
+extern pid_t g_glob_pid;
 
 void    handle_sigint(int sig)
 {
 	(void)sig;
-	if (glob_pid != 0)
+	if (g_glob_pid != 0)
 	{
-		kill(glob_pid, SIGINT);
-		glob_pid = 0;
+		kill(g_glob_pid, SIGINT);
+		g_glob_pid = 0;
 		write(1, "\n", 1);
 	}
 	else

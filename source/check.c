@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:31:42 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:19:13 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,28 @@ int	ft_check_absolute_relative_path(t_command *command)
 	if (access(command->arg[0], X_OK) == 0)
 		return (0);
 	return (1);
+}
+
+int should_ignore_dollar(const char *str, int pos)
+{
+	int	sq = 0;
+	int	dq = 0;
+	int	i = 0;
+
+	while (i < pos) {
+		if (str[i] == '\'' && !dq)
+		{
+			sq = !sq;
+		}
+		else if (str[i] == '"' && !sq)
+		{
+			dq = !dq;
+		}
+		i++;
+	}
+	if (sq)
+	{
+		return (1);
+	}
+	return (0);
 }
