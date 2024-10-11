@@ -47,7 +47,7 @@ void	free_arg(char **arg)
 
 void	free_inpath(t_inpath *inpath)
 {
-	t_inpath *temp;
+	t_inpath	*temp;
 
 	while (inpath != NULL)
 	{
@@ -62,7 +62,7 @@ void	free_inpath(t_inpath *inpath)
 
 void	free_outpath(t_outpath *outpath)
 {
-	t_outpath *temp;
+	t_outpath	*temp;
 
 	while (outpath != NULL)
 	{

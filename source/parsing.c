@@ -1,156 +1,59 @@
 #include "minishell.h"
 
-//ATTENTION il faut FREE chaque string et aussi chaque token donc double free car double malloc
-
-
-
-//recevoir le string
-//checker les quotes
-//checker les quotes et si elles ne sont pas fermer demander un nouvel input utilisateurs
-//utiliser strjoin pour coller les input ensemble
-//checker les quotes
-//par argument on entend chaque commande+args
-//si cest pas vide on cree une premiere commande
-//on copie jusquau separateur
-//la liste cest genre commande into commande
-//le plus simple cest que les commandes se pointe lune vers la suivante mais aussi que elles aient un element qui dit si
-//y a un redirecteur et donc quel pointe vers le bon out ou in en fonction
-
-
-//on malloc et on accroche lancien sur le nouveau
 void	parsing(char *input, t_command **command)
 {
-	t_temp_command 	*temp_cmd;
-	t_inpath		*inpath;
-	t_outpath		*outpath;
-	int				length;
-	int				i;
-	int				j;
+	t_parsing	*p;
 
-	temp_cmd = NULL;
-	inpath = NULL;
-	outpath = NULL;
-	i = 0;
-	j = 0;
-
-	//check_open_quotes(input);
-	//check_errors;
-
-	while (input[i] != '\0')
+	init_struct_parsing(&p);
+	while (input[p->i] != '\0')
 	{
-		while (input[i] != '|' && input[i] != '\0')
+		parsing2(input, p);
+		convert_command(p, command, input[p->i]);
+		if (input[p->i] == '|')
 		{
-			length = 0;
-			while (is_white_space(input[i]))
-				i++;
-			if (input[i] == '\0' || input[i] == '|')
-				break ;
-			else if (is_redir(input[i]))
-				length = create_redir(input + i, &inpath, &outpath, j);
-			else 
-				length = create_command(input + i, &temp_cmd);
-			i = i + length;
-			if (length == 0)
-				i++;
-		}
-		convert_command(&temp_cmd, command, &inpath, &outpath, input[i]);
-		if (input[i] == '|')
-		{
-			i++;
-			j++;
+			p->i++;
+			p->j++;
 			set_pipein(command);
 		}
 	}
 	set_pipeout(command);
 	print_command(command);
-	j = 0;
+	p->j = 0;
+	free(p);
 }
 
-
-int	create_command(char *input, t_temp_command **command)
+void	init_struct_parsing(t_parsing **p)
 {
-	int			i;
-	char		*str;
-	t_temp_command	*new;
-	t_temp_command	*current;
+	*p = malloc(sizeof(t_parsing));
+	(*p)->t = NULL;
+	(*p)->in = NULL;
+	(*p)->o = NULL;
+	(*p)->i = 0;
+	(*p)->j = 0;
+}
 
-	i = skip_command_length(input);
-	new = malloc(sizeof(t_temp_command));
-	initialize_temp_command(new);
-	str = copy_command(input);
-	new->str = str;
-	if (*command == NULL)
-		*command = new;
-	else
+void	parsing2(char *input, t_parsing *p)
+{
+	while (input[p->i] != '|' && input[p->i] != '\0')
 	{
-		current = *command;
-		while (current->next)
-			current = current->next;
-		current->next = new;
+		p->l = 0;
+		while (is_white_space(input[p->i]))
+			p->i++;
+		if (input[p->i] == '\0' || input[p->i] == '|')
+			break ;
+		else if (is_redir(input[p->i]))
+			p->l = create_redir(input + p->i, &(p->in), &(p->o), p->j);
+		else
+			p->l = create_command(input + p->i, &(p->t));
+		p->i = p->i + p->l;
+		if (p->l == 0)
+			p->i++;
 	}
-	return (i);
-}
-int	skip_command_length(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
-		i++;
-	return (i);
-}
-void	initialize_temp_command(t_temp_command *new)
-{
-	new->str = NULL;
-	new->next = NULL;
 }
 
-
-int	command_length(char *input)
+void	print_command(t_command **head)
 {
-	int	i;
-	int	c;
-
-	i = 0;
-	c = 0;
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
-	{
-		i++;
-		c++;
-	}
-	return (c);
-}
-char *copy_command(char *input)
-{
-	int		i;
-	int		j;
-	int		len;
-	char 	*copy;
-
-	i = 0;
-	j = 0;
-	len = command_length(input);
-	copy = malloc((len + 1 )* sizeof(char));
-	if (!copy)
-		return (NULL);
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0' && input[i] != '|' && !is_redir(input[i]))
-	{
-		copy[j] = input[i];
-		i++;
-		j++;
-	}
-	copy[j] = '\0';
-	return (copy);
-}
-void print_command(t_command **head)
-{
-    t_command *current = *head;
+    t_command	*current = *head;
 
 	printf("TEST:\n");
     while (current != NULL)
@@ -195,7 +98,7 @@ void print_command(t_command **head)
 
 void	set_pipein(t_command **head)
 {
-    t_command *current;
+	t_command	*current;
 
 	current = *head;
 	if (current == NULL)
@@ -208,7 +111,9 @@ void	set_pipein(t_command **head)
 
 void	set_pipeout(t_command **head)
 {
-    t_command *current = *head;
+	t_command	*current;
+
+	current = *head;
 	while (current != NULL)
 	{
 		if (current->pipein == true)
@@ -217,18 +122,3 @@ void	set_pipeout(t_command **head)
 	}
 	return ;
 }
-
-void	initialize_command(t_command *new)
-{
-	new->arg = NULL;
-	new->inpath = NULL;
-	new->outpath = NULL;
-	new->pipein = false;
-	new->pipeout = false;
-	new->next = NULL;
-}
-//on est deja envoyer au bon endroit
-
-// /!\ ATTENTION GERER LES EXIT ET FREE ENCORE
-//SI JAMAIS les outfile et infile ne
-//sarrete pas a lespace mais copie tout jusqa la fin ou la pipe

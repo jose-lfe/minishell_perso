@@ -8,6 +8,7 @@ bool	is_redir(char c)
 		return (true);
 	return (false);
 }
+
 bool	is_white_space(char c)
 {
 	if (c == ' ')
@@ -23,4 +24,14 @@ bool	is_white_space(char c)
 	if (c == '\f')
 		return (true);
 	return (false);
+}
+
+void	initialize_command(t_command *new)
+{
+	new->arg = NULL;
+	new->inpath = NULL;
+	new->outpath = NULL;
+	new->pipein = false;
+	new->pipeout = false;
+	new->next = NULL;
 }

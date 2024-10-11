@@ -12,7 +12,6 @@ int	create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index)
 	return (i);
 }
 
-
 int	create_inpath(char *input, t_inpath **inpath, int index)
 {
 	int			i;
@@ -42,10 +41,9 @@ int	create_inpath(char *input, t_inpath **inpath, int index)
 	return (i);
 }
 
-
 int	create_outpath(char *input, t_outpath **outpath, int index)
 {
-	int		i;
+	int			i;
 	char		*filename;
 	t_outpath	*new;
 	t_outpath	*current;
@@ -55,7 +53,7 @@ int	create_outpath(char *input, t_outpath **outpath, int index)
 	initialize_outpath(new);
 	filename = copy_redir(input);
 	new->filename = filename;
-	new->index = index;	
+	new->index = index;
 	if (*input == '>' && *(input + 1) == '>')
 		new->append = true;
 	else
@@ -103,46 +101,4 @@ int	filename_length(char *input)
 		c++;
 	}
 	return (c);
-}
-
-
-char *copy_redir(char *input)
-{
-	int		i;
-	int		j;
-	int		len;
-	char 	*copy;
-
-	i = 0;
-	j = 0;
-	len = filename_length(input);
-	copy = malloc((len + 1 )* sizeof(char));
-	if (!copy)
-		return (NULL);
-	while (is_redir(input[i]) && input[i] != '\0')
-		i++;
-	while (is_white_space(input[i]) && input[i] != '\0')
-		i++;
-	while (!is_white_space(input[i]) && input[i] != '\0')
-	{
-		copy[j] = input[i];
-		i++;
-		j++;
-	}
-	copy[j] = '\0';
-	return (copy);
-}
-void	initialize_inpath(t_inpath *new)
-{
-	new->index = 0;
-	new->filename = NULL;
-	new->heredoc = false;
-	new->next = NULL;
-}
-void	initialize_outpath(t_outpath *new)
-{
-	new->index = 0;
-	new->filename = NULL;
-	new->append = false;
-	new->next = NULL;
 }

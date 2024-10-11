@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 12:00:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:25:30 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,6 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
-typedef struct s_parsing
-{
-
-	struct s_temp_command 	*t;
-	struct s_inpath			*in;
-	struct s_outpath		*o;
-	int						l;
-	int						i;
-	int						j;
-}	t_parsing;
-
 // main.c
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, t_envp **envp);
@@ -165,17 +154,11 @@ int		ft_outredir2(t_outpath *outpath);
 void	ft_heredoc(t_inpath *inpath, int i);
 void	ft_change_stdin(t_inpath *inpath);
 
-//check_quote.c
-bool	check_quote(char *str);
-
 //check.c
 int		ft_check_command(t_command *command, t_envp **envp);
 int		ft_check_base_command(t_command *command, t_envp **envp);
 int		ft_check_absolute_relative_path(t_command *command);
 int 	should_ignore_dollar(const char *str, int pos);
-
-//create_command.c
-int	count_quote_command(char *input);
 
 //create_redir.c
 int		create_redir(char *input, t_inpath **inpath, t_outpath **outpath, int index);
@@ -186,14 +169,13 @@ int		filename_length(char *input);
 char	 *copy_redir(char *input);
 
 //convert_command.c
-void	convert_command(t_parsing *p, t_command **command, char input);
+void	convert_command(t_temp_command **temp, t_command **command, t_inpath **inpath, t_outpath **outpath, char input);
 char	*realloc_without_quote(char *str);
-char	*realloc_without_d_quote(char **str);
-char	*realloc_without_s_quote(char **str);
 int		command_count(t_temp_command **command);
-void	create_command_def(char **tb, t_command **command, t_parsing *p, char i);
+void	create_command_def(char **tb, t_command **command, t_inpath **inpath, t_outpath **outpath, char input);
 void	free_temp_command(t_temp_command **command);
 char	**create_tab(int size);
+
 void	give_index_redir(t_inpath **inpath, t_outpath **outpath, int index);
 int		command_length(char *input);
 int		skip_command_length(char *str);
@@ -201,8 +183,6 @@ char 	*copy_command(char *input);
 bool	is_redir(char c);
 bool	is_white_space(char c);
 void	parsing(char *str, t_command **command);
-void	parsing2(char *input, t_parsing *p);
-void	init_struct_parsing(t_parsing **p);
 int		create_command(char *input, t_temp_command **command);
 
 //void	print_commands(t_command **head);
