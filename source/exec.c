@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 16:14:08 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:01:09 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 	while (tmp)
 	{
 		error = 0;
-		if (tmp->inpath && ft_inredir(tmp->inpath, i) == 1)
+		if (tmp->inpath && ft_inredir(tmp->inpath, i, data) == 1)
 			error = 1;
 		if (tmp->outpath && ft_outredir(tmp->outpath, i) == 1)
 			error = 1;
@@ -59,7 +59,7 @@ int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 		ft_builtins(i, command, envp, data);
 	if (i == 8)
 		ft_base_command(command, envp, data);
-	if (i == 9)
+	if (i == 9 || i == -1)
 		ft_abs_rel_path(command, envp, data);
 	return (1);
 }
@@ -68,7 +68,6 @@ void	ft_abs_rel_path(t_command *command, t_envp **envp, t_data *data)
 {
 	int		fd[2];
 	char	**env;
-	int		status;
 
 	if (command->next && !command->outpath)
 		pipe(fd);
@@ -79,15 +78,14 @@ void	ft_abs_rel_path(t_command *command, t_envp **envp, t_data *data)
 			ft_redirect_fd(0, fd);
 		env = convert_envp(envp);
 		execve(command->arg[0], command->arg, env);
-		perror("execve");
 	}
-	waitpid(g_glob_pid, NULL, 0);
+	waitpid(g_glob_pid,  &data->exit_status, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		data->exit_status = 128 + WTERMSIG(status);
+	if (WIFEXITED(data->exit_status))
+		data->exit_status = WEXITSTATUS(data->exit_status);
+	else if (WIFSIGNALED(data->exit_status))
+		data->exit_status = 128 + WTERMSIG(data->exit_status);
 }
 
 void	ft_base_command(t_command *command, t_envp **envp, t_data *data)

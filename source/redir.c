@@ -6,19 +6,19 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 15:55:51 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:18:29 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_inredir(t_inpath *inpath, int i)
+int	ft_inredir(t_inpath *inpath, int i, t_data *data)
 {
 	while (inpath)
 	{
 		if (inpath->index == i && inpath->heredoc == true)
 		{
-			ft_heredoc(inpath, i);
+			ft_heredoc(inpath, i, data);
 			inpath = inpath->next;
 			continue ;
 		}
@@ -79,12 +79,13 @@ int	ft_outredir2(t_outpath *outpath)
 	return (0);
 }
 
-void	ft_heredoc(t_inpath *inpath, int i)
+void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
 {
 	char	*input;
 	char	*buffer;
 	int		fd[2];
 
+	dup2(data->base_stdin, STDIN_FILENO);
 	buffer = ft_strdup("");
 	if (pipe(fd) < 0)
 	{

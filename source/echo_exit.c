@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:34:57 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:34:54 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_exit(char **arg, t_data *data)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(arg[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			ft_free_all(data, 1);
+			ft_free_all(data, 2);
 		}
 		i++;
 	}

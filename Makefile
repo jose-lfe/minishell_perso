@@ -33,6 +33,7 @@ SRCS = 	source/main.c \
 		source/signal.c \
 		source/utils.c \
 		source/utils2.c \
+		source/new_exec.c \
 
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJ_PATH)/,$(notdir $(OBJS)))

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 16:19:37 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:12:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,20 @@ typedef struct s_parsing
 	int						j;
 }	t_parsing;
 
+typedef struct s_pipe
+{
+	int	fd[2];
+	int	pre_fd;
+	int	i;
+}	t_pipe;
+
 // main.c
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, t_envp **envp);
 void	exit_statut(char **str, int i, t_data *data);
 t_data	*init_data(void);
 void	dollar_checker(char **str, t_envp **envp, t_data *data);
+void	start(t_data *data, t_command **command, t_envp **envp);
 
 //envp.c
 t_envp	*ft_copy_envp(char **env);
@@ -158,10 +166,10 @@ void	ft_copy_original_std(t_data *data);
 void	ft_redirect_fd(int i, int *fd);
 
 //redir.c
-int		ft_inredir(t_inpath *inpath, int i);
+int		ft_inredir(t_inpath *inpath, int i, t_data *data);
 int		ft_outredir(t_outpath *outpath, int i);
 int		ft_outredir2(t_outpath *outpath);
-void	ft_heredoc(t_inpath *inpath, int i);
+void	ft_heredoc(t_inpath *inpath, int i, t_data *data);
 void	ft_change_stdin(t_inpath *inpath);
 
 //check_input.c

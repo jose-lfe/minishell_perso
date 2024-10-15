@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/11 16:34:15 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:13:47 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		command = NULL;
 		parsing(input, &command);
-		start_exec(data, &command, &envp);
+		start(data, &command, &envp);
 		free(input);
 	}
 	ft_free_all(data, 0);
