@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/17 11:37:42 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:38:21 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (input)
 			add_history(input);
-		if (check_input(&input, &envp, data))
-			continue ;
+		if (check_input(&input))
+			continue ;	
 		command = NULL;
+		dollar_checker(&input, &envp, data);
 		parsing(input, &command);
 		start(data, &command, &envp);
 		free(input);
 	}
 	ft_free_all(data, 0);
-	rl_clear_history();
 	return (0);
 }

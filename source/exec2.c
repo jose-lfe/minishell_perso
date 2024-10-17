@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 10:47:15 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:13:12 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,18 @@ int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 		tmp = tmp->next;
 	if (!tmp)
 		path = false;
-	if (ft_isalpha(command->arg[0][0]) == 1)
+	if (command->arg[0][0] == '.' || command->arg[0][0] == '/')
+	{
+		ft_putstr_fd(command->arg[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
 	{
 		ft_putstr_fd(command->arg[0], 2);
 		if (path)
 			ft_putstr_fd(": command not found\n", 2);
 		else
 			ft_putstr_fd(": No such file or directory\n", 2);
-	}
-	else
-	{
-		ft_putstr_fd(command->arg[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 	data->exit_status = 127;
 	return (1);

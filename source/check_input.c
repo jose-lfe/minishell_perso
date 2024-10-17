@@ -6,13 +6,13 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 12:03:19 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:36:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_input(char **input, t_envp **envp, t_data *data)
+bool	check_input(char **input)
 {
 	if (check_quote(*input))
 	{
@@ -24,13 +24,12 @@ bool	check_input(char **input, t_envp **envp, t_data *data)
 		write(1, "Syntax error near <>\n", 21);
 		return (true);
 	}
-	dollar_checker(input, envp, data);
 	return (false);
 }
 
 void	exit_statut(char **str, int i, t_data *data)
 {
-	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 2);
+	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 1);
 }
 
 bool	is_all_space(char *str)

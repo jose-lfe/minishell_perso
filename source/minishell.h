@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/17 11:57:08 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:00:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	ft_heredoc(t_inpath *inpath, int i, t_data *data);
 void	ft_change_stdin(t_inpath *inpath);
 
 //check_input.c
-bool	check_input(char **str, t_envp **envp, t_data *data);
+bool	check_input(char **str);
 
 //check_quote.c
 bool	check_quote(char *str);
@@ -202,8 +202,8 @@ char	*copy_redir(char *input);
 //convert_command.c
 void	convert_command(t_parsing *p, t_command **command, char input);
 char	*realloc_without_quote(char *str);
-char	*realloc_without_d_quote(char **str);
-char	*realloc_without_s_quote(char **str);
+char	*realloc_without_d_quote(char *str);
+char	*realloc_without_s_quote(char *str);
 int		command_count(t_temp_command **command);
 void	create_cmd_def(char **tb, t_command **command, t_parsing *p, char i);
 void	free_temp_command(t_temp_command **command);

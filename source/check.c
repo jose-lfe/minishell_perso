@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:15:53 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:33:49 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,20 @@ int	ft_check_absolute_relative_path(t_command *command)
 int	should_ignore_dollar(const char *str, int pos)
 {
 	int	sq;
-	int	dq;
 	int	i;
 
 	i = 0;
-	sq = 0;
-	dq = 0;
+	sq = -1;
+	printf("car");
 	while (i < pos)
 	{
-		if (str[i] == '\'' && !dq)
-		{
-			sq = !sq;
-		}
-		else if (str[i] == '"' && !sq)
-		{
-			dq = !dq;
-		}
+		if (str[i] == '\'')
+			sq = -sq;
 		i++;
 	}
-	if (sq)
+	if (sq == 1)
 	{
+		printf("ici\n");
 		return (1);
 	}
 	return (0);
