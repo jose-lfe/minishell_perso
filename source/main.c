@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:13:47 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:37:42 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,13 +140,3 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	return (0);
 }
-
-/*
-a faire demain : 
--ajouter index a heredoc << END cat -e > zzz | << end ls
--changer dollar_checker (verfier si dans quote)
--faire macro pour valeur de retour waitpid + autre endroit fait
--preparer les endroits ou tout free
--tout normer
--enjoy
-*/

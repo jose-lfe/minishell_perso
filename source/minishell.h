@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/15 16:21:01 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:57:08 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct s_pipe
 // main.c
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, t_envp **envp);
-void	exit_statut(char **str, int i, t_data *data);
 t_data	*init_data(void);
 void	dollar_checker(char **str, t_envp **envp, t_data *data);
 void	start(t_data *data, t_command **command, t_envp **envp);
@@ -159,6 +158,7 @@ void	ft_exec_base_command(t_command *command, t_envp **envp);
 void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data);
 void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data);
 int		ft_command_not_found(t_command *command, t_envp **envp, t_data *data);
+void	waiting_pid(t_data *data);
 
 //filedescriptor.c
 void	ft_original_std(t_data *data, t_command *command, int index);
@@ -177,6 +177,10 @@ bool	check_input(char **str, t_envp **envp, t_data *data);
 
 //check_quote.c
 bool	check_quote(char *str);
+void	exit_statut(char **str, int i, t_data *data);
+bool	is_all_space(char *str);
+bool	check_redir(char *str);
+bool	check_redir2(char *str, int *c_l, int *c_r, int *i);
 
 //check.c
 int		ft_check_command(t_command *command, t_envp **envp);

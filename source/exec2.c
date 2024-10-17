@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/15 12:42:26 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:47:15 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,13 @@ int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 	}
 	data->exit_status = 127;
 	return (1);
+}
+
+void	waiting_pid(t_data *data)
+{
+	waitpid(-1, &data->exit_status, 0);
+	if (WIFEXITED(data->exit_status))
+		data->exit_status = WEXITSTATUS(data->exit_status);
+	else if (WIFSIGNALED(data->exit_status))
+		data->exit_status = 128 + WTERMSIG(data->exit_status);
 }

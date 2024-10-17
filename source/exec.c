@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:01:09 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:42:45 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_abs_rel_path(t_command *command, t_envp **envp, t_data *data)
 		env = convert_envp(envp);
 		execve(command->arg[0], command->arg, env);
 	}
-	waitpid(g_glob_pid,  &data->exit_status, 0);
+	waitpid(g_glob_pid, &data->exit_status, 0);
 	if (command->next && !command->outpath)
 		ft_redirect_fd(1, fd);
 	if (WIFEXITED(data->exit_status))
