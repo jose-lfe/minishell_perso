@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 14:36:50 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:14:12 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	ft_echo(char **arg, t_data *data)
 	int	option;
 
 	option = 0;
-	if (ft_strlen(arg[1]) < 2)
-		option = 0;
-	else if (arg[1] && ft_strncmp(arg[1], "-n", ft_strlen(arg[1])) == 0)
-		option = 1;
+	if (arg[1] && ft_strncmp(arg[1], "-n", ft_strlen(arg[1])) == 0)
+	{
+		if (ft_strlen(arg[1]) == 2)
+			option = 1;
+	}
 	else if (arg[1])
 		ft_printf("%s", arg[1]);
 	if (arg[1] != NULL)

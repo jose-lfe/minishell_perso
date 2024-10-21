@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 13:13:12 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:58:45 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 	if (i == 2)
 		ft_cd(command->arg, data, env);
 	if (i == 3)
-		ft_pwd(data);
+		ft_pwd(command->arg, data);
 	if (i == 4)
 		ft_pre_export(env, command->arg, data);
 	if (i == 5)

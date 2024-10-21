@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/17 14:00:33 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:59:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ft_unset(t_envp **envp, char *arg);
 
 //cd_pwd.c
 void	ft_cd(char **arg, t_data *data, t_envp **envp);
-void	ft_pwd(t_data *data);
+void	ft_pwd(char **arg, t_data *data);
 void	ft_change_old_pwd(char *buffer, t_envp **envp);
 void	ft_change_new_pwd(t_envp **envp);
 
