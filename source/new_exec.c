@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 11:51:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:32:55 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	do_child(t_data *data, t_command *current, t_envp **envp, t_pipe p)
 		dup2(p.fd[1], STDOUT_FILENO);
 	close(p.fd[0]);
 	close(p.fd[1]);
-	if (current->inpath && ft_inredir(current->inpath, p.i, data) == 1)
-		error = 1;
 	if (current->outpath && ft_outredir(current->outpath, p.i) == 1)
 		error = 1;
 	if (error == 0 && ft_exec_command_bis(current, envp, data) == 0)
@@ -75,18 +73,7 @@ void	exec_with_pipe(t_data *data, t_command **command, t_envp **envp)
 	p.pre_fd = 0;
 	p.i = 0;
 	current = *command;
-	while (current != NULL)
-	{
-		if (current->next != NULL)
-			pipe(p.fd);
-		g_glob_pid = fork();
-		if (g_glob_pid == 0)
-			do_child(data, current, envp, p);
-		else
-			do_parent(current, &p);
-		current = current->next;
-		p.i++;
-	}
+	p.i = exec_pipe2(data, current, envp, p);
 	while (p.i > 0)
 	{
 		waiting_pid(data);
@@ -105,7 +92,10 @@ void	start(t_data *data, t_command **command, t_envp **envp)
 			return ;
 		}
 		if ((*command)->next)
+		{
 			exec_with_pipe(data, command, envp);
+			original_std(data);
+		}
 		else
 			start_exec(data, command, envp);
 	}

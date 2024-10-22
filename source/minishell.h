@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/21 10:59:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:37:36 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,16 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data);
 int		ft_command_not_found(t_command *command, t_envp **envp, t_data *data);
 void	waiting_pid(t_data *data);
 
+//new_exec2.c
+int		exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p);
+void	do_child(t_data *data, t_command *current, t_envp **envp, t_pipe p);
+void	do_parent(t_command *current, t_pipe *p);
+
 //filedescriptor.c
 void	ft_original_std(t_data *data, t_command *command, int index);
 void	ft_copy_original_std(t_data *data);
 void	ft_redirect_fd(int i, int *fd);
+void	original_std(t_data *data);
 
 //redir.c
 int		ft_inredir(t_inpath *inpath, int i, t_data *data);
@@ -180,7 +186,7 @@ bool	check_quote(char *str);
 void	exit_statut(char **str, int i, t_data *data);
 bool	is_all_space(char *str);
 bool	check_redir(char *str);
-bool	check_redir2(char *str, int *c_l, int *c_r, int *i);
+bool	check_redir2(char *str, char c);
 
 //check.c
 int		ft_check_command(t_command *command, t_envp **envp);

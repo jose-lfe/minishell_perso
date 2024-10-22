@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 13:36:31 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:32:54 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,53 +48,49 @@ bool	is_all_space(char *str)
 	return (true);
 }
 
-bool	check_redir(char *str)
+bool	check_redir2(char *str, char c)
 {
-	int	c_r;
-	int	c_l;
 	int	i;
 
-	c_r = 0;
-	c_l = 0;
 	i = 0;
-	while (str[i] != '\0')
-	{
-		if (check_redir2(str, &c_l, &c_r, &i) == true)
-			return (true);
-		if (i > 0)
-		{
-			if (str[i] == '>')
-				c_r = 1;
-		}
+	if (str[i + 1] && (str[i + 1]) == c)
 		i++;
-	}
+	if (str[i + 1])
+		i++;
+	if (str[i + 1] && is_redir(str[i]))
+		return (true);
+	if (str[i + 1])
+		i++;
+	while (is_white_space(str[i]) && str[i] != '\0')
+		i++;
+	if (str[i] == '|')
+		return (true);
+	if (ft_isalpha(str[i]) == 0)
+		return (true);
 	return (false);
 }
 
-bool	check_redir2(char *str, int *c_l, int *c_r, int *i)
+bool	check_redir(char *str)
 {
-	if (*c_r == 1 && str[*i] == '<')
-		return (true);
-	if (*c_l == 1 && str[*i] == '>')
-		return (true);
-	while (str[*i] == '<' && str[*i] != '\0')
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		(*c_l)++;
-		if (*c_l > 2)
-			return (true);
-		(*i)++;
-	}
-	while (str[*i] == '>' && str[*i] != '\0')
-	{
-		(*c_r)++;
-		if (*c_r > 2)
-			return (true);
-		(*i)++;
-	}
-	if (*i > 0)
-	{
-		if (str[*i - 1] == '<')
-			*c_l = 1;
+		while (is_white_space(str[i]))
+			i++;
+		if (str[i] == '<')
+		{
+			if (check_redir2(str + i, '<'))
+				return (true);
+		}
+		if (str[i] == '>')
+		{
+			if (check_redir2(str + i, '>'))
+				return (true);
+		}
+		while (!is_white_space(str[i]) && str[i] != '\0')
+			i++;
 	}
 	return (false);
 }

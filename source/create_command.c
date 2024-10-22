@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:13:50 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 15:31:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:32:29 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	count_quote_command(char *input)
 		if (input[i] == q)
 		{
 			if (input[i + 1] && (is_white_space(input[i + 1])
-				|| input[i + 1] == '\0'))
-			return (i + 1);
+					|| input[i + 1] == '\0'))
+				return (i + 1);
 		}
 		i++;
 	}

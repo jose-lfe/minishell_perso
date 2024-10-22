@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:20:11 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/15 13:17:05 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:18:45 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,12 @@ void	ft_redirect_fd(int i, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 	}
+}
+
+void	original_std(t_data *data)
+{
+	if (dup2(data->base_stdin, STDIN_FILENO) == -1)
+		perror("dup2 STDIN");
+	if (dup2(data->base_stdout, STDOUT_FILENO) == -1)
+		perror("dup2 STDOUT");
 }
