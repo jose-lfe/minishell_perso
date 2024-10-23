@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/22 10:32:07 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:05:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	dollar_checker(char **str, t_envp **envp, t_data *data)
 	}
 }
 
-t_data	*init_data(void)
+t_data	*init_data(t_envp *envp)
 {
 	t_data	*data;
 
@@ -109,6 +109,7 @@ t_data	*init_data(void)
 		exit(0);
 	ft_copy_original_std(data);
 	data->exit_status = 0;
+	data->envp = envp;
 	return (data);
 }
 
@@ -121,7 +122,7 @@ int	main(int ac, char **av, char **env)
 
 	setup(ac, av, env, &envp);
 	command = NULL;
-	data = init_data();
+	data = init_data(envp);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -133,7 +134,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		command = NULL;
 		dollar_checker(&input, &envp, data);
-		parsing(input, &command);
+		parsing(input, &command, data);
 		start(data, &command, &envp);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/22 11:37:36 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:19:20 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef struct s_pipe
 // main.c
 char	*ft_change_str(char *old, char *convert, int start, int size);
 int		dollar_converter(char **str, int i, t_envp **envp);
-t_data	*init_data(void);
+t_data	*init_data(t_envp *envp);
 void	dollar_checker(char **str, t_envp **envp, t_data *data);
 void	start(t_data *data, t_command **command, t_envp **envp);
 
@@ -164,6 +164,7 @@ void	waiting_pid(t_data *data);
 int		exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p);
 void	do_child(t_data *data, t_command *current, t_envp **envp, t_pipe p);
 void	do_parent(t_command *current, t_pipe *p);
+int		ft_read_buffer(char *buffer, ssize_t b_read);
 
 //filedescriptor.c
 void	ft_original_std(t_data *data, t_command *command, int index);
@@ -220,7 +221,7 @@ int		skip_command_length(char *str);
 char	*copy_command(char *input);
 bool	is_redir(char c);
 bool	is_white_space(char c);
-void	parsing(char *str, t_command **command);
+void	parsing(char *str, t_command **command, t_data *data);
 void	parsing2(char *input, t_parsing *p);
 void	init_struct_parsing(t_parsing **p);
 int		create_command(char *input, t_temp_command **command);

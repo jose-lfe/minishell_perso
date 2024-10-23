@@ -6,13 +6,13 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:14:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/22 10:31:41 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:06:27 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parsing(char *input, t_command **command)
+void	parsing(char *input, t_command **command, t_data *data)
 {
 	t_parsing	*p;
 
@@ -31,6 +31,7 @@ void	parsing(char *input, t_command **command)
 	set_pipeout(command);
 	p->j = 0;
 	free(p);
+	data->command = *command;
 }
 	//print_command(command);
 

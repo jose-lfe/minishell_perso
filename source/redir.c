@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/15 13:18:29 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:19:39 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,32 +81,58 @@ int	ft_outredir2(t_outpath *outpath)
 
 void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
 {
-	char	*input;
 	char	*buffer;
 	int		fd[2];
+	char	*lim;
+	ssize_t	b_read;
 
+	pipe(fd);
 	dup2(data->base_stdin, STDIN_FILENO);
-	buffer = ft_strdup("");
-	if (pipe(fd) < 0)
+	buffer = ft_calloc(1024, sizeof(char));
+	lim = ft_strjoin(inpath->filename, "\n");
+	b_read = ft_read_buffer(buffer, 0);
+	while (ft_strncmp(buffer, lim, b_read) != 0)
 	{
-		perror("pipe error\n");
-		return ;
+		if (!inpath->next || inpath->next->index != i)
+			ft_putstr_fd(buffer, fd[1]);
+		free(buffer);
+		buffer = ft_calloc(1024, sizeof(char));
+		b_read = ft_read_buffer(buffer, b_read);
 	}
-	while (1)
-	{
-		input = readline("heredoc> ");
-		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0)
-			break ;
-		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
-	}
-	if (!inpath->next || inpath->next->index != i)
-		ft_putstr_fd(buffer, fd[1]);
-	close(fd[1]);
-	if (inpath->next == NULL || inpath->next->index != i)
-		dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
 	free(buffer);
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 }
+
+// void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
+// {
+// 	char	*input;
+// 	char	*buffer;
+// 	int		fd[2];
+
+// 	dup2(data->base_stdin, STDIN_FILENO);
+// 	buffer = ft_strdup("");
+// 	if (pipe(fd) < 0)
+// 		return ;
+// 	while (1)
+// 	{
+// 		input = readline("heredoc> ");
+// 		if (ft_strncmp(input, inpath->filename, ft_strlen(input)) == 0 
+// 		&& ft_strlen(input) > 0)
+// 			break ;
+// 		buffer = ft_strjoin(ft_strjoin_gnl(buffer, input), "\n");
+// 		//free(buffer);
+// 		//free(input);
+// 	}
+// 	if (!inpath->next || inpath->next->index != i)
+// 		ft_putstr_fd(buffer, fd[1]);
+// 	close(fd[1]);
+// 	if (inpath->next == NULL || inpath->next->index != i)
+// 		dup2(fd[0], STDIN_FILENO);
+// 	close(fd[0]);
+// 	free(input);
+// }
 
 void	ft_change_stdin(t_inpath *inpath)
 {
