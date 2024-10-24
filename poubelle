@@ -1,3 +1,5 @@
 << end cat -e | grep car | wc > out | << END ls
 
+< script.sh ls > out | < script.sh grep bash
+
 -fsanitize=address

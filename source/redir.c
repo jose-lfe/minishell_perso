@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:27:03 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/23 11:19:39 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:01:36 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_inredir(t_inpath *inpath, int i, t_data *data)
 			return (1);
 		}
 		if (inpath->index == i)
-			ft_change_stdin(inpath);
+			ft_change_stdin(inpath, data);
 		inpath = inpath->next;
 	}
 	return (0);
@@ -103,6 +103,8 @@ void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
+	free(lim);
+	data->flag = 1;
 }
 
 // void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
@@ -134,11 +136,12 @@ void	ft_heredoc(t_inpath *inpath, int i, t_data *data)
 // 	free(input);
 // }
 
-void	ft_change_stdin(t_inpath *inpath)
+void	ft_change_stdin(t_inpath *inpath, t_data *data)
 {
 	int	fd;
 
 	fd = open(inpath->filename, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	data->flag = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/23 11:19:20 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:00:06 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_outpath
 
 typedef struct s_data
 {
+	int					flag;
 	int					exit_status;
 	int					base_stdin;
 	int					base_stdout;
@@ -177,7 +178,7 @@ int		ft_inredir(t_inpath *inpath, int i, t_data *data);
 int		ft_outredir(t_outpath *outpath, int i);
 int		ft_outredir2(t_outpath *outpath);
 void	ft_heredoc(t_inpath *inpath, int i, t_data *data);
-void	ft_change_stdin(t_inpath *inpath);
+void	ft_change_stdin(t_inpath *inpath, t_data *data);
 
 //check_input.c
 bool	check_input(char **str);
@@ -234,8 +235,8 @@ void	set_pipeout(t_command **head);
 //free.c
 void	free_command(t_command *command);
 void	free_arg(char **arg);
-void	free_inpath(t_inpath *inpath);
-void	free_outpath(t_outpath *outpath);
+int		free_inpath(t_inpath **inpath);
+int		free_outpath(t_outpath **outpath);
 void	ft_free_data(t_data *data);
 
 void	print_command(t_command **head);

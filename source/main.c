@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/22 14:05:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:39:11 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ t_data	*init_data(t_envp *envp)
 		exit(0);
 	ft_copy_original_std(data);
 	data->exit_status = 0;
+	data->flag = 0;
 	data->envp = envp;
+	data->command = NULL;
 	return (data);
 }
 
@@ -117,14 +119,13 @@ int	main(int ac, char **av, char **env)
 {
 	t_envp		*envp;
 	char		*input;
-	t_command	*command;
 	t_data		*data;
 
 	setup(ac, av, env, &envp);
-	command = NULL;
 	data = init_data(envp);
 	while (1)
 	{
+		data->command = NULL;
 		input = readline("minishell> ");
 		if (!input)
 			break ;
@@ -132,10 +133,9 @@ int	main(int ac, char **av, char **env)
 			add_history(input);
 		if (check_input(&input))
 			continue ;
-		command = NULL;
 		dollar_checker(&input, &envp, data);
-		parsing(input, &command, data);
-		start(data, &command, &envp);
+		parsing(input, &(data->command), data);
+		start(data, &(data->command), &envp);
 		free(input);
 	}
 	ft_free_all(data, 0);

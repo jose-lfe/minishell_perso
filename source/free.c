@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/23 11:28:20 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:10:44 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,26 @@
 
 void	free_command(t_command *command)
 {
-	t_command	*current;
+	t_command	*next;
+	int			in;
+	int			out;
 
+	in = 0;
+	out = 0;
 	if (command == NULL)
 		return ;
-	current = command;
-	if (command->inpath)
-		free_inpath(command->inpath);
-	if (command->outpath)
-		free_outpath(command->outpath);
 	while (command != NULL)
 	{
-		current = command->next;
-		free_arg(command->arg);
+		if (in < 1)
+			in = free_inpath(&(command->inpath));
+		if (out < 1)
+			out = free_outpath(&(command->outpath));
+		command->outpath = NULL;
+		next = command->next;
+		if (command->arg)
+			free_arg(command->arg);
 		free(command);
-		command = current;
+		command = next;
 	}
 }
 
@@ -45,34 +50,48 @@ void	free_arg(char **arg)
 	free(arg);
 }
 
-void	free_inpath(t_inpath *inpath)
+int	free_inpath(t_inpath **inpath)
 {
 	t_inpath	*temp;
-
-	while (inpath != NULL)
+	
+	if (!*inpath)
+		return (0);
+	while (*inpath != NULL)
 	{
-		temp = inpath->next;
-		if (inpath->filename)
-			free(inpath->filename);
-		if (inpath)
-			free(inpath);
-		inpath = temp;
+		temp = (*inpath)->next;
+		if ((*inpath)->filename)
+		{
+			free((*inpath)->filename);
+			(*inpath)->filename = NULL;
+		}
+		if (*inpath)
+			free(*inpath);
+		*inpath = NULL;
+		*inpath = temp;
 	}
+	return (1);
 }
 
-void	free_outpath(t_outpath *outpath)
+int	free_outpath(t_outpath **outpath)
 {
 	t_outpath	*temp;
 
-	while (outpath != NULL)
+	if (!*outpath)
+		return (0);
+	while (*outpath != NULL)
 	{
-		temp = outpath->next;
-		if (outpath->filename)
-			free(outpath->filename);
-		if (outpath)
-			free(outpath);
-		outpath = temp;
+		temp = (*outpath)->next;
+		if ((*outpath)->filename)
+		{
+			free((*outpath)->filename);
+			(*outpath)->filename = NULL;
+		}
+		if (*outpath)
+			free(*outpath);
+		(*outpath) = temp;
 	}
+	*outpath = NULL;
+	return (1);
 }
 
 void	ft_free_data(t_data *data)

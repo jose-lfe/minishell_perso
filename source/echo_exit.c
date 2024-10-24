@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/23 11:20:00 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:37:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	ft_exit(char **arg, t_data *data)
 void	ft_free_all(t_data *data, int exit_value)
 {
 	ft_free_envp(data->envp);
-	free_command(data->command);
+	if (data->command != NULL)
+		free_command(data->command);
 	free(data);
 	exit(exit_value);
 }

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:32:32 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/23 11:18:41 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:08:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p)
 	while (current != NULL)
 	{
 		error = 0;
+		data->flag = 0;
 		if (current->next != NULL)
 			pipe(p.fd);
 		if (current->inpath && ft_inredir(current->inpath, p.i, data) == 1)

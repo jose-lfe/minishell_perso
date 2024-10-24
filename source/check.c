@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/17 13:33:49 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:10:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	should_ignore_dollar(const char *str, int pos)
 
 	i = 0;
 	sq = -1;
-	printf("car");
 	while (i < pos)
 	{
 		if (str[i] == '\'')
@@ -84,9 +83,6 @@ int	should_ignore_dollar(const char *str, int pos)
 		i++;
 	}
 	if (sq == 1)
-	{
-		printf("ici\n");
 		return (1);
-	}
 	return (0);
 }

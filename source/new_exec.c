@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/22 11:32:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:08:22 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	do_child(t_data *data, t_command *current, t_envp **envp, t_pipe p)
 	int	error;
 
 	error = 0;
-	if (p.pre_fd != 0)
+	if (p.pre_fd != 0 && data->flag == 0)
 	{
 		dup2(p.pre_fd, STDIN_FILENO);
 		close(p.pre_fd);
@@ -95,9 +95,13 @@ void	start(t_data *data, t_command **command, t_envp **envp)
 		{
 			exec_with_pipe(data, command, envp);
 			original_std(data);
+			data->flag = 0;
 		}
 		else
+		{
 			start_exec(data, command, envp);
+			data->flag = 0;
+		}
 	}
 	else
 		return ;
