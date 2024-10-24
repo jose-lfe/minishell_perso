@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:06:02 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 14:10:44 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:16:22 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_arg(char **arg)
 int	free_inpath(t_inpath **inpath)
 {
 	t_inpath	*temp;
-	
+
 	if (!*inpath)
 		return (0);
 	while (*inpath != NULL)
