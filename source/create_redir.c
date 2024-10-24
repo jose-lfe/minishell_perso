@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:13:56 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:19:37 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:34:53 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	create_inpath(char *input, t_inpath **inpath, int index)
 	new = malloc(sizeof(t_inpath));
 	initialize_inpath(new);
 	filename = copy_redir(input);
-	new->filename = filename;
+	new->filename = realloc_without_quote(filename);
 	new->index = index;
 	if (*input == '<' && *(input + 1) == '<')
 		new->heredoc = true;
@@ -64,7 +64,7 @@ int	create_outpath(char *input, t_outpath **outpath, int index)
 	new = malloc(sizeof(t_outpath));
 	initialize_outpath(new);
 	filename = copy_redir(input);
-	new->filename = filename;
+	new->filename = realloc_without_quote(filename);
 	new->index = index;
 	if (*input == '>' && *(input + 1) == '>')
 		new->append = true;

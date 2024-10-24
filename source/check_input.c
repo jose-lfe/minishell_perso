@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/22 10:32:54 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:26:53 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ bool	check_input(char **input)
 	return (false);
 }
 
-void	exit_statut(char **str, int i, t_data *data)
-{
-	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 1);
-}
-
 bool	is_all_space(char *str)
 {
 	int	i;
@@ -46,6 +41,18 @@ bool	is_all_space(char *str)
 		i++;
 	}
 	return (true);
+}
+
+int	ft_accept(char c)
+{
+	if (c == '(' || c == ')')
+		return (0);
+	if (c == '[' || c == ']')
+		return (0);
+	if (c == 0)
+		return (0);
+	else
+		return (1);
 }
 
 bool	check_redir2(char *str, char c)
@@ -65,7 +72,7 @@ bool	check_redir2(char *str, char c)
 		i++;
 	if (str[i] == '|')
 		return (true);
-	if (ft_isalpha(str[i]) == 0)
+	if (ft_accept(str[i]) == 0)
 		return (true);
 	return (false);
 }
