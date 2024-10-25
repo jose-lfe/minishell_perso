@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 14:26:53 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:03:26 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_accept(char c)
 		return (0);
 	if (c == '[' || c == ']')
 		return (0);
-	if (c == 0)
+	if (c == '\0')
 		return (0);
 	else
 		return (1);

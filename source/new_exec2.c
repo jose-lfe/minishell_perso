@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:32:32 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 14:27:01 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:40:28 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,9 @@ int	ft_read_buffer(char *buffer, ssize_t b_read)
 
 void	exit_statut(char **str, int i, t_data *data)
 {
-	*str = ft_change_str(*str, ft_itoa(data->exit_status), i, 1);
+	char	*tmp;
+
+	tmp = ft_itoa(data->exit_status);
+	*str = ft_change_str(*str, tmp, i, 1);
+	free (tmp);
 }
