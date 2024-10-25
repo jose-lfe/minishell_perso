@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/25 11:33:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:13:53 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	ft_heredoc(t_inpath *inpath, int i, t_data *data);
 void	ft_change_stdin(t_inpath *inpath, t_data *data);
 
 //check_input.c
-bool	check_input(char **str);
+bool	check_input(char **str, t_data *data);
 
 //check_quote.c
 bool	check_quote(char *str);

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/24 12:39:11 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:12:38 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (input)
 			add_history(input);
-		if (check_input(&input))
+		if (check_input(&input, data))
 			continue ;
 		dollar_checker(&input, &envp, data);
 		parsing(input, &(data->command), data);

@@ -6,22 +6,24 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/25 12:03:26 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:22:16 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_input(char **input)
+bool	check_input(char **input, t_data *data)
 {
 	if (check_quote(*input))
 	{
-		write(1, "Error: quotes are wrong\n", 24);
+		write(2, "Error: quotes are wrong\n", 24);
+		data->exit_status = 1;
 		return (true);
 	}
 	if (check_redir(*input))
 	{
-		write(1, "Syntax error near <>\n", 21);
+		write(2, "Syntax error near <>\n", 21);
+		data->exit_status = 2;
 		return (true);
 	}
 	return (false);
@@ -45,11 +47,11 @@ bool	is_all_space(char *str)
 
 int	ft_accept(char c)
 {
+	if (c == '>' || c == '<')
+		return (0);
 	if (c == '(' || c == ')')
 		return (0);
 	if (c == '[' || c == ']')
-		return (0);
-	if (c == '\0')
 		return (0);
 	else
 		return (1);
