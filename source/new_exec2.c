@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:32:32 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/25 11:40:28 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:00:14 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 
 extern pid_t	g_glob_pid;
 
+pid_t	exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe *p)
+{
+	int	error;
+
+	error = 0;
+	data->flag = 0;
+	if (current->next != NULL)
+		pipe(p->fd);
+	if (current->inpath && ft_inredir(current->inpath, p->i, data) == 1)
+		error = 1;
+	g_glob_pid = fork();
+	if (g_glob_pid == 0 && error == 0)
+		do_child(data, current, envp, *p);
+	else
+		do_parent(current, p);
+	current = current->next;
+	return (g_glob_pid);
+}
+
+/*
 int	exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p)
 {
 	int	error;
@@ -35,7 +55,7 @@ int	exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p)
 		p.i++;
 	}
 	return (p.i);
-}
+}*/
 
 int	ft_read_buffer(char *buffer, ssize_t b_read)
 {

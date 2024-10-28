@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/25 12:13:53 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:56:16 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,10 @@ void	ft_exec_base_command(t_command *command, t_envp **envp);
 void	ft_builtins(int i, t_command *command, t_envp **envp, t_data *data);
 void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data);
 int		ft_command_not_found(t_command *command, t_envp **envp, t_data *data);
-void	waiting_pid(t_data *data);
+void	waiting_pid(t_data *data, t_pipe p, pid_t *pids);
 
 //new_exec2.c
-int		exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe p);
+pid_t	exec_pipe2(t_data *data, t_command *current, t_envp **envp, t_pipe *p);
 void	do_child(t_data *data, t_command *current, t_envp **envp, t_pipe p);
 void	do_parent(t_command *current, t_pipe *p);
 int		ft_read_buffer(char *buffer, ssize_t b_read);

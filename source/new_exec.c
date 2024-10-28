@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 14:08:22 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:04:57 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,35 @@ void	exec_with_pipe(t_data *data, t_command **command, t_envp **envp)
 {
 	t_command	*current;
 	t_pipe		p;
+	pid_t		*pids;
+
+	p.pre_fd = 0;
+	p.i = 0;
+	current = *command;
+	while (current)
+	{
+		current = current->next;
+		p.i++;
+	}
+	pids = malloc(sizeof(pid_t) * p.i);
+	current = *command;
+	p.i = 0;
+	while (current != NULL)
+	{
+		pids[p.i] = exec_pipe2(data, current, envp, &p);
+		p.i++;
+		current = current->next;
+	}
+	waiting_pid(data, p, pids);
+	free(pids);
+	free_command(*command);
+}
+
+/*
+void	exec_with_pipe(t_data *data, t_command **command, t_envp **envp)
+{
+	t_command	*current;
+	t_pipe		p;
 
 	p.pre_fd = 0;
 	p.i = 0;
@@ -80,7 +109,7 @@ void	exec_with_pipe(t_data *data, t_command **command, t_envp **envp)
 		p.i--;
 	}
 	free_command(*command);
-}
+}*/
 
 void	start(t_data *data, t_command **command, t_envp **envp)
 {
