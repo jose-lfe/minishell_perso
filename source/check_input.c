@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/25 12:22:16 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:42:47 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ bool	check_input(char **input, t_data *data)
 	if (check_quote(*input))
 	{
 		write(2, "Error: quotes are wrong\n", 24);
-		data->exit_status = 1;
+		data->exit_status = 2;
 		return (true);
 	}
 	if (check_redir(*input))
 	{
 		write(2, "Syntax error near <>\n", 21);
+		data->exit_status = 2;
+		return (true);
+	}
+	if (check_pipe(*input))
+	{
+		write(2, "Syntax error near |\n", 20);
 		data->exit_status = 2;
 		return (true);
 	}
@@ -52,6 +58,10 @@ int	ft_accept(char c)
 	if (c == '(' || c == ')')
 		return (0);
 	if (c == '[' || c == ']')
+		return (0);
+	if (c == ' ')
+		return (0);
+	if (c == '\0')
 		return (0);
 	else
 		return (1);

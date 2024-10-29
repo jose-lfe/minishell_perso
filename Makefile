@@ -11,6 +11,7 @@ AR = ar
 SRCS = 	source/main.c \
 		source/cd_pwd.c \
 		source/check_input.c \
+		source/check_pipe.c \
 		source/check_quote.c \
 		source/check.c \
 		source/convert_command.c \

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/29 12:16:40 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:39:31 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ void	command_not_found2(t_command *command)
 
 	i = 0;
 	if (access(command->arg[0], F_OK) == 0)
+	{
 		if (access(command->arg[0], X_OK) != 0)
 		{
 			ft_putstr_fd(command->arg[0], 2);
 			ft_putstr_fd(": Permission denied\n", 2);
-			return;
+			return ;
 		}
+	}
 	while (command->arg[0][i] == '.' || command->arg[0][i] == '/')
 		i++;
 	if (command->arg[0][i] == '\0')

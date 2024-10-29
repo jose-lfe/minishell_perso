@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/28 12:56:16 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:38:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,8 @@ void	ft_change_stdin(t_inpath *inpath, t_data *data);
 
 //check_input.c
 bool	check_input(char **str, t_data *data);
+bool	check_pipe(char *str);
+int		ft_accept(char c);
 
 //check_quote.c
 bool	check_quote(char *str);
