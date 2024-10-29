@@ -1,7 +1,7 @@
 NAME = minishell
 CC = gcc
 LDFLAGS = -lreadline
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 LIBFT_PATH = ./library/libft
 LIBFT = -L$(LIBFT_PATH) -lft
 LIBFT_SENTINEL = $(LIBFT_PATH)/libft_built.sentinel

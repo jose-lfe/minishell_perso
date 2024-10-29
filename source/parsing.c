@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:14:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/22 14:06:27 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:03:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	set_pipeout(t_command **head)
 	t_command	*current;
 
 	current = *head;
-	while (current != NULL)
+	while (current->next != NULL)
 	{
 		if (current->pipein == true)
 			current->next->pipeout = true;

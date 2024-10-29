@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/28 13:04:57 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:42:51 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int	ft_exec_command_bis(t_command *command, t_envp **envp, t_data *data)
 	char	**env;
 
 	i = ft_check_command(command, envp);
+	if (i == -1)
+	{
+		ft_command_not_found(command, envp, data);
+		data->exit_status = 127;
+		exit(data->exit_status);
+	}
 	if (i >= 1 && i <= 7)
 	{
 		ft_exec_builtins(i, command, envp, data);
@@ -33,6 +39,7 @@ int	ft_exec_command_bis(t_command *command, t_envp **envp, t_data *data)
 		execve(command->arg[0], command->arg, env);
 	}
 	data->exit_status = 127;
+	exit(data->exit_status);
 	return (1);
 }
 

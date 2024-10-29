@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/28 13:04:26 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:16:40 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,32 @@ void	ft_exec_builtins(int i, t_command *command, t_envp **env, t_data *data)
 		ft_exit(command->arg, data);
 }
 
+void	command_not_found2(t_command *command)
+{
+	int	i;
+
+	i = 0;
+	if (access(command->arg[0], F_OK) == 0)
+		if (access(command->arg[0], X_OK) != 0)
+		{
+			ft_putstr_fd(command->arg[0], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			return;
+		}
+	while (command->arg[0][i] == '.' || command->arg[0][i] == '/')
+		i++;
+	if (command->arg[0][i] == '\0')
+	{
+		ft_putstr_fd(command->arg[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+	}
+	if (ft_isalnum(command->arg[0][i]) == 1)
+	{
+		ft_putstr_fd(command->arg[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+}
+
 int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 {
 	t_envp	*tmp;
@@ -72,8 +98,7 @@ int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 		path = false;
 	if (command->arg[0][0] == '.' || command->arg[0][0] == '/')
 	{
-		ft_putstr_fd(command->arg[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		command_not_found2(command);
 	}
 	else
 	{

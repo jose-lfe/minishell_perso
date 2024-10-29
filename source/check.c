@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 14:10:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:15:42 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,28 @@ int	ft_check_command(t_command *command, t_envp **envp)
 	return (-1);
 }
 
+int	is_str_alpha_num(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (ft_isalnum(str[i]) == 1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_check_base_command(t_command *command, t_envp **envp)
 {
 	char	**path;
 	int		i;
 	char	*cmd;
 
+	if (is_str_alpha_num(command->arg[0]) == 1)
+		return (1);
 	path = ft_get_path(envp);
 	if (!path)
 		return (1);
@@ -64,6 +80,13 @@ int	ft_check_base_command(t_command *command, t_envp **envp)
 
 int	ft_check_absolute_relative_path(t_command *command)
 {
+	int	i;
+
+	i = 0;
+	while (command->arg[0][i] == '.' || command->arg[0][i] == '/')
+		i++;
+	if (command->arg[0][i] == '\0')
+		return (1);
 	if (access(command->arg[0], X_OK) == 0)
 		return (0);
 	return (1);
