@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/24 12:37:10 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:22:58 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,33 @@ void	ft_echo(char **arg, t_data *data)
 	data->exit_status = 0;
 }
 
-void	ft_exit(char **arg, t_data *data)
+void	ft_exit(t_command *command, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("exit\n", 2);
-	if (arg[1] && arg[2])
+	if (command->pipein == false && command->pipeout == false)
+		ft_putstr_fd("exit\n", 2);
+	if (command->arg[1] && command->arg[2])
 	{
 		ft_putstr_fd("exit: too many arguments", 2);
 		data->exit_status = 1;
 		return ;
 	}
-	if (!arg[1])
+	if (!command->arg[1])
 		ft_free_all(data, data->exit_status);
-	while (arg[1][i])
+	while (command->arg[1][i])
 	{
-		if (ft_isdigit(arg[1][i]) == 0)
+		if (ft_isdigit(command->arg[1][i]) == 0)
 		{
 			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(arg[1], 2);
+			ft_putstr_fd(command->arg[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			ft_free_all(data, 2);
 		}
 		i++;
 	}
-	ft_free_all(data, ft_atoi(arg[1]) % 256);
+	ft_free_all(data, ft_atoi(command->arg[1]) % 256);
 }
 
 void	ft_free_all(t_data *data, int exit_value)

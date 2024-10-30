@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/29 12:15:42 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:13:55 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_check_command(t_command *command, t_envp **envp)
 		return (6);
 	if (ft_strncmp(command->arg[0], "exit", ft_strlen(command->arg[0])) == 0)
 		return (7);
+	if (ft_strncmp(command->arg[0], "./minishell", ft_strlen(command->arg[0])) == 0)
+		return (10);
 	if (ft_check_base_command(command, envp) == 0)
 		return (8);
 	if (ft_check_absolute_relative_path(command) == 0)

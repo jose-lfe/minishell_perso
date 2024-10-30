@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/29 13:03:33 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:55:19 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	dollar_converter(char **str, int i, t_envp **envp)
 	var = ft_substr(*str + 1, start, size_var);
 	i = 0;
 	tmp = *envp;
-	while (tmp && ft_strncmp(tmp->var, var, ft_strlen(tmp->var)) != 0)
+	while (tmp && ft_strncmp(var, tmp->var, ft_strlen(var)) != 0)
 		tmp = tmp->next;
 	if (!tmp)
 		return (ft_remove_dollar(str, var, start, size_var));

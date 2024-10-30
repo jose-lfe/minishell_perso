@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/29 12:16:04 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:04:53 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	ft_exec_command(t_command *command, t_envp **envp, t_data *data)
 		ft_base_command(command, envp, data);
 	if (i == 9 || i == -1)
 		ft_abs_rel_path(command, envp, data);
+	if (i == 10)
+		ft_exec_minishell(command, envp, data);
 	return (1);
 }
 

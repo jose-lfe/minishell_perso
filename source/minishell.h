@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/29 12:38:33 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:22:05 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,14 @@ void	ft_unset(t_envp **envp, char *arg);
 
 //cd_pwd.c
 void	ft_cd(char **arg, t_data *data, t_envp **envp);
-void	ft_pwd(char **arg, t_data *data);
+void	ft_pwd(t_data *data);
 void	ft_change_old_pwd(char *buffer, t_envp **envp);
 void	ft_change_new_pwd(t_envp **envp);
 int		ft_go_home(t_envp **envp, char *buffer);
 
 //echo_exit.c
 void	ft_echo(char **arg, t_data *data);
-void	ft_exit(char **arg, t_data *data);
+void	ft_exit(t_command *command, t_data *data);
 void	ft_free_all(t_data *data, int exit_value);
 
 //utils.c
@@ -250,5 +250,6 @@ void	setup_signals(void);
 
 //setup.c
 void	setup(int ac, char **av, char **env, t_envp **envp);
+void	ft_exec_minishell(t_command *command, t_envp **envp, t_data *data);
 
 #endif

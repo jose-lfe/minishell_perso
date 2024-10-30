@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:14:00 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/25 11:47:11 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:00:07 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ void	ft_change_new_pwd(t_envp **envp)
 	free(buffer);
 }
 
-void	ft_pwd(char **arg, t_data *data)
+void	ft_pwd(t_data *data)
 {
 	char	*buffer;
 
-	if (arg[1])
-	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);
-		data->exit_status = 1;
-		return ;
-	}
+	// if (arg[1])
+	// {
+	// 	ft_putstr_fd("pwd: too many arguments\n", 2);
+	// 	data->exit_status = 1;
+	// 	return ;
+	// }
 	buffer = getcwd(NULL, 0);
 	if (buffer != NULL)
 	{
