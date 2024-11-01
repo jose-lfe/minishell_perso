@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:14:32 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/31 11:36:06 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:44:47 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_exec_minishell(t_command *command, t_envp **envp, t_data *data)
 
 int	ft_compare(char *str, char *check)
 {
-	if(ft_strlen(str) == ft_strlen(check))
+	if (ft_strlen(str) == ft_strlen(check))
 	{
 		if (ft_strncmp(str, check, ft_strlen(str)) == 0)
 			return (1);
