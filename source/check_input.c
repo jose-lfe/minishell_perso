@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:51:06 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/29 12:42:47 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:50:33 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	check_input(char **input, t_data *data)
 {
+	if (is_all_space(*input))
+		return (true);
 	if (check_quote(*input))
 	{
 		write(2, "Error: quotes are wrong\n", 24);

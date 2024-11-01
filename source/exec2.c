@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:14:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 19:19:00 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:43:03 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,19 @@ int	ft_command_not_found(t_command *command, t_envp **envp, t_data *data)
 
 	path = true;
 	tmp = *envp;
-	while (tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+	while (tmp &&ft_compare(tmp->var, "PATH") == 0)
 		tmp = tmp->next;
 	if (!tmp)
 		path = false;
-	if (command->arg[0][0] == '.' || command->arg[0][0] == '/')
-	{
-		command_not_found2(command);
-	}
+	if (ft_strlen(command->arg[0]) != 0
+		&& (command->arg[0][0] == '.' || command->arg[0][0] == '/'))
+		{
+			command_not_found2(command);
+		}
 	else
 	{
-		ft_putstr_fd(command->arg[0], 2);
+		if (ft_strlen(command->arg[0]) != 0)
+			ft_putstr_fd(command->arg[0], 2);
 		if (path)
 			ft_putstr_fd(": command not found\n", 2);
 		else

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 11:34:34 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:42:18 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	ft_export(t_envp **envp, char *arg)
 	while (tmp)
 	{
 		if (size_var == -1
-			&& ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
+			&& ft_compare(tmp->var, arg) == 1)
 			return ;
-		else if (ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
+		else if (ft_compare(tmp->var, arg) == 1)
 		{
 			ft_change_var(envp, arg, size_var);
 			return ;
@@ -98,7 +98,7 @@ void	ft_unset(t_envp **envp, char *arg)
 	tmp = *envp;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, arg, ft_strlen(arg)) == 0)
+		if (ft_compare(tmp->var, arg) == 1)
 		{
 			if (tmp->pre == NULL)
 				*envp = tmp->next;

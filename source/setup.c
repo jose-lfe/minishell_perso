@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:14:32 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 19:05:17 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:36:06 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**change_shlvl(t_envp **envp)
 	int		shlvl;
 
 	tmp = *envp;
-	while (tmp && ft_strncmp(tmp->var, "SHLVL", 5) != 0)
+	while (tmp && ft_compare(tmp->var, "SHLVL") == 0)
 		tmp = tmp->next;
 	if (tmp)
 	{
@@ -66,4 +66,14 @@ void	ft_exec_minishell(t_command *command, t_envp **envp, t_data *data)
 		data->exit_status = WEXITSTATUS(data->exit_status);
 	else if (WIFSIGNALED(data->exit_status))
 		data->exit_status = 128 + WTERMSIG(data->exit_status);
+}
+
+int	ft_compare(char *str, char *check)
+{
+	if(ft_strlen(str) == ft_strlen(check))
+	{
+		if (ft_strncmp(str, check, ft_strlen(str)) == 0)
+			return (1);
+	}
+	return (0);
 }

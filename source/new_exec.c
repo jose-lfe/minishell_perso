@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 19:04:39 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:43:57 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ void	start(t_data *data, t_command **command, t_envp **envp)
 {
 	if (*command)
 	{
-		if (is_all_space((*command)->arg[0]))
+		do_heredoc(command, data);
+		if (data->exit_status == 130)
 		{
 			free_command(*command);
 			return ;

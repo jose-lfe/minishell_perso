@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:14:24 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/11 16:14:25 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:02:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	initialize_command(t_command *new)
 	new->pipein = false;
 	new->pipeout = false;
 	new->next = NULL;
+	new->fd_heredoc = -1;
 }

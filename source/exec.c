@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:47 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/30 19:04:53 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:42:44 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 	while (tmp)
 	{
 		error = 0;
-		if (tmp->inpath && ft_inredir(tmp->inpath, i, data) == 1)
+		if (tmp->inpath && ft_inredir(tmp->inpath, i, data, tmp) == 1)
 			error = 1;
 		if (tmp->outpath && ft_outredir(tmp->outpath, i) == 1)
 			error = 1;
@@ -45,6 +45,7 @@ void	start_exec(t_data *data, t_command **command, t_envp **envp)
 		tmp = tmp->next;
 		i++;
 	}
+	ft_putstr_fd("caca\n", 2);
 	free_command(*command);
 }
 

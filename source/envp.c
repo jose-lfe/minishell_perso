@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:49:27 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 11:40:13 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:43:44 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_env(t_envp **envp, t_data *data)
 	check = 0;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, "PATH", ft_strlen(tmp->var)) == 0)
+		if (ft_compare(tmp->var, "PATH") == 1)
 			check = 1;
 		tmp = tmp->next;
 	}

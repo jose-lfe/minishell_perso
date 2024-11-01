@@ -26,6 +26,7 @@ SRCS = 	source/main.c \
 		source/exec.c \
 		source/exec2.c \
 		source/free.c \
+		source/heredoc.c \
 		source/filedescriptor.c \
 		source/parsing_utils.c \
 		source/parsing.c \

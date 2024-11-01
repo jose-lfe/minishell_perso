@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:30:18 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 13:13:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:56:47 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 int	ft_check_command(t_command *command, t_envp **envp)
 {
-	if (ft_strncmp(command->arg[0], "echo", ft_strlen(command->arg[0])) == 0)
+	if (ft_strlen(command->arg[0]) == 0)
+		return (-1);
+	if (ft_compare(command->arg[0], "echo") == 1)
 		return (1);
-	if (ft_strncmp(command->arg[0], "cd", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "cd") == 1)
 		return (2);
-	if (ft_strncmp(command->arg[0], "pwd", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "pwd") == 1)
 		return (3);
-	if (ft_strncmp(command->arg[0], "export", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "export") == 1)
 		return (4);
-	if (ft_strncmp(command->arg[0], "unset", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "unset") == 1)
 		return (5);
-	if (ft_strncmp(command->arg[0], "env", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "env") == 1)
 		return (6);
-	if (ft_strncmp(command->arg[0], "exit", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "exit") == 1)
 		return (7);
-	if (ft_strncmp(command->arg[0], "./minishell", ft_strlen(command->arg[0])) == 0)
+	if (ft_compare(command->arg[0], "exit") == 1)
 		return (10);
 	if (ft_check_base_command(command, envp) == 0)
 		return (8);

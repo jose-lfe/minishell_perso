@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 13:18:05 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:38:02 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_get_path(t_envp **envp)
 	char	**path;
 
 	tmp = *envp;
-	while (tmp && ft_strncmp(tmp->var, "PATH", 4) != 0)
+	while (tmp && ft_compare(tmp->var, "PATH") == 0)
 		tmp = tmp->next;
 	if (!tmp)
 		return (NULL);
@@ -63,7 +63,7 @@ void	ft_change_var(t_envp **envp, char *arg, int size_var)
 	tmp = *envp;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, arg, ft_strlen(tmp->var)) == 0)
+		if (ft_compare(tmp->var, arg) == 1)
 			break ;
 		tmp = tmp->next;
 	}

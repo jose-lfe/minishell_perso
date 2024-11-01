@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:39:19 by joseluis          #+#    #+#             */
-/*   Updated: 2024/10/30 19:22:05 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:47:30 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_command
 	bool				pipein;
 	bool				pipeout;
 	bool				heredoc;
+	int					fd_heredoc;
 	struct s_command	*next;
 }	t_command;
 
@@ -174,11 +175,14 @@ void	ft_copy_original_std(t_data *data);
 void	ft_redirect_fd(int i, int *fd);
 void	original_std(t_data *data);
 
+//heredoc.c
+void	do_heredoc(t_command **command, t_data *data);
+void	ft_heredoc(t_inpath *inpath, t_data *data, int *fd);
+
 //redir.c
-int		ft_inredir(t_inpath *inpath, int i, t_data *data);
+int		ft_inredir(t_inpath *inpath, int i, t_data *data, t_command *command);
 int		ft_outredir(t_outpath *outpath, int i);
 int		ft_outredir2(t_outpath *outpath);
-void	ft_heredoc(t_inpath *inpath, int i, t_data *data);
 void	ft_change_stdin(t_inpath *inpath, t_data *data);
 
 //check_input.c
@@ -251,5 +255,6 @@ void	setup_signals(void);
 //setup.c
 void	setup(int ac, char **av, char **env, t_envp **envp);
 void	ft_exec_minishell(t_command *command, t_envp **envp, t_data *data);
+int		ft_compare(char *str, char *check);
 
 #endif
