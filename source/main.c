@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 08:49:26 by joseluis          #+#    #+#             */
-/*   Updated: 2024/11/05 12:25:43 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:20:25 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,5 @@ int	main(int ac, char **av, char **env)
 		free(input);
 	}
 	ft_free_all(data, 0);
-	rl_clear_history();
 	return (0);
 }

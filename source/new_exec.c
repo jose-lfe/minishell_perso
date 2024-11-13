@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:11:21 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/11/05 12:24:38 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:49:13 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_exec_command_bis(t_command *command, t_envp **envp, t_data *data)
 		execve(command->arg[0], command->arg, env);
 	}
 	if (i == 10)
-		ft_exec_minishell(command, envp, data);
+		exit(data->exit_status);
 	return (1);
 }
 

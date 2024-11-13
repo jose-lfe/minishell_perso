@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:04:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/10 17:35:28 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:25:30 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ char	*ft_get_value(char *str)
 	j = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	start = ++i;
 	if (!str[i])
 		return (ft_strdup(""));
+	start = ++i;
 	while (str[i++])
 		j++;
 	res = malloc((j + 1) * sizeof(char));

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:27:09 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/30 19:22:58 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:20:35 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	ft_free_all(t_data *data, int exit_value)
 	if (data->command != NULL)
 		free_command(data->command);
 	free(data);
+	rl_clear_history();
 	exit(exit_value);
 }

@@ -1,0 +1,8 @@
+corriger leaks Cd 
+corriger export (export caca -> pas visible par env)
+corriger quote qui ne contienne que des espaces (exemple : < Makefile cat | grep "  ")
+tout retester avant eval
+
+
+-fsanitize=address -g
+208,551 bytes in 247 blocks

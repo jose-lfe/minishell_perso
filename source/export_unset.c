@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:59 by jose-lfe          #+#    #+#             */
-/*   Updated: 2024/10/31 11:42:18 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:23:39 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,26 @@ void	ft_export(t_envp **envp, char *arg)
 {
 	t_envp	*tmp;
 	int		size_var;
+	char	*var;
 
 	tmp = *envp;
 	size_var = ft_strlen_var(arg);
+	if (size_var != -1)
+		var = ft_substr(arg, 0, size_var);
 	while (tmp)
 	{
-		if (size_var == -1
-			&& ft_compare(tmp->var, arg) == 1)
+		if (size_var == -1 && ft_compare(tmp->var, arg) == 1)
 			return ;
-		else if (ft_compare(tmp->var, arg) == 1)
+		else if (size_var != -1 && ft_compare(tmp->var, var) == 1)
 		{
 			ft_change_var(envp, arg, size_var);
+			free(var);
 			return ;
 		}
 		tmp = tmp->next;
 	}
+	if (size_var != -1)
+		free(var);
 	ft_add_back(envp, ft_new_var(arg));
 }
 
